@@ -99,7 +99,8 @@ a {
 
 .app-shell--sidebar {
   grid-template-rows: 1fr;
-  grid-template-columns: 280px 1fr;
+  /* Requirements: sidebar width ~220–240px for iconized navigation readability */
+  grid-template-columns: 240px 1fr;
 }
 
 .app-main {
@@ -123,7 +124,8 @@ a {
   height: 100vh;
   z-index: 25;
   border-right: 1px solid rgba(17, 24, 39, 0.08);
-  background: linear-gradient(180deg, rgba(246, 244, 255, 0.92), rgba(255, 255, 255, 0.96));
+  /* Requirements: soft lavender background (#f5f5ff) */
+  background: linear-gradient(180deg, rgba(245, 245, 255, 0.96), rgba(255, 255, 255, 0.94));
   backdrop-filter: blur(10px);
 }
 
@@ -192,6 +194,7 @@ a {
   text-decoration: none;
   display: flex;
   align-items: center;
+  /* Requirements: icon left of label with 8–12px spacing */
   gap: 10px;
   padding: 10px 10px;
   border-radius: 999px;
@@ -205,24 +208,28 @@ a {
 
 .sidebar-icon {
   width: 18px;
+  height: 18px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   color: rgba(17, 24, 39, 0.55);
+  flex: 0 0 auto;
 }
 
 .sidebar-link:hover {
   color: rgba(17, 24, 39, 0.92);
-  background: rgba(129, 140, 248, 0.065);
+  /* Requirements: subtle rounded highlight behind icon + text */
+  background: rgba(129, 140, 248, 0.075);
 }
 
 .sidebar-link.active {
+  /* Requirements: highlight text + icon in blue/purple accent */
   background: rgba(129, 140, 248, 0.16);
   color: rgba(17, 24, 39, 0.92);
 }
 
 .sidebar-link.active .sidebar-icon {
-  color: rgba(79, 70, 229, 0.88);
+  color: rgba(79, 70, 229, 0.92);
 }
 
 .sidebar-badge {
@@ -248,6 +255,12 @@ a {
 
 .sidebar-cta {
   width: 100%;
+}
+
+.sidebar-cta-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .sidebar-mini {
