@@ -4,6 +4,7 @@ import "./App.css";
 
 import Sidebar from "./components/Sidebar";
 import MainSearchBar from "./components/MainSearchBar";
+import ProfileMenu from "./components/ProfileMenu";
 import ToastProvider from "./components/ToastProvider";
 import DashboardPage from "./pages/DashboardPage";
 import JobsPage from "./pages/JobsPage";
@@ -79,6 +80,12 @@ function App() {
 
           <main className="app-main" aria-label="Main content">
             <div className="app-main-inner">
+              <div className="app-tools" aria-label="Global controls">
+                <div className="app-tools-right">
+                  <ProfileMenu profileName={profile?.name} />
+                </div>
+              </div>
+
               <MainSearchBar
                 placeholder="Search jobs, skills, companies…"
                 onSearch={() => {

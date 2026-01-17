@@ -269,10 +269,158 @@ a {
   padding: 0 6px;
 }
 
+/* =========================================================
+   Main content tool/header area (global controls)
+   - Lives above the main search, aligned to the right
+   - Sticky to match the search behavior
+   ========================================================= */
+
+.app-tools {
+  position: sticky;
+  top: 0;
+  z-index: 12;
+  padding: 10px 0 0;
+  display: flex;
+  justify-content: flex-end;
+  background: linear-gradient(180deg, rgba(249, 250, 251, 0.92), rgba(249, 250, 251, 0.0));
+  backdrop-filter: blur(6px);
+}
+
+.app-tools-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Profile menu */
+.profile-menu {
+  position: relative;
+}
+
+.profile-trigger {
+  appearance: none;
+  border: 1px solid rgba(17, 24, 39, 0.10);
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(10px);
+  border-radius: 999px;
+  height: 40px;
+  padding: 4px 10px 4px 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  color: rgba(17, 24, 39, 0.90);
+  transition:
+    background var(--duration-fast) var(--ease),
+    border-color var(--duration-fast) var(--ease),
+    box-shadow var(--duration-fast) var(--ease),
+    transform var(--duration-fast) var(--ease);
+}
+
+.profile-trigger:hover {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(79, 70, 229, 0.18);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-xs);
+}
+
+.profile-trigger.open {
+  border-color: rgba(129, 140, 248, 0.40);
+  box-shadow: 0 0 0 4px rgba(129, 140, 248, 0.18);
+  transform: translateY(-1px);
+}
+
+.profile-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  background: rgba(129, 140, 248, 0.18);
+  border: 1px solid rgba(79, 70, 229, 0.16);
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: 12.5px;
+  letter-spacing: -0.02em;
+  color: rgba(17, 24, 39, 0.86);
+  flex: 0 0 auto;
+}
+
+.profile-name {
+  font-size: 13px;
+  font-weight: 650;
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profile-chevron {
+  display: inline-flex;
+  color: rgba(17, 24, 39, 0.55);
+}
+
+.profile-dropdown {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  min-width: 180px;
+  border-radius: 14px;
+  border: 1px solid rgba(17, 24, 39, 0.10);
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-soft);
+  padding: 6px;
+  animation: dropdown-in var(--duration) var(--ease);
+}
+
+@keyframes dropdown-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.profile-item {
+  appearance: none;
+  border: 1px solid transparent;
+  background: transparent;
+  width: 100%;
+  text-align: left;
+  padding: 10px 10px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(17, 24, 39, 0.86);
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease), border-color var(--duration-fast) var(--ease);
+}
+
+.profile-item:hover {
+  background: rgba(129, 140, 248, 0.10);
+  border-color: rgba(79, 70, 229, 0.12);
+}
+
+.profile-item:focus-visible {
+  box-shadow: 0 0 0 4px rgba(129, 140, 248, 0.20);
+}
+
+.profile-item.danger {
+  color: rgba(239, 68, 68, 0.90);
+}
+
+.profile-item.danger:hover {
+  background: rgba(239, 68, 68, 0.08);
+  border-color: rgba(239, 68, 68, 0.16);
+}
+
 /* Main content search (moved from header into main area) */
 .main-search {
   position: sticky;
-  top: 0;
+  top: 50px; /* stack below .app-tools */
   z-index: 10;
   padding: 10px 0 0;
   background: linear-gradient(180deg, rgba(249, 250, 251, 0.92), rgba(249, 250, 251, 0.0));
@@ -346,13 +494,25 @@ a {
   .sidebar-bottom {
     display: none;
   }
+
+  .app-tools {
+    position: relative;
+    top: auto;
+    padding-top: 0;
+  }
+
   .main-search {
     position: relative;
     top: auto;
     padding-top: 0;
   }
+
   .app-main-inner {
     padding: 16px 14px 28px;
+  }
+
+  .profile-name {
+    max-width: 120px;
   }
 }
 
