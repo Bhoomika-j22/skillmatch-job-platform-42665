@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { Card, Badge, Button, Select } from "../components/ui";
+import { useToast } from "../components/ToastProvider";
 import { MOCK_NOTIFICATIONS } from "../data/mockData";
 
 const TYPES = ["All", "job", "application", "challenge"];
@@ -7,6 +8,7 @@ const TYPES = ["All", "job", "application", "challenge"];
 // PUBLIC_INTERFACE
 export default function NotificationsPage({ notifications, setNotifications }) {
   /** Notifications center (placeholder, ready for websocket integration). */
+  const { toast } = useToast();
   const [type, setType] = useState("All");
   const wsUrl = process.env.REACT_APP_WS_URL || "";
 
@@ -17,6 +19,7 @@ export default function NotificationsPage({ notifications, setNotifications }) {
 
   const markAllRead = () => {
     setNotifications((prev) => prev.map((n) => ({ ...n, read: true })));
+    toast({ title: "All caught up", message: "Marked all notifications as read.", variant: "success" });
   };
 
   return (
@@ -64,7 +67,11 @@ export default function NotificationsPage({ notifications, setNotifications }) {
               <span className="mini">{n.time}</span>
               <Button
                 type="button"
-                onClick={() => setNotifications((prev) => prev.map((x) => (x.id === n.id ? { ...x, read: true } : x)))}
+                size="sm"
+                onClick={() => {
+                  setNotifications((prev) => prev.map((x) => (x.id === n.id ? { ...x, read: true } : x)));
+                  toast({ title: "Marked read", message: n.title, variant: "info" });
+                }}
                 disabled={!!n.read}
               >
                 Mark read

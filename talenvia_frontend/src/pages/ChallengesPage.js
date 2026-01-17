@@ -1,17 +1,28 @@
 import React, { useMemo } from "react";
 import { Card, Badge, Button } from "../components/ui";
+import { useToast } from "../components/ToastProvider";
 import { MOCK_CHALLENGES } from "../data/mockData";
 
 // PUBLIC_INTERFACE
 export default function ChallengesPage({ completedChallenges, setCompletedChallenges }) {
   /** Gamified challenges with XP rewards and completion toggles. */
+  const { toast } = useToast();
   const completedSet = useMemo(() => new Set(completedChallenges || []), [completedChallenges]);
 
   const toggle = (id) => {
+    const c = MOCK_CHALLENGES.find((x) => x.id === id);
     setCompletedChallenges((prev) => {
       const set = new Set(prev || []);
-      if (set.has(id)) set.delete(id);
+      const isDone = set.has(id);
+      if (isDone) set.delete(id);
       else set.add(id);
+
+      toast({
+        title: isDone ? "Marked incomplete" : "Challenge completed",
+        message: c ? c.title : "Updated challenge",
+        variant: isDone ? "warn" : "success",
+      });
+
       return Array.from(set);
     });
   };

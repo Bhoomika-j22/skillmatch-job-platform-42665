@@ -1,10 +1,12 @@
 import React, { useMemo, useState } from "react";
 import { Card, Badge, Button, Select } from "../components/ui";
+import { useToast } from "../components/ToastProvider";
 import { MOCK_TESTS } from "../data/mockData";
 
 // PUBLIC_INTERFACE
 export default function MockTestsPage({ testHistory, setTestHistory }) {
   /** Mock tests list and a basic "start/finish" flow stored locally. */
+  const { toast } = useToast();
   const [activeId, setActiveId] = useState("");
   const active = useMemo(() => MOCK_TESTS.find((t) => t.id === activeId) || null, [activeId]);
 
@@ -18,6 +20,7 @@ export default function MockTestsPage({ testHistory, setTestHistory }) {
       ...(prev || []),
     ]);
     setActiveId("");
+    toast({ title: "Score saved", message: `${active.title} • ${score}%`, variant: "success" });
   };
 
   return (

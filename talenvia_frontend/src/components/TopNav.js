@@ -1,12 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Button } from "./ui";
 
 // PUBLIC_INTERFACE
 export default function TopNav({ notificationCount = 0 }) {
   /** Main application top navigation bar. */
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 6);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <header className="topbar">
+    <header className={`topbar ${scrolled ? "scrolled" : ""}`.trim()}>
       <div className="topbar-inner">
         <div className="brand" aria-label="Talenvia">
           <div className="brand-badge" aria-hidden="true">
@@ -38,15 +47,22 @@ export default function TopNav({ notificationCount = 0 }) {
             Profile & Skills
           </NavLink>
           <NavLink to="/notifications" className={({ isActive }) => `nav-pill ${isActive ? "active" : ""}`}>
-            Notifications {notificationCount ? <span className="badge secondary">{notificationCount}</span> : null}
+            Notifications{" "}
+            {notificationCount ? (
+              <span className="badge secondary" aria-label={`${notificationCount} unread notifications`}>
+                {notificationCount}
+              </span>
+            ) : null}
           </NavLink>
         </nav>
 
         <div className="topbar-actions">
           <Button
             variant="ghost"
+            size="sm"
             type="button"
             onClick={() => window.open(process.env.REACT_APP_FRONTEND_URL || window.location.origin, "_blank")}
+            aria-label="Open frontend base URL in a new tab"
             title="Open frontend base URL"
           >
             Open

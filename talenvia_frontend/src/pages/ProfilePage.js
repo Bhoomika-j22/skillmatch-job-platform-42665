@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { Card, Badge, Button, Input, Select } from "../components/ui";
+import { useToast } from "../components/ToastProvider";
 
 const LEVELS = ["Junior", "Mid", "Senior"];
 const LOC_PREF = ["Remote", "Hybrid", "On-site"];
@@ -7,6 +8,7 @@ const LOC_PREF = ["Remote", "Hybrid", "On-site"];
 // PUBLIC_INTERFACE
 export default function ProfilePage({ profile, setProfile }) {
   /** Skill-based profile editor. */
+  const { toast } = useToast();
   const [skillInput, setSkillInput] = useState("");
 
   const skills = profile.skills || [];
@@ -16,14 +18,19 @@ export default function ProfilePage({ profile, setProfile }) {
     if (!s) return;
     if (skills.map((x) => x.toLowerCase()).includes(s.toLowerCase())) {
       setSkillInput("");
+      toast({ title: "Already added", message: `${s} is already in your skills.`, variant: "info" });
       return;
     }
     setProfile((p) => ({ ...p, skills: [...(p.skills || []), s] }));
     setSkillInput("");
+    toast({ title: "Skill added", message: s, variant: "success" });
   };
 
   const removeSkill = (skill) => {
+    const ok = window.confirm(`Remove skill "${skill}"?`);
+    if (!ok) return;
     setProfile((p) => ({ ...p, skills: (p.skills || []).filter((x) => x !== skill) }));
+    toast({ title: "Skill removed", message: skill, variant: "warn" });
   };
 
   const matchHint = useMemo(() => {
@@ -39,7 +46,18 @@ export default function ProfilePage({ profile, setProfile }) {
           <h1 className="page-title">Profile & Skills</h1>
           <p className="page-subtitle">Build a skill-based profile that powers job matches, tests, and challenges.</p>
         </div>
-        <Badge variant="primary">{skills.length} skills</Badge>
+        <div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
+          <Badge variant="primary">{skills.length} skills</Badge>
+          <Button
+            size="sm"
+            variant="primary"
+            type="button"
+            onClick={() => toast({ title: "Profile saved", message: "Your profile is stored locally (demo).", variant: "success" })}
+            aria-label="Save profile"
+          >
+            Save
+          </Button>
+        </div>
       </div>
 
       <div className="grid grid-2">

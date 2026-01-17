@@ -1,11 +1,13 @@
 import React, { useMemo, useState } from "react";
 import { Card, Badge, Button, Input, Select } from "../components/ui";
+import { useToast } from "../components/ToastProvider";
 
 const STATUSES = ["Saved", "Applied", "Interview", "Offer", "Rejected"];
 
 // PUBLIC_INTERFACE
 export default function ApplicationsPage({ applications, setApplications }) {
   /** Track job applications and update pipeline statuses. */
+  const { toast } = useToast();
   const [filter, setFilter] = useState("All");
   const [note, setNote] = useState("");
 
@@ -35,6 +37,7 @@ export default function ApplicationsPage({ applications, setApplications }) {
         a.id === first.id ? { ...a, notes: [...(a.notes || []), { text: note.trim(), at: new Date().toISOString() }] } : a
       )
     );
+    toast({ title: "Note added", message: `Added to ${first.jobTitle}`, variant: "success" });
     setNote("");
   };
 
@@ -119,7 +122,17 @@ export default function ApplicationsPage({ applications, setApplications }) {
                   </option>
                 ))}
               </Select>
-              <Button type="button" onClick={() => setApplications((prev) => prev.filter((x) => x.id !== a.id))}>
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={() => {
+                  const ok = window.confirm(`Remove "${a.jobTitle}" from applications?`);
+                  if (!ok) return;
+                  setApplications((prev) => prev.filter((x) => x.id !== a.id));
+                  toast({ title: "Removed", message: `${a.jobTitle}`, variant: "warn" });
+                }}
+              >
                 Remove
               </Button>
             </div>

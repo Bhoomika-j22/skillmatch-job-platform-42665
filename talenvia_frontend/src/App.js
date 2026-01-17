@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 
 import TopNav from "./components/TopNav";
+import ToastProvider from "./components/ToastProvider";
 import DashboardPage from "./pages/DashboardPage";
 import JobsPage from "./pages/JobsPage";
 import ProfilePage from "./pages/ProfilePage";
@@ -71,30 +72,34 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div className="app-shell">
-        <TopNav notificationCount={unreadCount} />
-        <main>
-          <Routes>
-            <Route path="/" element={<DashboardPage profile={profile} applications={applicationsWithLabels} />} />
-            <Route path="/jobs" element={<JobsPage profile={profile} onApply={handleApply} />} />
-            <Route path="/profile" element={<ProfilePage profile={profile} setProfile={setProfile} />} />
-            <Route
-              path="/challenges"
-              element={<ChallengesPage completedChallenges={completedChallenges} setCompletedChallenges={setCompletedChallenges} />}
-            />
-            <Route path="/mock-tests" element={<MockTestsPage testHistory={testHistory} setTestHistory={setTestHistory} />} />
-            <Route
-              path="/applications"
-              element={<ApplicationsPage applications={applicationsWithLabels} setApplications={setApplications} />}
-            />
-            <Route
-              path="/notifications"
-              element={<NotificationsPage notifications={notifications} setNotifications={setNotifications} />}
-            />
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
-        </main>
-      </div>
+      <ToastProvider>
+        <div className="app-shell">
+          <TopNav notificationCount={unreadCount} />
+          <main aria-label="Main content">
+            <Routes>
+              <Route path="/" element={<DashboardPage profile={profile} applications={applicationsWithLabels} />} />
+              <Route path="/jobs" element={<JobsPage profile={profile} onApply={handleApply} />} />
+              <Route path="/profile" element={<ProfilePage profile={profile} setProfile={setProfile} />} />
+              <Route
+                path="/challenges"
+                element={
+                  <ChallengesPage completedChallenges={completedChallenges} setCompletedChallenges={setCompletedChallenges} />
+                }
+              />
+              <Route path="/mock-tests" element={<MockTestsPage testHistory={testHistory} setTestHistory={setTestHistory} />} />
+              <Route
+                path="/applications"
+                element={<ApplicationsPage applications={applicationsWithLabels} setApplications={setApplications} />}
+              />
+              <Route
+                path="/notifications"
+                element={<NotificationsPage notifications={notifications} setNotifications={setNotifications} />}
+              />
+              <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+          </main>
+        </div>
+      </ToastProvider>
     </BrowserRouter>
   );
 }
