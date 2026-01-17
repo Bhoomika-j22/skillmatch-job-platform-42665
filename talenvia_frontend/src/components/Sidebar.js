@@ -365,6 +365,14 @@ export default function Sidebar({ notificationCount = 0 }) {
             {/* New groups requested: Settings and Account (placed directly below Notifications). */}
             <div className="sidebar-group" role="group" aria-label="Settings">
               <div className="sidebar-group-title">Settings</div>
+
+              <NavLink to="/settings" className={({ isActive }) => `sidebar-link ${isActive ? "active" : ""}`}>
+                <span className="sidebar-icon" aria-hidden="true">
+                  <IconSettings size={18} />
+                </span>
+                <span>Settings</span>
+              </NavLink>
+
               <NavLink
                 to="/settings/career-preferences"
                 className={({ isActive }) => `sidebar-link sidebar-link--sub ${isActive ? "active" : ""}`}

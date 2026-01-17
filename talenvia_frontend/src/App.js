@@ -17,6 +17,7 @@ import CareerPreferencesPage from "./pages/CareerPreferencesPage";
 import ChangeMobilePage from "./pages/ChangeMobilePage";
 import ChangeEmailPage from "./pages/ChangeEmailPage";
 import ChangePasswordPage from "./pages/ChangePasswordPage";
+import SettingsPage from "./pages/SettingsPage";
 import NotFoundPage from "./pages/NotFoundPage";
 
 import { useLocalStorage } from "./hooks/useLocalStorage";
@@ -125,6 +126,7 @@ function App() {
                     element={<NotificationsPage notifications={notifications} setNotifications={setNotifications} />}
                   />
 
+                  <Route path="/settings" element={<SettingsPage />} />
                   <Route path="/settings/career-preferences" element={<CareerPreferencesPage />} />
                   <Route path="/account/change-mobile" element={<ChangeMobilePage />} />
                   <Route path="/account/change-email" element={<ChangeEmailPage />} />
