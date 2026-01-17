@@ -161,7 +161,7 @@ export default function SettingsPage() {
 
       <div className="grid" style={{ maxWidth: 900 }}>
         <Card>
-          <div className="list" aria-label="Settings options">
+          <div className="list" aria-label="Settings options" style={{ gap: 10 }}>
             {SETTINGS_ITEMS.map((item) => {
               const Icon = item.icon;
               const showCount = item.key === "blocked" && blockedCount > 0;
@@ -174,13 +174,13 @@ export default function SettingsPage() {
                   onClick={() => navigate(item.to)}
                   aria-label={item.title}
                 >
-                  <div className="settings-unified-left" style={{ alignItems: "flex-start" }}>
-                    <span className="settings-unified-icon" aria-hidden="true" style={{ marginTop: 1 }}>
+                  <div className="settings-unified-left">
+                    <span className="settings-unified-icon" aria-hidden="true">
                       <Icon size={18} />
                     </span>
 
                     <div className="settings-unified-titlewrap" style={{ flex: 1 }}>
-                      <h4 className="settings-unified-title" style={{ margin: 0, display: "flex", gap: 10 }}>
+                      <h4 className="settings-unified-title" style={{ margin: 0, display: "flex", gap: 10, alignItems: "center" }}>
                         <span>{item.title}</span>
                         {showCount ? (
                           <span className="badge info" aria-label={`${blockedCount} blocked companies`}>
@@ -209,7 +209,7 @@ export default function SettingsPage() {
               onClick={onLogout}
               loading={loggingOut}
               aria-label="Logout"
-              className="settings-logout"
+              className="settings-logout danger"
             >
               <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
                 <span aria-hidden="true">

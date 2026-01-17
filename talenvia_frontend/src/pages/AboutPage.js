@@ -52,70 +52,48 @@ export default function AboutPage() {
 
       <div className="grid" style={{ maxWidth: 980 }}>
         <Card>
-          <div style={{ display: "grid", gap: 14 }}>
-            <h2 style={{ margin: 0, fontSize: 18 }}>Our mission</h2>
-            <p style={{ margin: 0 }}>
-              Talenvia helps candidates find roles that actually match their skills, preferences, and growth goals—without
-              endless scrolling. We bring structure to your job search through a clean dashboard, smart recommendations,
-              and progress-based tools.
-            </p>
-          </div>
+          <div className="info-stack">
+            <div>
+              <h2 className="info-title">Our mission</h2>
+              <p className="info-lead">
+                Talenvia helps candidates find roles that actually match their skills, preferences, and growth goals—without
+                endless scrolling. We bring structure to your job search through a clean dashboard, smart recommendations,
+                and progress-based tools.
+              </p>
+            </div>
 
-          <div className="hr" />
+            <div className="hr" />
 
-          <div style={{ display: "grid", gap: 12 }}>
-            <h2 style={{ margin: 0, fontSize: 18 }}>What we believe</h2>
+            <div>
+              <h2 className="info-title">What we believe</h2>
 
-            <div className="list" aria-label="Talenvia values">
-              {[
-                {
-                  title: "Skills over buzzwords",
-                  body: "Your skills and real outcomes matter more than generic keywords.",
-                },
-                {
-                  title: "Transparency in progress",
-                  body: "Track applications, get insights, and understand what to improve next.",
-                },
-                {
-                  title: "Confidence through practice",
-                  body: "Mock tests and challenges make preparation measurable and motivating.",
-                },
-              ].map((v) => (
-                <div
-                  key={v.title}
-                  className="list-item"
-                  style={{
-                    display: "flex",
-                    gap: 12,
-                    alignItems: "flex-start",
-                    border: "1px solid rgba(79, 70, 229, 0.12)",
-                    background: "linear-gradient(135deg, rgba(79, 70, 229, 0.06), rgba(236, 72, 153, 0.03))",
-                  }}
-                >
-                  <span
-                    aria-hidden="true"
-                    style={{
-                      width: 34,
-                      height: 34,
-                      borderRadius: 10,
-                      display: "inline-flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      color: "#4F46E5",
-                      background: "rgba(79, 70, 229, 0.10)",
-                      flex: "0 0 auto",
-                      marginTop: 2,
-                    }}
-                  >
-                    <IconStar size={18} />
-                  </span>
+              <div className="info-list" aria-label="Talenvia values">
+                {[
+                  {
+                    title: "Skills over buzzwords",
+                    body: "Your skills and real outcomes matter more than generic keywords.",
+                  },
+                  {
+                    title: "Transparency in progress",
+                    body: "Track applications, get insights, and understand what to improve next.",
+                  },
+                  {
+                    title: "Confidence through practice",
+                    body: "Mock tests and challenges make preparation measurable and motivating.",
+                  },
+                ].map((v) => (
+                  <div key={v.title} className="info-row">
+                    <span className="info-row-icon" aria-hidden="true">
+                      <IconStar size={18} />
+                    </span>
 
-                  <div style={{ flex: 1 }}>
-                    <div style={{ fontWeight: 700, color: "#111827" }}>{v.title}</div>
-                    <div style={{ marginTop: 4, opacity: 0.9 }}>{v.body}</div>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <h3 className="info-row-title">{v.title}</h3>
+                      <p className="info-row-body">{v.body}</p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </Card>

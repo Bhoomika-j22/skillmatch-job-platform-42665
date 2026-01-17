@@ -139,7 +139,14 @@ export default function SettingsAccountPage() {
       </div>
 
       <div className="grid" style={{ maxWidth: 900 }}>
-        <Card title="Change mobile number" header={<span className="settings-inline-icon" aria-hidden="true"><IconPhone size={18} /></span>}>
+        <Card
+          title="Change mobile number"
+          header={
+            <span className="settings-inline-icon" aria-hidden="true">
+              <IconPhone size={18} />
+            </span>
+          }
+        >
           <div className="settings-form-grid">
             <Input
               label="New mobile number"
@@ -157,7 +164,14 @@ export default function SettingsAccountPage() {
           </div>
         </Card>
 
-        <Card title="Change email" header={<span className="settings-inline-icon" aria-hidden="true"><IconMail size={18} /></span>}>
+        <Card
+          title="Change email"
+          header={
+            <span className="settings-inline-icon" aria-hidden="true">
+              <IconMail size={18} />
+            </span>
+          }
+        >
           <div className="settings-form-grid">
             <Input
               label="New email"

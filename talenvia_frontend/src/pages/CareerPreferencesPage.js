@@ -65,35 +65,36 @@ export default function CareerPreferencesPage() {
 
       <div className="grid grid-2" style={{ maxWidth: 980 }}>
         <Card title="Preferences">
-          <Input
-            label="Target role"
-            value={role}
-            onChange={(e) => setRole(e.target.value)}
-            placeholder="e.g., Data Analyst"
-            error={!role.trim() ? "Required" : ""}
-          />
-          <div style={{ height: 10 }} />
+          <div style={{ display: "grid", gap: 12 }}>
+            <Input
+              label="Target role"
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+              placeholder="e.g., Data Analyst"
+              error={!role.trim() ? "Required" : ""}
+            />
 
-          <div className="grid" style={{ gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-            <Select label="Level" value={level} onChange={(e) => setLevel(e.target.value)}>
-              {LEVELS.map((l) => (
-                <option key={l} value={l}>
-                  {l}
-                </option>
-              ))}
-            </Select>
+            <div className="grid grid-2" style={{ gap: 12 }}>
+              <Select label="Level" value={level} onChange={(e) => setLevel(e.target.value)}>
+                {LEVELS.map((l) => (
+                  <option key={l} value={l}>
+                    {l}
+                  </option>
+                ))}
+              </Select>
 
-            <Select label="Work preference" value={workPreference} onChange={(e) => setWorkPreference(e.target.value)}>
-              {WORK_PREF.map((p) => (
-                <option key={p} value={p}>
-                  {p}
-                </option>
-              ))}
-            </Select>
+              <Select label="Work preference" value={workPreference} onChange={(e) => setWorkPreference(e.target.value)}>
+                {WORK_PREF.map((p) => (
+                  <option key={p} value={p}>
+                    {p}
+                  </option>
+                ))}
+              </Select>
+            </div>
           </div>
 
           <div className="hr" />
-          <p className="mini" style={{ margin: 0 }}>
+          <p className="mini" style={{ margin: 0, lineHeight: 1.45 }}>
             These preferences will be used to improve job matches once backend persistence is connected.
           </p>
         </Card>

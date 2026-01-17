@@ -87,71 +87,44 @@ export default function HowItWorksPage() {
 
       <div className="grid" style={{ maxWidth: 980 }}>
         <Card>
-          <div style={{ display: "grid", gap: 10 }}>
-            <h2 style={{ margin: 0, fontSize: 18 }}>Your journey in 4 steps</h2>
-            <p style={{ margin: 0, opacity: 0.9 }}>
-              Talenvia is built to keep you focused on high-signal actions that move you closer to interviews.
-            </p>
-          </div>
+          <div className="info-stack">
+            <div>
+              <h2 className="info-title">Your journey in 4 steps</h2>
+              <p className="info-lead">
+                Talenvia is built to keep you focused on high-signal actions that move you closer to interviews.
+              </p>
+            </div>
 
-          <div className="hr" />
+            <div className="hr" />
 
-          <div className="list" aria-label="How Talenvia Works steps">
-            {steps.map((s, idx) => {
-              const Icon = s.icon;
-              return (
-                <div
-                  key={s.title}
-                  className="list-item"
-                  style={{
-                    display: "flex",
-                    gap: 12,
-                    alignItems: "flex-start",
-                    border: "1px solid rgba(79, 70, 229, 0.12)",
-                    background: "linear-gradient(135deg, rgba(79, 70, 229, 0.06), rgba(236, 72, 153, 0.03))",
-                  }}
-                >
-                  <span
-                    aria-hidden="true"
-                    style={{
-                      width: 34,
-                      height: 34,
-                      borderRadius: 10,
-                      display: "inline-flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      color: "#4F46E5",
-                      background: "rgba(79, 70, 229, 0.10)",
-                      flex: "0 0 auto",
-                      marginTop: 2,
-                      fontWeight: 700,
-                    }}
-                    title={`Step ${idx + 1}`}
-                  >
-                    <Icon size={18} />
-                  </span>
+            <div className="info-list" aria-label="How Talenvia Works steps">
+              {steps.map((s, idx) => {
+                const Icon = s.icon;
+                return (
+                  <div key={s.title} className="info-row">
+                    <span className="info-row-icon" aria-hidden="true" title={`Step ${idx + 1}`}>
+                      <Icon size={18} />
+                    </span>
 
-                  <div style={{ flex: 1 }}>
-                    <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
-                      <div style={{ fontWeight: 800, color: "#111827" }}>{`Step ${idx + 1}`}</div>
-                      <div style={{ fontWeight: 700 }}>{s.title}</div>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <h3 className="info-row-title">{`Step ${idx + 1}: ${s.title}`}</h3>
+                      <p className="info-row-body">{s.body}</p>
                     </div>
-                    <div style={{ marginTop: 4, opacity: 0.9 }}>{s.body}</div>
                   </div>
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
 
-          <div className="hr" />
+            <div className="hr" />
 
-          <div style={{ display: "flex", justifyContent: "space-between", gap: 10, flexWrap: "wrap" }}>
-            <Button type="button" onClick={() => navigate("/profile")} aria-label="Go to Profile and Skills">
-              Go to Profile &amp; Skills
-            </Button>
-            <Button variant="primary" type="button" onClick={() => navigate("/jobs")} aria-label="Browse Jobs">
-              Browse Jobs
-            </Button>
+            <div style={{ display: "flex", justifyContent: "space-between", gap: 10, flexWrap: "wrap" }}>
+              <Button type="button" onClick={() => navigate("/profile")} aria-label="Go to Profile and Skills">
+                Go to Profile &amp; Skills
+              </Button>
+              <Button variant="primary" type="button" onClick={() => navigate("/jobs")} aria-label="Browse Jobs">
+                Browse Jobs
+              </Button>
+            </div>
           </div>
         </Card>
       </div>

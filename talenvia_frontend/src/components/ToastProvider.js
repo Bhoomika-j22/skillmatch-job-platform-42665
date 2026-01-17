@@ -6,7 +6,8 @@ const ToastContext = createContext(null);
 /**
  * PUBLIC_INTERFACE
  * Hook to enqueue toast/snackbar notifications.
- * @returns {{ toast: (t: {title: string, message?: string, variant?: 'success'|'error'|'warn'|'info', durationMs?: number}) => void }}
+ * Supports optional confirm/undo actions for safer destructive operations.
+ * @returns {{ toast: (t: {title: string, message?: string, variant?: 'success'|'error'|'warn'|'info', durationMs?: number, actionLabel?: string, onAction?: () => void, dismissLabel?: string}) => void }}
  */
 export function useToast() {
   const ctx = useContext(ToastContext);
@@ -30,9 +31,19 @@ export default function ToastProvider({ children }) {
   }, []);
 
   const toast = useCallback(
-    ({ title, message = "", variant = "info", durationMs = 2600 } = {}) => {
+    (
+      {
+        title,
+        message = "",
+        variant = "info",
+        durationMs = 2600,
+        actionLabel,
+        onAction,
+        dismissLabel = "Dismiss",
+      } = {}
+    ) => {
       const id = `t_${Date.now()}_${idRef.current++}`;
-      const next = { id, title, message, variant };
+      const next = { id, title, message, variant, actionLabel, onAction, dismissLabel };
       setToasts((prev) => [next, ...(prev || [])].slice(0, 4));
 
       if (durationMs > 0) {
@@ -49,14 +60,44 @@ export default function ToastProvider({ children }) {
       {children}
 
       {/* aria-live region for announcing toast content */}
-      <div className="toast-viewport" role="region" aria-label="Notifications" aria-live="polite" aria-relevant="additions">
+      <div
+        className="toast-viewport"
+        role="region"
+        aria-label="Notifications"
+        aria-live="polite"
+        aria-relevant="additions"
+      >
         {toasts.map((t) => (
           <div key={t.id} className={`toast ${t.variant}`}>
             <div className="toast-title">{t.title}</div>
             {t.message ? <div className="toast-body">{t.message}</div> : null}
             <div className="toast-actions">
-              <Button size="sm" variant="ghost" type="button" onClick={() => remove(t.id)} aria-label="Dismiss notification">
-                Dismiss
+              {t.actionLabel && typeof t.onAction === "function" ? (
+                <Button
+                  size="sm"
+                  variant="secondary"
+                  type="button"
+                  onClick={() => {
+                    try {
+                      t.onAction();
+                    } finally {
+                      remove(t.id);
+                    }
+                  }}
+                  aria-label={t.actionLabel}
+                >
+                  {t.actionLabel}
+                </Button>
+              ) : null}
+
+              <Button
+                size="sm"
+                variant="ghost"
+                type="button"
+                onClick={() => remove(t.id)}
+                aria-label={t.dismissLabel || "Dismiss notification"}
+              >
+                {t.dismissLabel || "Dismiss"}
               </Button>
             </div>
           </div>

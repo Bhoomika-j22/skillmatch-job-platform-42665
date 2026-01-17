@@ -81,16 +81,40 @@ export default function BlockedCompaniesPage() {
   };
 
   const removeCompany = (name) => {
-    const next = (blocked || []).filter((c) => c.toLowerCase() !== String(name).toLowerCase());
+    const prev = blocked || [];
+    const next = prev.filter((c) => c.toLowerCase() !== String(name).toLowerCase());
     setBlocked(next);
     writeBlockedCompanies(next);
-    toast({ title: "Removed", message: "Company removed from blocked list.", variant: "success" });
+
+    toast({
+      title: "Removed",
+      message: `"${name}" removed from blocked companies.`,
+      variant: "success",
+      actionLabel: "Undo",
+      onAction: () => {
+        setBlocked(prev);
+        writeBlockedCompanies(prev);
+      },
+      durationMs: 4200,
+    });
   };
 
   const clearAll = () => {
+    const prev = blocked || [];
     setBlocked([]);
     writeBlockedCompanies([]);
-    toast({ title: "Cleared", message: "Blocked companies cleared.", variant: "success" });
+
+    toast({
+      title: "Cleared",
+      message: "Blocked companies cleared.",
+      variant: "success",
+      actionLabel: "Undo",
+      onAction: () => {
+        setBlocked(prev);
+        writeBlockedCompanies(prev);
+      },
+      durationMs: 4200,
+    });
   };
 
   return (
