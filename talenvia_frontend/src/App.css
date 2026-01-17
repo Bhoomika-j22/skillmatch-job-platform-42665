@@ -313,6 +313,9 @@ a {
   align-items: center;
   gap: 10px;
   min-width: 0;
+
+  /* Minor horizontal nudge for visual balance (do not affect sidebar). */
+  padding-left: 12px;
 }
 
 .topheader-brand-badge {
