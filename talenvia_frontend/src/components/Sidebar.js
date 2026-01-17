@@ -405,13 +405,6 @@ export default function Sidebar({ notificationCount = 0 }) {
               </span>
             </NavLink>
 
-            <div className="sidebar-divider" role="separator" aria-hidden="true" />
-
-          </nav>
-        </div>
-
-        <div className="sidebar-bottom">
-          <nav className="sidebar-nav sidebar-nav--bottom" aria-label="Secondary">
             <NavLink to="/settings" className={({ isActive }) => `sidebar-link ${isActive ? "active" : ""}`}>
               <span className="sidebar-icon" aria-hidden="true">
                 <IconGear size={18} />
@@ -432,8 +425,12 @@ export default function Sidebar({ notificationCount = 0 }) {
               </span>
               <span>How Talenvia Works</span>
             </NavLink>
-          </nav>
 
+            <div className="sidebar-divider" role="separator" aria-hidden="true" />
+          </nav>
+        </div>
+
+        <div className="sidebar-bottom">
           <Button
             variant="primary"
             size="md"
