@@ -17,13 +17,18 @@ function SearchIcon({ size = 16 }) {
   );
 }
 
-// PUBLIC_INTERFACE
+/**
+ * PUBLIC_INTERFACE
+ * Search bar component.
+ * Supports `variant="main"` (default) and `variant="header"` for placement inside the fixed top header.
+ */
 export default function MainSearchBar({
   placeholder = "Search jobs, skills, companies…",
   initialValue = "",
   onSearch,
+  variant = "main",
 }) {
-  /** Main content search bar (UI affordance; wiring to page-level filters can be added later). */
+  /** Search bar (UI affordance; wiring to page-level filters can be added later). */
   const [query, setQuery] = useState(initialValue || "");
   const inputRef = useRef(null);
 
@@ -38,10 +43,17 @@ export default function MainSearchBar({
     // (No auto-focus by default; just ensure ref is stable.)
   }, [isCompact]);
 
+  const isHeader = variant === "header";
+  const rootClass = isHeader ? "header-search" : "main-search";
+  const formClass = isHeader ? "header-search-form" : "main-search-form";
+  const iconClass = isHeader ? "header-search-icon" : "main-search-icon";
+  const inputClass = isHeader ? "header-search-input" : "main-search-input";
+  const inputId = isHeader ? "header-search-input" : "main-search-input";
+
   return (
-    <div className="main-search" aria-label="Search area">
+    <div className={rootClass} aria-label="Search area">
       <form
-        className="main-search-form"
+        className={formClass}
         role="search"
         aria-label="Search"
         onSubmit={(e) => {
@@ -49,16 +61,16 @@ export default function MainSearchBar({
           if (onSearch) onSearch(query);
         }}
       >
-        <label className="sr-only" htmlFor="main-search-input">
+        <label className="sr-only" htmlFor={inputId}>
           Search
         </label>
-        <span className="main-search-icon" aria-hidden="true">
+        <span className={iconClass} aria-hidden="true">
           <SearchIcon size={16} />
         </span>
         <input
           ref={inputRef}
-          id="main-search-input"
-          className="main-search-input"
+          id={inputId}
+          className={inputClass}
           type="search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}

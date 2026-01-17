@@ -113,6 +113,11 @@ a {
   margin: 0 auto;
 }
 
+.app-main-inner--with-topheader {
+  /* Fixed header height = 64px; keep content from sliding under it */
+  padding-top: calc(64px + 18px);
+}
+
 .app-content {
   margin-top: 14px;
 }
@@ -120,8 +125,9 @@ a {
 /* Sidebar */
 .sidebar {
   position: sticky;
-  top: 0;
-  height: 100vh;
+  /* Fixed top header is 64px tall */
+  top: 64px;
+  height: calc(100vh - 64px);
   z-index: 25;
   border-right: 1px solid rgba(17, 24, 39, 0.08);
   /* Requirements: soft lavender background (#f5f5ff) */
@@ -303,26 +309,121 @@ a {
 }
 
 /* =========================================================
-   Main content tool/header area (global controls)
-   - Lives above the main search, aligned to the right
-   - Sticky to match the search behavior
+   Fixed top header (STRICT requirements)
+   - Single horizontal line
+   - Height: 64px
+   - Brand (left), Search (center), Notifications+Profile (right)
+   - Fixed at top, no duplicate headers
    ========================================================= */
 
-.app-tools {
-  position: sticky;
+.topheader {
+  position: fixed;
   top: 0;
-  z-index: 12;
-  padding: 10px 0 0;
-  display: flex;
-  justify-content: flex-end;
-  background: linear-gradient(180deg, rgba(249, 250, 251, 0.92), rgba(249, 250, 251, 0.0));
-  backdrop-filter: blur(6px);
+  left: 0;
+  right: 0;
+  height: 64px;
+  z-index: 50;
+  background: #ffffff;
+  border-bottom: 1px solid rgba(17, 24, 39, 0.08);
+  box-shadow: 0 2px 10px rgba(17, 24, 39, 0.05); /* subtle bottom shadow */
 }
 
-.app-tools-right {
+.topheader-inner {
+  height: 64px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: minmax(180px, 240px) minmax(280px, 1fr) minmax(220px, 260px);
+  align-items: center;
+  gap: 14px;
+}
+
+/* Left: brand */
+.topheader-left {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.topheader-brand-badge {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(79, 70, 229, 0.95), rgba(236, 72, 153, 0.80));
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+.topheader-brand-title strong {
+  font-size: 15px;
+  letter-spacing: -0.01em;
+  color: rgba(17, 24, 39, 0.92);
+  white-space: nowrap;
+}
+
+/* Center: search */
+.topheader-center {
+  display: flex;
+  justify-content: center; /* ensure centered inside header */
+  min-width: 0;
+}
+
+/* Right: actions */
+.topheader-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* Search styles used inside header */
+.header-search {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.header-search-form {
+  width: min(640px, 100%);
+  height: 40px;
+  border-radius: 999px;
+  border: 1px solid rgba(17, 24, 39, 0.10);
+  background: rgba(249, 250, 251, 1);
   display: flex;
   align-items: center;
   gap: 10px;
+  padding: 0 14px;
+  transition: border-color var(--duration-fast) var(--ease), box-shadow var(--duration-fast) var(--ease),
+    background var(--duration-fast) var(--ease);
+}
+
+.header-search-icon {
+  display: inline-flex;
+  color: rgba(17, 24, 39, 0.55);
+}
+
+.header-search-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: rgba(17, 24, 39, 0.92);
+  font-size: 13.5px;
+}
+
+.header-search-input::placeholder {
+  color: rgba(17, 24, 39, 0.45);
+}
+
+.header-search-form:focus-within {
+  border-color: rgba(79, 70, 229, 0.32);
+  box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.14);
+  background: rgba(255, 255, 255, 1);
 }
 
 /* =========================================================
@@ -966,20 +1067,28 @@ a {
     display: none;
   }
 
-  .app-tools {
-    position: relative;
-    top: auto;
-    padding-top: 0;
-  }
-
-  .main-search {
-    position: relative;
-    top: auto;
-    padding-top: 0;
+  /* On small screens the sidebar becomes a top section; keep layout stable under fixed header */
+  .sidebar {
+    top: 64px;
+    height: auto;
   }
 
   .app-main-inner {
     padding: 16px 14px 28px;
+  }
+
+  .app-main-inner--with-topheader {
+    padding-top: calc(64px + 16px);
+  }
+
+  .topheader-inner {
+    grid-template-columns: minmax(140px, 200px) 1fr minmax(180px, 240px);
+    gap: 10px;
+    padding: 0 14px;
+  }
+
+  .header-search-form {
+    width: min(520px, 100%);
   }
 
   .profile-name {

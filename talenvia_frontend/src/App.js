@@ -87,25 +87,39 @@ function App() {
     <BrowserRouter>
       <ToastProvider>
         <div className="app-shell app-shell--sidebar">
-          <Sidebar notificationCount={unreadCount} />
-
-          <main className="app-main" aria-label="Main content">
-            <div className="app-main-inner">
-              <div className="app-tools" aria-label="Global controls">
-                <div className="app-tools-right">
-                  <NotificationBell notifications={notifications} setNotifications={setNotifications} />
-                  <ProfileMenu profileName={profile?.name} />
+          <header className="topheader" aria-label="Top header">
+            <div className="topheader-inner">
+              <div className="topheader-left" aria-label="Brand">
+                <div className="topheader-brand-badge" aria-hidden="true">
+                  T
+                </div>
+                <div className="topheader-brand-title">
+                  <strong>Talenvia</strong>
                 </div>
               </div>
 
-              <MainSearchBar
-                placeholder="Search jobs, skills, companies…"
-                onSearch={() => {
-                  // Intentionally non-destructive for now: per existing app behavior, there is no global search page yet.
-                  // This is the new placement for the search affordance, ready to be wired to filters/results later.
-                }}
-              />
+              <div className="topheader-center" aria-label="Search">
+                <MainSearchBar
+                  variant="header"
+                  placeholder="Search jobs, skills, companies…"
+                  onSearch={() => {
+                    // Intentionally non-destructive for now: per existing app behavior, there is no global search page yet.
+                    // This header search is ready to be wired to filters/results later.
+                  }}
+                />
+              </div>
 
+              <div className="topheader-right" aria-label="Header actions">
+                <NotificationBell notifications={notifications} setNotifications={setNotifications} />
+                <ProfileMenu profileName={profile?.name} />
+              </div>
+            </div>
+          </header>
+
+          <Sidebar notificationCount={unreadCount} />
+
+          <main className="app-main" aria-label="Main content">
+            <div className="app-main-inner app-main-inner--with-topheader">
               <div className="app-content">
                 <Routes>
                   <Route path="/" element={<DashboardPage profile={profile} applications={applicationsWithLabels} />} />
@@ -137,6 +151,7 @@ function App() {
                   <Route path="/settings/account" element={<SettingsAccountPage />} />
                   <Route path="/settings/details" element={<SettingsDetailPage />} />
                   <Route path="/settings/career-preferences" element={<CareerPreferencesPage />} />
+                  <Route path="/settings/blocked-companies" element={<BlockedCompaniesPage />} />
                   <Route path="/settings/blocked-companies" element={<BlockedCompaniesPage />} />
                   <Route path="/account/change-mobile" element={<ChangeMobilePage />} />
                   <Route path="/account/change-email" element={<ChangeEmailPage />} />
