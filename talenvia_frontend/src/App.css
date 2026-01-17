@@ -249,9 +249,11 @@ a {
 /* Sidebar: single divider below "Notifications" (do not use elsewhere). */
 .sidebar-divider {
   height: 1px;
-  background: rgba(17, 24, 39, 0.10); /* light gray */
+  /* Slightly lighter/softer gray tint to better blend with the lavender sidebar background. */
+  background: rgba(17, 24, 39, 0.08);
   border-radius: 999px; /* subtle rounding on ends */
-  margin: 10px 10px; /* comfortable spacing above and below, aligned with link padding */
+  /* Fine-tuned vertical rhythm: a bit more breathing room while remaining subtle. */
+  margin: 12px 10px;
 }
 
 /* Sidebar grouped sections (Settings/Account) */
