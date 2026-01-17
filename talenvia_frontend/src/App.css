@@ -3042,6 +3042,26 @@ a {
   text-overflow: ellipsis;
 }
 
+/* Inline edit controls for ProfileSideCard (keep subtle + consistent) */
+.dash-profilecard-editbar {
+  margin-top: 8px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.dash-profilecard-editactions {
+  display: inline-flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.dash-profilecard-editbtn.btn {
+  height: 30px;
+  padding: 0 10px;
+  border-radius: 10px;
+  font-size: 12px;
+}
+
 .dash-profilecard-divider {
   height: 1px;
   background: #eef2f7;

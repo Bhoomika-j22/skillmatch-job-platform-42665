@@ -62,7 +62,7 @@ export default function ProfilePage({ profile, setProfile }) {
       </div>
 
       <div style={{ marginBottom: 16 }}>
-        <ProfileSideCard profile={profile} />
+        <ProfileSideCard profile={profile} setProfile={setProfile} />
       </div>
 
       <div className="grid grid-2">

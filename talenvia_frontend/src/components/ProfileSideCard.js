@@ -1,5 +1,6 @@
-import React, { useMemo, useRef, useState } from "react";
-import { Button } from "./ui";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { Button, Input } from "./ui";
+import { useToast } from "./ToastProvider";
 
 /**
  * Inline SVG icon set for the profile side card (no external deps).
@@ -158,17 +159,68 @@ function initialsFromName(name) {
   return (first + second).toUpperCase();
 }
 
+function normalizeUrl(val) {
+  const v = String(val || "").trim();
+  if (!v) return "";
+  // Allow users to type "linkedin.com/in/..." without scheme; normalize to https.
+  if (/^https?:\/\//i.test(v)) return v;
+  return `https://${v}`;
+}
+
+function isValidEmail(val) {
+  const v = String(val || "").trim();
+  if (!v) return true; // optional
+  // Basic front-end validation (not RFC-perfect, but sufficient for UI).
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+}
+
+function isValidMobile(val) {
+  const v = String(val || "").trim();
+  if (!v) return true; // optional
+  // Digits only with sensible length range.
+  return /^\d{7,15}$/.test(v);
+}
+
+function isValidUrl(val) {
+  const v = String(val || "").trim();
+  if (!v) return true; // optional
+  try {
+    // Accept without scheme by normalizing first.
+    // eslint-disable-next-line no-new
+    new URL(normalizeUrl(v));
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 // PUBLIC_INTERFACE
-export default function ProfileSideCard({ profile }) {
+export default function ProfileSideCard({ profile, setProfile }) {
   /**
    * Right-side profile card: rounded white background, subtle shadow, avatar,
    * name/role, resume upload, light dividers, and blue icons for info sections.
+   *
+   * Editing behavior (demo):
+   * - Inline edit for: full name, job title/role, email, mobile, LinkedIn, GitHub, personal website.
+   * - Save persists to App profile state (App uses useLocalStorage => localStorage persistence).
    */
+  const { toast } = useToast();
+
   const fileInputRef = useRef(null);
   const [resumeFile, setResumeFile] = useState(null);
 
+  const [isEditing, setIsEditing] = useState(false);
+  const [draft, setDraft] = useState({
+    name: "",
+    role: "",
+    email: "",
+    phone: "",
+    links: { linkedin: "", github: "", portfolio: "" },
+  });
+  const [errors, setErrors] = useState({});
+
   const name = profile?.name || "User";
-  const role = profile?.role || "Candidate";
+  const role = profile?.role || profile?.targetRole || "Candidate";
   const headline = profile?.headline || "Open to opportunities";
   const location = profile?.location || "—";
   const phone = profile?.phone || "—";
@@ -188,6 +240,39 @@ export default function ProfileSideCard({ profile }) {
     };
   }, [profile]);
 
+  useEffect(() => {
+    // When starting to edit, keep draft synced with current profile.
+    if (!isEditing) return;
+    const links = profile?.links || {};
+    setDraft({
+      name: String(profile?.name || ""),
+      role: String(profile?.role || profile?.targetRole || ""),
+      email: String(profile?.email || ""),
+      phone: String(profile?.phone || ""),
+      links: {
+        linkedin: String(links.linkedin || ""),
+        github: String(links.github || ""),
+        portfolio: String(links.portfolio || ""),
+      },
+    });
+    setErrors({});
+  }, [isEditing, profile]);
+
+  function validate(nextDraft) {
+    const nextErrors = {};
+    const fullName = String(nextDraft?.name || "").trim();
+    if (!fullName) nextErrors.name = "Full name is required.";
+
+    if (!isValidEmail(nextDraft?.email)) nextErrors.email = "Enter a valid email (e.g., name@domain.com).";
+    if (!isValidMobile(nextDraft?.phone)) nextErrors.phone = "Mobile must be digits only (7–15 digits).";
+
+    if (!isValidUrl(nextDraft?.links?.linkedin)) nextErrors.linkedin = "Enter a valid URL.";
+    if (!isValidUrl(nextDraft?.links?.github)) nextErrors.github = "Enter a valid URL.";
+    if (!isValidUrl(nextDraft?.links?.portfolio)) nextErrors.portfolio = "Enter a valid URL.";
+
+    return nextErrors;
+  }
+
   function onPickResumeClick() {
     fileInputRef.current?.click();
   }
@@ -197,17 +282,90 @@ export default function ProfileSideCard({ profile }) {
     setResumeFile(f);
   }
 
+  function startEditing() {
+    setIsEditing(true);
+  }
+
+  function cancelEditing() {
+    setIsEditing(false);
+    setErrors({});
+  }
+
+  function saveEdits() {
+    const nextErrors = validate(draft);
+    setErrors(nextErrors);
+    if (Object.keys(nextErrors).length) {
+      toast({ title: "Fix validation errors", message: "Please review the highlighted fields.", variant: "error" });
+      return;
+    }
+
+    if (typeof setProfile !== "function") {
+      // Component can still render read-only if setProfile is not provided.
+      toast({ title: "Cannot save", message: "Profile update handler not connected.", variant: "error" });
+      return;
+    }
+
+    const nextProfile = {
+      ...(profile || {}),
+      name: String(draft.name || "").trim(),
+      role: String(draft.role || "").trim(),
+      email: String(draft.email || "").trim(),
+      phone: String(draft.phone || "").trim(),
+      links: {
+        ...(profile?.links || {}),
+        linkedin: String(draft.links.linkedin || "").trim() ? normalizeUrl(draft.links.linkedin) : "",
+        github: String(draft.links.github || "").trim() ? normalizeUrl(draft.links.github) : "",
+        portfolio: String(draft.links.portfolio || "").trim() ? normalizeUrl(draft.links.portfolio) : "",
+      },
+    };
+
+    // Persist via App's useLocalStorage state.
+    setProfile(nextProfile);
+
+    setIsEditing(false);
+    toast({ title: "Profile updated", message: "Saved locally (demo).", variant: "success" });
+  }
+
   return (
     <section className="dash-profilecard" aria-label="Profile summary">
       <header className="dash-profilecard-head">
         <div className="dash-profilecard-avatar" aria-hidden="true">
-          {initialsFromName(name)}
+          {initialsFromName(isEditing ? draft.name || name : name)}
         </div>
 
         <div className="dash-profilecard-meta">
-          <div className="dash-profilecard-name">{name}</div>
-          <div className="dash-profilecard-role">{role}</div>
+          <div className="dash-profilecard-name">{isEditing ? draft.name || "—" : name}</div>
+          <div className="dash-profilecard-role">{isEditing ? draft.role || "—" : role}</div>
           <div className="dash-profilecard-headline">{headline}</div>
+
+          <div className="dash-profilecard-editbar">
+            {!isEditing ? (
+              <Button type="button" size="sm" variant="secondary" className="dash-profilecard-editbtn" onClick={startEditing}>
+                Edit
+              </Button>
+            ) : (
+              <div className="dash-profilecard-editactions" role="group" aria-label="Profile edit actions">
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="primary"
+                  className="dash-profilecard-editbtn"
+                  onClick={saveEdits}
+                >
+                  Save
+                </Button>
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="ghost"
+                  className="dash-profilecard-editbtn"
+                  onClick={cancelEditing}
+                >
+                  Cancel
+                </Button>
+              </div>
+            )}
+          </div>
         </div>
       </header>
 
@@ -263,8 +421,25 @@ export default function ProfileSideCard({ profile }) {
             <span className="dash-profilecard-row-icon" aria-hidden="true">
               <ProfileIcon name="phone" />
             </span>
-            <span className="dash-profilecard-row-label">Phone</span>
-            <span className="dash-profilecard-row-value">{phone}</span>
+            <span className="dash-profilecard-row-label">Mobile</span>
+            <span className="dash-profilecard-row-value">
+              {isEditing ? (
+                <Input
+                  value={draft.phone}
+                  onChange={(e) => {
+                    const next = { ...draft, phone: e.target.value };
+                    setDraft(next);
+                    setErrors((prev) => ({ ...(prev || {}), phone: undefined }));
+                  }}
+                  placeholder="Digits only"
+                  inputMode="numeric"
+                  aria-label="Mobile number"
+                  error={errors.phone}
+                />
+              ) : (
+                phone
+              )}
+            </span>
           </li>
 
           <li className="dash-profilecard-row">
@@ -272,7 +447,24 @@ export default function ProfileSideCard({ profile }) {
               <ProfileIcon name="mail" />
             </span>
             <span className="dash-profilecard-row-label">Email</span>
-            <span className="dash-profilecard-row-value">{email}</span>
+            <span className="dash-profilecard-row-value">
+              {isEditing ? (
+                <Input
+                  value={draft.email}
+                  onChange={(e) => {
+                    const next = { ...draft, email: e.target.value };
+                    setDraft(next);
+                    setErrors((prev) => ({ ...(prev || {}), email: undefined }));
+                  }}
+                  placeholder="name@domain.com"
+                  inputMode="email"
+                  aria-label="Email address"
+                  error={errors.email}
+                />
+              ) : (
+                email
+              )}
+            </span>
           </li>
 
           <li className="dash-profilecard-row">
@@ -323,8 +515,28 @@ export default function ProfileSideCard({ profile }) {
             <span className="dash-profilecard-row-icon" aria-hidden="true">
               <ProfileIcon name="briefcase" />
             </span>
-            <span className="dash-profilecard-row-label">Portfolio</span>
-            <span className="dash-profilecard-row-value">{web.portfolio}</span>
+            <span className="dash-profilecard-row-label">Website</span>
+            <span className="dash-profilecard-row-value">
+              {isEditing ? (
+                <Input
+                  value={draft.links.portfolio}
+                  onChange={(e) => {
+                    const next = { ...draft, links: { ...draft.links, portfolio: e.target.value } };
+                    setDraft(next);
+                    setErrors((prev) => ({ ...(prev || {}), portfolio: undefined }));
+                  }}
+                  placeholder="https://your-site.com"
+                  aria-label="Personal website"
+                  error={errors.portfolio}
+                />
+              ) : web.portfolio && web.portfolio !== "—" ? (
+                <a href={normalizeUrl(web.portfolio)} target="_blank" rel="noreferrer">
+                  {web.portfolio}
+                </a>
+              ) : (
+                "—"
+              )}
+            </span>
           </li>
 
           <li className="dash-profilecard-row">
@@ -332,7 +544,27 @@ export default function ProfileSideCard({ profile }) {
               <ProfileIcon name="link" />
             </span>
             <span className="dash-profilecard-row-label">LinkedIn</span>
-            <span className="dash-profilecard-row-value">{web.linkedin}</span>
+            <span className="dash-profilecard-row-value">
+              {isEditing ? (
+                <Input
+                  value={draft.links.linkedin}
+                  onChange={(e) => {
+                    const next = { ...draft, links: { ...draft.links, linkedin: e.target.value } };
+                    setDraft(next);
+                    setErrors((prev) => ({ ...(prev || {}), linkedin: undefined }));
+                  }}
+                  placeholder="https://linkedin.com/in/…"
+                  aria-label="LinkedIn profile"
+                  error={errors.linkedin}
+                />
+              ) : web.linkedin && web.linkedin !== "—" ? (
+                <a href={normalizeUrl(web.linkedin)} target="_blank" rel="noreferrer">
+                  {web.linkedin}
+                </a>
+              ) : (
+                "—"
+              )}
+            </span>
           </li>
 
           <li className="dash-profilecard-row">
@@ -340,7 +572,27 @@ export default function ProfileSideCard({ profile }) {
               <ProfileIcon name="link" />
             </span>
             <span className="dash-profilecard-row-label">GitHub</span>
-            <span className="dash-profilecard-row-value">{web.github}</span>
+            <span className="dash-profilecard-row-value">
+              {isEditing ? (
+                <Input
+                  value={draft.links.github}
+                  onChange={(e) => {
+                    const next = { ...draft, links: { ...draft.links, github: e.target.value } };
+                    setDraft(next);
+                    setErrors((prev) => ({ ...(prev || {}), github: undefined }));
+                  }}
+                  placeholder="https://github.com/…"
+                  aria-label="GitHub profile"
+                  error={errors.github}
+                />
+              ) : web.github && web.github !== "—" ? (
+                <a href={normalizeUrl(web.github)} target="_blank" rel="noreferrer">
+                  {web.github}
+                </a>
+              ) : (
+                "—"
+              )}
+            </span>
           </li>
         </ul>
       </section>
