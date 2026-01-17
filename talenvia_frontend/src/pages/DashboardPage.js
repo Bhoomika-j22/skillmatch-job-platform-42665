@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Badge, Button } from "../components/ui";
+import MainSearchBar from "../components/MainSearchBar";
 import { MOCK_JOBS } from "../data/mockData";
 
 /**
@@ -180,6 +181,15 @@ export default function DashboardPage({ profile, applications }) {
           <section className="dash-panel" aria-label="Recommended Jobs">
             <div className="dash-panel-head">
               <div>
+                <div className="dash-page-search" aria-label="Search recommended jobs">
+                  <MainSearchBar
+                    variant="main"
+                    placeholder="Search jobs, skills, companies…"
+                    initialValue={query}
+                    onSearch={(q) => setQuery(q || "")}
+                  />
+                </div>
+
                 <h1 className="dash-title">Recommended Jobs</h1>
                 <p className="dash-subtitle">Based on your profile and recent activity</p>
               </div>

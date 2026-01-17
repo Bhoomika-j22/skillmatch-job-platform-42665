@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 
 import Sidebar from "./components/Sidebar";
-import MainSearchBar from "./components/MainSearchBar";
 import ProfileMenu from "./components/ProfileMenu";
 import NotificationBell from "./components/NotificationBell";
 import ToastProvider from "./components/ToastProvider";
@@ -88,25 +87,16 @@ function App() {
       <ToastProvider>
         <div className="app-shell app-shell--sidebar">
           <header className="topheader" aria-label="Top header">
-            <div className="topheader-inner">
+            <div className="topheader-inner topheader-inner--no-search">
               <div className="topheader-left" aria-label="Brand">
                 <div className="topheader-brand-badge" aria-hidden="true">
                   T
                 </div>
-                <div className="topheader-brand-title">
+                <div className="topheader-brand-title topheader-brand-title--stacked">
                   <strong>Talenvia</strong>
+                  <span>Talent</span>
+                  <span>Journey</span>
                 </div>
-              </div>
-
-              <div className="topheader-center" aria-label="Search">
-                <MainSearchBar
-                  variant="header"
-                  placeholder="Search jobs, skills, companies…"
-                  onSearch={() => {
-                    // Intentionally non-destructive for now: per existing app behavior, there is no global search page yet.
-                    // This header search is ready to be wired to filters/results later.
-                  }}
-                />
               </div>
 
               <div className="topheader-right" aria-label="Header actions">

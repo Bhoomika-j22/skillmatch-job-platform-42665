@@ -335,9 +335,13 @@ a {
   margin: 0 auto;
   padding: 0 20px;
   display: grid;
-  grid-template-columns: minmax(180px, 240px) minmax(280px, 1fr) minmax(220px, 260px);
+  grid-template-columns: minmax(220px, 1fr) minmax(220px, 260px);
   align-items: center;
   gap: 14px;
+}
+
+.topheader-inner--no-search {
+  grid-template-columns: minmax(220px, 1fr) minmax(220px, 260px);
 }
 
 /* Left: brand */
@@ -365,6 +369,19 @@ a {
   letter-spacing: -0.01em;
   color: rgba(17, 24, 39, 0.92);
   white-space: nowrap;
+}
+
+.topheader-brand-title--stacked {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.05;
+}
+
+.topheader-brand-title--stacked span {
+  font-size: 11.5px;
+  font-weight: 650;
+  color: rgba(17, 24, 39, 0.58);
+  letter-spacing: -0.01em;
 }
 
 /* Center: search */
@@ -990,14 +1007,18 @@ a {
   padding: 0 10px;
 }
 
-/* Main content search (moved from header into main area) */
+/* Main content search (page-level; should scroll with content) */
 .main-search {
-  position: sticky;
-  top: 50px; /* stack below .app-tools */
-  z-index: 10;
-  padding: 10px 0 0;
-  background: linear-gradient(180deg, rgba(249, 250, 251, 0.92), rgba(249, 250, 251, 0.0));
-  backdrop-filter: blur(6px);
+  position: relative;
+  z-index: 1;
+  padding: 0;
+  background: transparent;
+  backdrop-filter: none;
+}
+
+/* Dashboard: keep the search visually above the section title */
+.dash-page-search {
+  margin-bottom: 12px;
 }
 
 .main-search-form {
