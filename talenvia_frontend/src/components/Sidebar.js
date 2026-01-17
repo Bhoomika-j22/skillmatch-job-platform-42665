@@ -222,33 +222,7 @@ function IconBell({ size = 18 }) {
   );
 }
 
-function IconSettings({ size = 18 }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden="true"
-      focusable="false"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M19.4 15a8.2 8.2 0 0 0 .1-2l2-1.2-2-3.4-2.3.6a7.7 7.7 0 0 0-1.7-1l-.3-2.4H11l-.3 2.4c-.6.3-1.2.6-1.7 1l-2.3-.6-2 3.4 2 1.2a8.2 8.2 0 0 0 .1 2l-2 1.2 2 3.4 2.3-.6c.5.4 1.1.7 1.7 1l.3 2.4h4l.3-2.4c.6-.3 1.2-.6 1.7-1l2.3.6 2-3.4-2-1.2Z"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinejoin="round"
-        opacity="0.95"
-      />
-    </svg>
-  );
-}
+
 
 function IconShield({ size = 18 }) {
   return (
@@ -362,12 +336,7 @@ export default function Sidebar({ notificationCount = 0 }) {
               </span>
             </NavLink>
 
-            <NavLink to="/settings" className={({ isActive }) => `sidebar-link ${isActive ? "active" : ""}`}>
-              <span className="sidebar-icon" aria-hidden="true">
-                <IconSettings size={18} />
-              </span>
-              <span>Settings</span>
-            </NavLink>
+
           </nav>
         </div>
 
