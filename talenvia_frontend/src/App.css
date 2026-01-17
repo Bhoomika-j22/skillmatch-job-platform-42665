@@ -296,9 +296,10 @@ a {
 
 .topheader-inner {
   height: 64px;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
+  /* Allow the brand to sit flush to the viewport's left edge (0px). */
+  width: 100%;
+  margin: 0;
+  padding: 0; /* no left offset */
   display: grid;
   /* Two-column fixed header: brand (left) + actions (right). */
   grid-template-columns: 1fr auto;
@@ -348,6 +349,9 @@ a {
   align-items: center;
   justify-content: flex-end;
   gap: 10px;
+
+  /* Keep right-side controls visually aligned with page padding while brand is flush-left */
+  padding-right: 20px;
 }
 
 /* Search styles used inside header */
@@ -1006,7 +1010,11 @@ a {
   .topheader-inner {
     grid-template-columns: 1fr auto;
     gap: 10px;
-    padding: 0 14px;
+    padding: 0; /* keep brand flush-left on mobile too */
+  }
+
+  .topheader-right {
+    padding-right: 14px;
   }
 
   .profile-name {
