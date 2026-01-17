@@ -349,7 +349,7 @@ a {
     Subtle alignment nudge: keep sizing/typography identical, but shift the search slightly left
     so it aligns better with the main content area while not impacting brand (left) or actions (right).
   */
-  transform: translateX(2px);
+  transform: translateX(-2px);
 }
 
 /* Right: actions */
