@@ -405,6 +405,7 @@ export default function Sidebar({ notificationCount = 0 }) {
               </span>
             </NavLink>
 
+            <div className="sidebar-divider" role="separator" aria-hidden="true" />
 
           </nav>
         </div>
