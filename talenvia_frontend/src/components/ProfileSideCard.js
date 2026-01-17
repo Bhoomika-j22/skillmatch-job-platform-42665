@@ -3,6 +3,14 @@ import { Button, Input } from "./ui";
 import { useToast } from "./ToastProvider";
 
 /**
+ * Avatar upload constraints (local-only persistence):
+ * We store the image as a Data URL string inside the profile object (localStorage-backed).
+ * Keeping a conservative cap avoids blowing up localStorage and slows less on load.
+ */
+const AVATAR_MAX_BYTES = 800 * 1024; // 800KB
+const AVATAR_ACCEPTED_TYPES = ["image/png", "image/jpeg", "image/webp", "image/gif"];
+
+/**
  * Inline SVG icon set for the profile side card (no external deps).
  * Uses currentColor so CSS can control the "blue icon" look.
  */
@@ -167,6 +175,14 @@ function normalizeUrl(val) {
   return `https://${v}`;
 }
 
+function formatBytes(bytes) {
+  const n = Number(bytes || 0);
+  if (!n) return "0B";
+  if (n < 1024) return `${n}B`;
+  if (n < 1024 * 1024) return `${(n / 1024).toFixed(0)}KB`;
+  return `${(n / (1024 * 1024)).toFixed(1)}MB`;
+}
+
 function isValidEmail(val) {
   const v = String(val || "").trim();
   if (!v) return true; // optional
@@ -297,19 +313,57 @@ export default function ProfileSideCard({ profile, setProfile }) {
 
   function onAvatarSelected(e) {
     const f = e.target.files?.[0] || null;
-    setAvatarFile(f);
-    if (f) {
-      // Preview locally
-      const reader = new FileReader();
-      reader.onloadend = () => setAvatarPreview(reader.result);
-      reader.readAsDataURL(f);
+
+    // Allow re-selecting the same file later by clearing the input value.
+    // (Otherwise onChange may not fire if user picks the same file twice.)
+    try {
+      // eslint-disable-next-line no-param-reassign
+      e.target.value = "";
+    } catch {
+      // ignore
     }
+
+    if (!f) {
+      setAvatarFile(null);
+      return;
+    }
+
+    // Basic validation
+    if (!AVATAR_ACCEPTED_TYPES.includes(f.type)) {
+      toast({
+        title: "Unsupported image type",
+        message: "Please upload a PNG, JPG, WEBP, or GIF image.",
+        variant: "error",
+      });
+      setAvatarFile(null);
+      return;
+    }
+
+    if (f.size > AVATAR_MAX_BYTES) {
+      toast({
+        title: "Image too large",
+        message: `Please choose an image smaller than ${formatBytes(AVATAR_MAX_BYTES)} (selected ${formatBytes(f.size)}).`,
+        variant: "error",
+      });
+      setAvatarFile(null);
+      return;
+    }
+
+    setAvatarFile(f);
+
+    // Preview locally as Data URL (also what we persist into profile.avatarUrl).
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setAvatarPreview(reader.result);
+      toast({ title: "Photo ready", message: "Click Save to persist this photo locally.", variant: "info" });
+    };
+    reader.readAsDataURL(f);
   }
 
   function removeAvatar() {
     setAvatarFile(null);
     setAvatarPreview(null);
-    toast({ title: "Avatar removed", message: "Profile picture is removed locally.", variant: "warn" });
+    toast({ title: "Avatar removed", message: "Click Save to persist the removal locally.", variant: "warn" });
   }
 
   function onPickResumeClick() {
@@ -461,6 +515,22 @@ export default function ProfileSideCard({ profile, setProfile }) {
           <div className="dash-profilecard-name">{isEditing ? draft.name || "—" : name}</div>
           <div className="dash-profilecard-role">{isEditing ? draft.role || "—" : role}</div>
           <div className="dash-profilecard-headline">{headline}</div>
+
+          {isEditing ? (
+            <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 8, alignItems: "center" }}>
+              <Button type="button" size="sm" variant="secondary" onClick={onPickAvatarClick}>
+                {avatarPreview ? "Change photo" : "Upload photo"}
+              </Button>
+              {avatarPreview ? (
+                <Button type="button" size="sm" variant="ghost" onClick={removeAvatar} style={{ color: "#ef4444" }}>
+                  Remove
+                </Button>
+              ) : null}
+              <span className="mini" style={{ marginLeft: 2 }}>
+                PNG/JPG/WEBP/GIF • max {formatBytes(AVATAR_MAX_BYTES)} • stored locally
+              </span>
+            </div>
+          ) : null}
 
           <div className="dash-profilecard-editbar">
             {!isEditing ? (
