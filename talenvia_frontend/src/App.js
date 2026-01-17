@@ -5,6 +5,7 @@ import "./App.css";
 import Sidebar from "./components/Sidebar";
 import ProfileMenu from "./components/ProfileMenu";
 import NotificationBell from "./components/NotificationBell";
+import MainSearchBar from "./components/MainSearchBar";
 import ToastProvider from "./components/ToastProvider";
 import DashboardPage from "./pages/DashboardPage";
 import JobsPage from "./pages/JobsPage";
@@ -87,16 +88,18 @@ function App() {
       <ToastProvider>
         <div className="app-shell app-shell--sidebar">
           <header className="topheader" aria-label="Top header">
-            <div className="topheader-inner topheader-inner--no-search">
+            <div className="topheader-inner">
               <div className="topheader-left" aria-label="Brand">
                 <div className="topheader-brand-badge" aria-hidden="true">
                   T
                 </div>
-                <div className="topheader-brand-title topheader-brand-title--stacked">
+                <div className="topheader-brand-title">
                   <strong>Talenvia</strong>
-                  <span>Talent</span>
-                  <span>Journey</span>
                 </div>
+              </div>
+
+              <div className="topheader-center" aria-label="Header search">
+                <MainSearchBar variant="header" />
               </div>
 
               <div className="topheader-right" aria-label="Header actions">

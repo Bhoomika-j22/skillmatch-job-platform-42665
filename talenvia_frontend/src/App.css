@@ -335,13 +335,9 @@ a {
   margin: 0 auto;
   padding: 0 20px;
   display: grid;
-  grid-template-columns: minmax(220px, 1fr) minmax(220px, 260px);
+  grid-template-columns: minmax(220px, 1fr) minmax(220px, 640px) minmax(220px, 260px);
   align-items: center;
   gap: 14px;
-}
-
-.topheader-inner--no-search {
-  grid-template-columns: minmax(220px, 1fr) minmax(220px, 260px);
 }
 
 /* Left: brand */
@@ -371,18 +367,7 @@ a {
   white-space: nowrap;
 }
 
-.topheader-brand-title--stacked {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.05;
-}
 
-.topheader-brand-title--stacked span {
-  font-size: 11.5px;
-  font-weight: 650;
-  color: rgba(17, 24, 39, 0.58);
-  letter-spacing: -0.01em;
-}
 
 /* Center: search */
 .topheader-center {
@@ -1007,58 +992,7 @@ a {
   padding: 0 10px;
 }
 
-/* Main content search (page-level; should scroll with content) */
-.main-search {
-  position: relative;
-  z-index: 1;
-  padding: 0;
-  background: transparent;
-  backdrop-filter: none;
-}
 
-/* Dashboard: keep the search visually above the section title */
-.dash-page-search {
-  margin-bottom: 12px;
-}
-
-.main-search-form {
-  width: 100%;
-  max-width: 620px;
-  height: 40px;
-  border-radius: 999px;
-  border: 1px solid rgba(17, 24, 39, 0.10);
-  background: rgba(129, 140, 248, 0.08);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 0 14px;
-  transition: border-color var(--duration-fast) var(--ease), box-shadow var(--duration-fast) var(--ease),
-    background var(--duration-fast) var(--ease);
-}
-
-.main-search-icon {
-  display: inline-flex;
-  color: rgba(17, 24, 39, 0.60);
-}
-
-.main-search-input {
-  width: 100%;
-  border: none;
-  outline: none;
-  background: transparent;
-  color: rgba(17, 24, 39, 0.90);
-  font-size: 13.5px;
-}
-
-.main-search-input::placeholder {
-  color: rgba(17, 24, 39, 0.50);
-}
-
-.main-search-form:focus-within {
-  border-color: rgba(129, 140, 248, 0.40);
-  box-shadow: 0 0 0 4px rgba(129, 140, 248, 0.20);
-  background: rgba(129, 140, 248, 0.10);
-}
 
 /* Responsive: collapse sidebar to top on small screens */
 @media (max-width: 980px) {

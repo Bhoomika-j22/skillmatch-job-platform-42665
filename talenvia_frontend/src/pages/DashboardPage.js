@@ -1,7 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Badge, Button } from "../components/ui";
-import MainSearchBar from "../components/MainSearchBar";
 import { MOCK_JOBS } from "../data/mockData";
 
 /**
@@ -128,7 +127,6 @@ function ProgressRing({ value = 80, size = 76 }) {
 // PUBLIC_INTERFACE
 export default function DashboardPage({ profile, applications }) {
   /** Dashboard landing page matching the extracted 3-column design notes. */
-  const [query, setQuery] = useState("");
   const [chip, setChip] = useState("Recommended");
   const [sort, setSort] = useState("Relevance");
 
@@ -142,20 +140,12 @@ export default function DashboardPage({ profile, applications }) {
   }, [profile, applications]);
 
   const recommendedJobs = useMemo(() => {
-    const q = query.trim().toLowerCase();
     const base = MOCK_JOBS.slice().sort((a, b) => b.match - a.match);
 
     let filtered = base;
     if (chip === "Remote") filtered = filtered.filter((j) => String(j.location).toLowerCase().includes("remote"));
     if (chip === "Full-time") filtered = filtered.filter((j) => String(j.type).toLowerCase().includes("full"));
     if (chip === "Top Match") filtered = filtered.filter((j) => Number(j.match) >= 80);
-
-    if (q) {
-      filtered = filtered.filter((j) => {
-        const hay = `${j.title} ${j.company} ${j.location} ${j.type} ${(j.tags || []).join(" ")}`.toLowerCase();
-        return hay.includes(q);
-      });
-    }
 
     if (sort === "Newest") {
       filtered = filtered.slice().sort((a, b) => (a.postedDaysAgo || 0) - (b.postedDaysAgo || 0));
@@ -164,7 +154,7 @@ export default function DashboardPage({ profile, applications }) {
     } // "Relevance" keeps default
 
     return filtered;
-  }, [query, chip, sort]);
+  }, [chip, sort]);
 
   const careerScore = useMemo(() => {
     // Demo scoring: skills contribute, applications contribute slightly; capped.
@@ -181,15 +171,6 @@ export default function DashboardPage({ profile, applications }) {
           <section className="dash-panel" aria-label="Recommended Jobs">
             <div className="dash-panel-head">
               <div>
-                <div className="dash-page-search" aria-label="Search recommended jobs">
-                  <MainSearchBar
-                    variant="main"
-                    placeholder="Search jobs, skills, companies…"
-                    initialValue={query}
-                    onSearch={(q) => setQuery(q || "")}
-                  />
-                </div>
-
                 <h1 className="dash-title">Recommended Jobs</h1>
                 <p className="dash-subtitle">Based on your profile and recent activity</p>
               </div>
