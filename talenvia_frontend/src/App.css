@@ -301,8 +301,8 @@ a {
   margin: 0;
   padding: 0; /* no left offset */
   display: grid;
-  /* Two-column fixed header: brand (left) + actions (right). */
-  grid-template-columns: 1fr auto;
+  /* Three-column fixed header: brand (left) + centered search + actions (right). */
+  grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 14px;
 }
@@ -1011,7 +1011,7 @@ a {
   }
 
   .topheader-inner {
-    grid-template-columns: 1fr auto;
+    grid-template-columns: auto 1fr auto;
     gap: 10px;
     padding: 0; /* keep brand flush-left on mobile too */
   }

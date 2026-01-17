@@ -5,6 +5,7 @@ import "./App.css";
 import Sidebar from "./components/Sidebar";
 import ProfileMenu from "./components/ProfileMenu";
 import NotificationBell from "./components/NotificationBell";
+import MainSearchBar from "./components/MainSearchBar";
 
 import ToastProvider from "./components/ToastProvider";
 import DashboardPage from "./pages/DashboardPage";
@@ -96,6 +97,17 @@ function App() {
                 <div className="topheader-brand-title">
                   <strong>Talenvia</strong>
                 </div>
+              </div>
+
+              <div className="topheader-center" aria-label="Header search">
+                <MainSearchBar
+                  variant="header"
+                  placeholder="Search jobs, skills, companies…"
+                  onSearch={() => {
+                    // Header search is currently a UI affordance (no global search state wired yet).
+                    // This keeps behavior non-destructive while ensuring no duplicate search bars exist.
+                  }}
+                />
               </div>
 
               <div className="topheader-right" aria-label="Header actions">
