@@ -1,24 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
 import { Button } from "./ui";
 
 // PUBLIC_INTERFACE
 export default function TopNav({ notificationCount = 0 }) {
-  /** Main application top navigation bar. */
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 6);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  /** Main application top navigation bar (single, professional header). */
 
   return (
-    <header className={`topbar ${scrolled ? "scrolled" : ""}`.trim()}>
-      <div className="topbar-inner">
-        <div className="brand" aria-label="Talenvia">
-          <div className="brand-badge" aria-hidden="true">
+    <header className="topbar topbar--pro">
+      <div className="topbar-inner topbar-inner--pro">
+        <div className="brand brand--pro" aria-label="Talenvia">
+          <div className="brand-badge brand-badge--pro" aria-hidden="true">
             T
           </div>
           <div className="brand-title">
@@ -27,36 +19,42 @@ export default function TopNav({ notificationCount = 0 }) {
           </div>
         </div>
 
-        <nav className="nav" aria-label="Primary">
-          <NavLink to="/" end className={({ isActive }) => `nav-pill ${isActive ? "active" : ""}`}>
+        <nav className="nav nav--pro" aria-label="Primary">
+          <NavLink to="/" end className={({ isActive }) => `nav-pill nav-pill--pro ${isActive ? "active" : ""}`}>
             Dashboard
           </NavLink>
-          <NavLink to="/jobs" className={({ isActive }) => `nav-pill ${isActive ? "active" : ""}`}>
+          <NavLink to="/jobs" className={({ isActive }) => `nav-pill nav-pill--pro ${isActive ? "active" : ""}`}>
             Jobs
           </NavLink>
-          <NavLink to="/applications" className={({ isActive }) => `nav-pill ${isActive ? "active" : ""}`}>
+          <NavLink
+            to="/applications"
+            className={({ isActive }) => `nav-pill nav-pill--pro ${isActive ? "active" : ""}`}
+          >
             Applications
           </NavLink>
-          <NavLink to="/challenges" className={({ isActive }) => `nav-pill ${isActive ? "active" : ""}`}>
+          <NavLink to="/challenges" className={({ isActive }) => `nav-pill nav-pill--pro ${isActive ? "active" : ""}`}>
             Challenges
           </NavLink>
-          <NavLink to="/mock-tests" className={({ isActive }) => `nav-pill ${isActive ? "active" : ""}`}>
+          <NavLink to="/mock-tests" className={({ isActive }) => `nav-pill nav-pill--pro ${isActive ? "active" : ""}`}>
             Mock Tests
           </NavLink>
-          <NavLink to="/profile" className={({ isActive }) => `nav-pill ${isActive ? "active" : ""}`}>
+          <NavLink to="/profile" className={({ isActive }) => `nav-pill nav-pill--pro ${isActive ? "active" : ""}`}>
             Profile & Skills
           </NavLink>
-          <NavLink to="/notifications" className={({ isActive }) => `nav-pill ${isActive ? "active" : ""}`}>
-            Notifications{" "}
+          <NavLink
+            to="/notifications"
+            className={({ isActive }) => `nav-pill nav-pill--pro ${isActive ? "active" : ""}`}
+          >
+            Notifications
             {notificationCount ? (
-              <span className="badge secondary" aria-label={`${notificationCount} unread notifications`}>
+              <span className="nav-badge" aria-label={`${notificationCount} unread notifications`}>
                 {notificationCount}
               </span>
             ) : null}
           </NavLink>
         </nav>
 
-        <div className="topbar-actions">
+        <div className="topbar-actions topbar-actions--pro">
           <Button
             variant="ghost"
             size="sm"

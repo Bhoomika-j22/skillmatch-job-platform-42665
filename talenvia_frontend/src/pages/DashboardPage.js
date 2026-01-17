@@ -174,65 +174,6 @@ export default function DashboardPage({ profile, applications }) {
 
   return (
     <div className="dash">
-      {/* Page-level header per design notes (separate from app TopNav) */}
-      <header className="dash-header">
-        <div className="dash-header-inner">
-          <div className="dash-brand" aria-label="Talenvia Dashboard">
-            <div className="dash-brand-mark" aria-hidden="true">
-              T
-            </div>
-            <div className="dash-brand-text">
-              <strong>Talenvia</strong>
-              <span>Dashboard</span>
-            </div>
-          </div>
-
-          <nav className="dash-toplinks" aria-label="Dashboard shortcuts">
-            <Link className="dash-toplink active" to="/">
-              Jobs
-            </Link>
-            <Link className="dash-toplink" to="/applications">
-              Applications
-            </Link>
-            <Link className="dash-toplink" to="/notifications">
-              Messages
-            </Link>
-          </nav>
-
-          <div className="dash-search" role="search">
-            <span className="dash-search-icon" aria-hidden="true">
-              <Icon name="search" />
-            </span>
-            <input
-              className="dash-search-input"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search jobs, companies…"
-              aria-label="Search jobs"
-            />
-          </div>
-
-          <div className="dash-header-actions" aria-label="Header actions">
-            <button className="dash-iconbtn" type="button" aria-label="Notifications">
-              <Icon name="bell" />
-            </button>
-            <button className="dash-iconbtn" type="button" aria-label="Help">
-              <Icon name="help" />
-            </button>
-
-            <div className="dash-user" aria-label="User menu">
-              <div className="dash-avatar" aria-hidden="true">
-                {(profile?.name || "U").slice(0, 1).toUpperCase()}
-              </div>
-              <div className="dash-user-meta">
-                <div className="dash-user-name">{profile?.name ? profile.name : "Guest"}</div>
-                <div className="dash-user-sub">{profile?.targetRole || "Set your target role"}</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
-
       <main className="dash-main" aria-label="Dashboard content">
         <div className="dash-grid">
           {/* Left column - Recommended Jobs */}

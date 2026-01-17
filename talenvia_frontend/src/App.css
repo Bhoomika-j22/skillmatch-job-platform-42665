@@ -96,39 +96,51 @@ a {
   position: sticky;
   top: 0;
   z-index: 30;
-  background: rgba(249, 250, 251, 0.72);
+  /* Reference: subtle lavender/off-white gradient, almost white */
+  background: linear-gradient(180deg, rgba(246, 244, 255, 0.96), rgba(255, 255, 255, 0.96));
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--border);
-  transition: box-shadow var(--duration) var(--ease), background var(--duration) var(--ease);
-}
-
-.topbar.scrolled {
-  background: rgba(249, 250, 251, 0.92);
-  box-shadow: var(--shadow-soft);
+  border-bottom: 1px solid rgba(17, 24, 39, 0.08);
+  /* No/very subtle shadow per requirements */
+  box-shadow: none;
 }
 
 .topbar-inner {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 14px 18px;
+  height: 60px; /* compact header height */
+  padding: 0 18px;
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 16px;
+}
+
+/* Professional header variants (used by TopNav) */
+.topbar--pro {
+  /* keep for targeting; no extra styles needed beyond base topbar */
+}
+
+.topbar-inner--pro {
+  /* Center the navigation precisely between left brand and right actions */
+  justify-content: space-between;
 }
 
 .brand {
   display: flex;
   align-items: center;
   gap: 10px;
-  min-width: 180px;
+  min-width: 220px;
+}
+
+.brand--pro {
+  min-width: 220px;
 }
 
 .brand-badge {
   width: 38px;
   height: 38px;
-  border-radius: 12px;
-  background: linear-gradient(135deg, rgba(79, 70, 229, 0.95), rgba(236, 72, 153, 0.95));
-  box-shadow: var(--shadow-sm);
+  border-radius: 999px; /* circular logo */
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.95), rgba(168, 85, 247, 0.92));
+  box-shadow: none; /* flat */
   display: grid;
   place-items: center;
   color: white;
@@ -136,30 +148,41 @@ a {
   letter-spacing: -0.02em;
 }
 
+.brand-badge--pro {
+  width: 36px;
+  height: 36px;
+}
+
 .brand-title {
   display: flex;
   flex-direction: column;
-  line-height: 1.05;
+  line-height: 1.1;
 }
 
 .brand-title strong {
   font-size: 14px;
   letter-spacing: -0.01em;
+  color: rgba(17, 24, 39, 0.92); /* near-black */
 }
 
 .brand-title span {
   font-size: 12px;
-  color: var(--muted);
+  color: rgba(17, 24, 39, 0.62);
 }
 
 .nav {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 18px; /* text-link spacing in center */
   flex: 1;
+  justify-content: center;
   overflow-x: auto;
   padding: 2px 0;
   scrollbar-width: none;
+}
+
+.nav--pro {
+  gap: 18px;
 }
 
 .nav::-webkit-scrollbar {
@@ -174,37 +197,73 @@ a {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 9px 12px;
+  /* Inactive = plain text; no background */
+  padding: 8px 10px;
   border-radius: 999px;
-  color: var(--text);
+  color: rgba(17, 24, 39, 0.78);
   border: 1px solid transparent;
-  transition:
-    transform var(--duration-fast) var(--ease),
-    background var(--duration-fast) var(--ease),
-    border-color var(--duration-fast) var(--ease);
+  background: transparent;
+  transition: background var(--duration-fast) var(--ease), color var(--duration-fast) var(--ease);
   white-space: nowrap;
   font-size: 13px;
+  font-weight: 500;
+}
+
+.nav-pill--pro {
+  padding: 8px 10px;
 }
 
 .nav-pill:hover {
-  background: rgba(79, 70, 229, 0.08);
-  border-color: rgba(79, 70, 229, 0.18);
-  transform: translateY(-1px);
-}
-
-.nav-pill:active {
-  transform: translateY(0);
+  color: rgba(17, 24, 39, 0.92);
+  background: rgba(99, 102, 241, 0.08); /* soft indigo hover */
 }
 
 .nav-pill.active {
-  background: rgba(79, 70, 229, 0.12);
-  border-color: rgba(79, 70, 229, 0.25);
+  /* Active = light purple pill */
+  background: rgba(99, 102, 241, 0.16);
+  border-color: transparent;
+  color: rgba(17, 24, 39, 0.92);
+}
+
+.nav-badge {
+  margin-left: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 6px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  /* Reference: light pink background with dark text */
+  background: rgba(244, 114, 182, 0.22);
+  color: rgba(17, 24, 39, 0.85);
 }
 
 .topbar-actions {
   display: flex;
   align-items: center;
   gap: 10px;
+  min-width: 220px;
+  justify-content: flex-end;
+}
+
+.topbar-actions--pro {
+  min-width: 220px;
+}
+
+@media (max-width: 980px) {
+  .brand {
+    min-width: unset;
+  }
+  .topbar-actions {
+    min-width: unset;
+  }
+  .nav {
+    justify-content: flex-start;
+    gap: 12px;
+  }
 }
 
 .container {
