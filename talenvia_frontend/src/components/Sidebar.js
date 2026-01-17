@@ -334,7 +334,7 @@ export default function Sidebar({ notificationCount = 0 }) {
               T
             </div>
             <div className="sidebar-brand-title">
-              <strong>talenvia</strong>
+              <strong>Talenvia</strong>
               <span>Talent + Journey</span>
             </div>
           </div>
