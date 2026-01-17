@@ -362,61 +362,12 @@ export default function Sidebar({ notificationCount = 0 }) {
               </span>
             </NavLink>
 
-            {/* New groups requested: Settings and Account (placed directly below Notifications). */}
-            <div className="sidebar-group" role="group" aria-label="Settings">
-              <div className="sidebar-group-title">Settings</div>
-
-              <NavLink to="/settings" className={({ isActive }) => `sidebar-link ${isActive ? "active" : ""}`}>
-                <span className="sidebar-icon" aria-hidden="true">
-                  <IconSettings size={18} />
-                </span>
-                <span>Settings</span>
-              </NavLink>
-
-              <NavLink
-                to="/settings/career-preferences"
-                className={({ isActive }) => `sidebar-link sidebar-link--sub ${isActive ? "active" : ""}`}
-              >
-                <span className="sidebar-icon" aria-hidden="true">
-                  <IconSettings size={18} />
-                </span>
-                <span>Career Preferences</span>
-              </NavLink>
-            </div>
-
-            <div className="sidebar-group" role="group" aria-label="Account">
-              <div className="sidebar-group-title">Account</div>
-
-              <NavLink
-                to="/account/change-mobile"
-                className={({ isActive }) => `sidebar-link sidebar-link--sub ${isActive ? "active" : ""}`}
-              >
-                <span className="sidebar-icon" aria-hidden="true">
-                  <IconShield size={18} />
-                </span>
-                <span>Change Mobile</span>
-              </NavLink>
-
-              <NavLink
-                to="/account/change-email"
-                className={({ isActive }) => `sidebar-link sidebar-link--sub ${isActive ? "active" : ""}`}
-              >
-                <span className="sidebar-icon" aria-hidden="true">
-                  <IconShield size={18} />
-                </span>
-                <span>Change Email</span>
-              </NavLink>
-
-              <NavLink
-                to="/account/change-password"
-                className={({ isActive }) => `sidebar-link sidebar-link--sub ${isActive ? "active" : ""}`}
-              >
-                <span className="sidebar-icon" aria-hidden="true">
-                  <IconShield size={18} />
-                </span>
-                <span>Change Password</span>
-              </NavLink>
-            </div>
+            <NavLink to="/settings" className={({ isActive }) => `sidebar-link ${isActive ? "active" : ""}`}>
+              <span className="sidebar-icon" aria-hidden="true">
+                <IconSettings size={18} />
+              </span>
+              <span>Settings</span>
+            </NavLink>
           </nav>
         </div>
 
