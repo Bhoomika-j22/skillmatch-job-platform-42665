@@ -5,6 +5,7 @@ import "./App.css";
 import Sidebar from "./components/Sidebar";
 import MainSearchBar from "./components/MainSearchBar";
 import ProfileMenu from "./components/ProfileMenu";
+import NotificationBell from "./components/NotificationBell";
 import ToastProvider from "./components/ToastProvider";
 import DashboardPage from "./pages/DashboardPage";
 import JobsPage from "./pages/JobsPage";
@@ -89,6 +90,7 @@ function App() {
             <div className="app-main-inner">
               <div className="app-tools" aria-label="Global controls">
                 <div className="app-tools-right">
+                  <NotificationBell notifications={notifications} setNotifications={setNotifications} />
                   <ProfileMenu profileName={profile?.name} />
                 </div>
               </div>
