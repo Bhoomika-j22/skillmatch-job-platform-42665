@@ -145,6 +145,7 @@ a {
 .sidebar-top {
   display: flex;
   flex-direction: column;
+  /* Keep the original vertical rhythm even without the removed brand block. */
   gap: 14px;
   min-height: 0;
 }

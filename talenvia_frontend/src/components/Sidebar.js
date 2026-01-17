@@ -324,21 +324,11 @@ function IconSpark({ size = 18 }) {
 
 // PUBLIC_INTERFACE
 export default function Sidebar({ notificationCount = 0 }) {
-  /** Fixed left-side navigation sidebar with Talenvia branding and vertical nav. */
+  /** Fixed left-side navigation sidebar (navigation only; branding lives in the top header). */
   return (
     <aside className="sidebar" aria-label="Primary sidebar navigation">
       <div className="sidebar-inner">
         <div className="sidebar-top">
-          <div className="sidebar-brand" aria-label="Talenvia">
-            <div className="sidebar-brand-badge" aria-hidden="true">
-              T
-            </div>
-            <div className="sidebar-brand-title">
-              <strong>Talenvia</strong>
-              <span>Talent + Journey</span>
-            </div>
-          </div>
-
           <nav className="sidebar-nav" aria-label="Primary">
             <NavLink to="/" end className={({ isActive }) => `sidebar-link ${isActive ? "active" : ""}`}>
               <span className="sidebar-icon" aria-hidden="true">
@@ -419,6 +409,7 @@ export default function Sidebar({ notificationCount = 0 }) {
               <span>About Us</span>
             </NavLink>
 
+            {/* Kept as existing route for now (separate from About). */}
             <NavLink to="/how-it-works" className={({ isActive }) => `sidebar-link ${isActive ? "active" : ""}`}>
               <span className="sidebar-icon" aria-hidden="true">
                 <IconSpark size={18} />
