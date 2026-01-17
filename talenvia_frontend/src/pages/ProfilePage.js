@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { Card, Badge, Button, Input, Select } from "../components/ui";
 import { useToast } from "../components/ToastProvider";
+import ProfileSideCard from "../components/ProfileSideCard";
 
 const LEVELS = ["Junior", "Mid", "Senior"];
 const LOC_PREF = ["Remote", "Hybrid", "On-site"];
@@ -58,6 +59,10 @@ export default function ProfilePage({ profile, setProfile }) {
             Save
           </Button>
         </div>
+      </div>
+
+      <div style={{ marginBottom: 16 }}>
+        <ProfileSideCard profile={profile} />
       </div>
 
       <div className="grid grid-2">
