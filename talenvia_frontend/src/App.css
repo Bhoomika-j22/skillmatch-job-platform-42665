@@ -346,11 +346,10 @@ a {
   min-width: 0;
 
   /*
-    Nudge: the brand is slightly inset and the right side has extra padding,
-    so the mathematically centered grid can look a bit left of the main content column.
-    This small translate keeps existing sizing/typography and stays within the fixed header.
+    Subtle alignment nudge: keep sizing/typography identical, but shift the search slightly left
+    so it aligns better with the main content area while not impacting brand (left) or actions (right).
   */
-  transform: translateX(10px);
+  transform: translateX(6px);
 }
 
 /* Right: actions */
