@@ -342,8 +342,15 @@ a {
 /* Center: search */
 .topheader-center {
   display: flex;
-  justify-content: center; /* ensure centered inside header */
+  justify-content: center; /* keep single-line header layout */
   min-width: 0;
+
+  /*
+    Nudge: the brand is slightly inset and the right side has extra padding,
+    so the mathematically centered grid can look a bit left of the main content column.
+    This small translate keeps existing sizing/typography and stays within the fixed header.
+  */
+  transform: translateX(10px);
 }
 
 /* Right: actions */
