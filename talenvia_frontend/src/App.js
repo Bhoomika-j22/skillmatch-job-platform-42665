@@ -19,6 +19,7 @@ import ChangeEmailPage from "./pages/ChangeEmailPage";
 import ChangePasswordPage from "./pages/ChangePasswordPage";
 import SettingsPage from "./pages/SettingsPage";
 import SettingsDetailPage from "./pages/SettingsDetailPage";
+import BlockedCompaniesPage from "./pages/BlockedCompaniesPage";
 import NotFoundPage from "./pages/NotFoundPage";
 
 import { useLocalStorage } from "./hooks/useLocalStorage";
@@ -130,6 +131,7 @@ function App() {
                   <Route path="/settings" element={<SettingsPage />} />
                   <Route path="/settings/details" element={<SettingsDetailPage />} />
                   <Route path="/settings/career-preferences" element={<CareerPreferencesPage />} />
+                  <Route path="/settings/blocked-companies" element={<BlockedCompaniesPage />} />
                   <Route path="/account/change-mobile" element={<ChangeMobilePage />} />
                   <Route path="/account/change-email" element={<ChangeEmailPage />} />
                   <Route path="/account/change-password" element={<ChangePasswordPage />} />

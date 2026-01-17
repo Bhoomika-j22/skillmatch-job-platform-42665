@@ -1369,6 +1369,33 @@ a {
   flex: 0 0 auto;
 }
 
+/* Settings: logout affordance */
+.btn.settings-logout {
+  padding-left: 16px;
+  padding-right: 16px;
+  border-color: rgba(17, 24, 39, 0.12);
+}
+.btn.settings-logout:hover {
+  border-color: rgba(239, 68, 68, 0.22);
+  background: rgba(239, 68, 68, 0.06);
+}
+.btn.danger {
+  color: rgba(239, 68, 68, 0.92);
+}
+
+/* Small inline icon used in card headers */
+.settings-inline-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  background: rgba(129, 140, 248, 0.10);
+  border: 1px solid rgba(79, 70, 229, 0.12);
+  color: rgba(79, 70, 229, 0.92);
+}
+
 .split {
   display: grid;
   grid-template-columns: 320px 1fr;

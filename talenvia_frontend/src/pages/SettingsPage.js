@@ -1,6 +1,7 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Card, Badge } from "../components/ui";
+import { Button, Card } from "../components/ui";
+import { useToast } from "../components/ToastProvider";
 
 /**
  * Inline SVG icons (no extra dependencies).
@@ -19,32 +20,36 @@ function IconUser({ size = 18 }) {
   );
 }
 
-function IconBell({ size = 18 }) {
+function IconBriefcase({ size = 18 }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
       <path
-        d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 7h18s-3 0-3-7Z"
+        d="M10 7V6a2 2 0 0 1 2-2h0a2 2 0 0 1 2 2v1"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <path
+        d="M4 7h16v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"
         stroke="currentColor"
         strokeWidth="2"
         strokeLinejoin="round"
       />
-      <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path d="M4 12h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
     </svg>
   );
 }
 
-function IconSliders({ size = 18 }) {
+function IconBlock({ size = 18 }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
-      <path d="M4 21v-7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-      <path d="M4 10V3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-      <path d="M12 21v-9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-      <path d="M12 8V3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-      <path d="M20 21v-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-      <path d="M20 12V3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-      <path d="M2 14h4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-      <path d="M10 10h4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-      <path d="M18 16h4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path
+        d="M12 22a10 10 0 1 0-10-10 10 10 0 0 0 10 10Z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+      <path d="M7.5 7.5 16.5 16.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
     </svg>
   );
 }
@@ -58,67 +63,120 @@ function ChevronRight({ size = 18 }) {
 }
 
 /**
- * Flat Settings list (no section headers).
- * Requirements: show exactly 3 rows (Profile & Skills, Notifications w/ badge, Settings).
- * "Settings" must look identical to Notifications list rows and navigate to the Settings detail screen.
+ * Settings items required by the request:
+ * - Account (navigates to existing settings detail screen that contains account controls)
+ * - Career Preferences (navigates to existing career preferences page)
+ * - Blocked Companies (new screen)
  */
-const SETTINGS_ROWS = [
-  { key: "profile", title: "Profile & Skills", icon: IconUser, to: "/profile" },
-  { key: "notifications", title: "Notifications", icon: IconBell, to: "/notifications", showUnreadBadge: true },
-  { key: "settings", title: "Settings", icon: IconSliders, to: "/settings/details" },
+const SETTINGS_ITEMS = [
+  {
+    key: "account",
+    title: "Account",
+    description: "Change your primary email, mobile number, or password",
+    icon: IconUser,
+    to: "/settings/details",
+  },
+  {
+    key: "career",
+    title: "Career Preferences",
+    description: "Manage job preferences used for recommendations",
+    icon: IconBriefcase,
+    to: "/settings/career-preferences",
+  },
+  {
+    key: "blocked",
+    title: "Blocked Companies",
+    description: "Choose companies you don’t want to show your profile to",
+    icon: IconBlock,
+    to: "/settings/blocked-companies",
+  },
 ];
 
 // PUBLIC_INTERFACE
 export default function SettingsPage() {
-  /** Flat Settings list screen (single Settings item; details are on /settings/details). */
+  /** Naukri-inspired Settings page: 3 items (Account, Career Preferences, Blocked Companies) + Logout. */
   const navigate = useNavigate();
+  const { toast } = useToast();
+  const [loggingOut, setLoggingOut] = useState(false);
 
-  const unreadCount = useMemo(() => {
+  const blockedCount = useMemo(() => {
     try {
-      const raw = window.localStorage.getItem("talenvia.notifications");
+      const raw = window.localStorage.getItem("talenvia.blockedCompanies");
       if (!raw) return 0;
-      const list = JSON.parse(raw);
-      if (!Array.isArray(list)) return 0;
-      return list.filter((n) => n && n.read === false).length;
+      const parsed = JSON.parse(raw);
+      if (!Array.isArray(parsed)) return 0;
+      // Allow either string[] or {name}[] for flexibility.
+      return parsed.filter(Boolean).length;
     } catch {
       return 0;
     }
   }, []);
+
+  const onLogout = async () => {
+    setLoggingOut(true);
+    try {
+      // Demo-safe logout: clear known local demo keys without assuming a backend auth system.
+      const keysToClear = [
+        "talenvia.profile",
+        "talenvia.notifications",
+        "talenvia.applications",
+        "talenvia.challenges.completed",
+        "talenvia.tests.history",
+        "talenvia.pref.role",
+        "talenvia.pref.level",
+        "talenvia.pref.workPreference",
+        "talenvia.account.mobile",
+        "talenvia.account.email",
+        "talenvia.blockedCompanies",
+      ];
+      keysToClear.forEach((k) => window.localStorage.removeItem(k));
+
+      toast({ title: "Logged out", message: "You have been logged out on this device (demo).", variant: "success" });
+      navigate("/");
+    } finally {
+      setLoggingOut(false);
+    }
+  };
 
   return (
     <div className="container">
       <div className="page-header">
         <div>
           <h1 className="page-title">Settings</h1>
-          <p className="page-subtitle">Quick access to profile, notifications, and your account settings.</p>
+          <p className="page-subtitle">Manage your account and preferences.</p>
         </div>
       </div>
 
-      <div className="grid" style={{ maxWidth: 760 }}>
+      <div className="grid" style={{ maxWidth: 820 }}>
         <Card>
           <div className="list" aria-label="Settings options">
-            {SETTINGS_ROWS.map((row) => {
-              const Icon = row.icon;
+            {SETTINGS_ITEMS.map((item) => {
+              const Icon = item.icon;
+              const showCount = item.key === "blocked" && blockedCount > 0;
+
               return (
                 <button
-                  key={row.key}
+                  key={item.key}
                   type="button"
                   className="list-item settings-unified-item"
-                  onClick={() => navigate(row.to)}
-                  aria-label={row.title}
+                  onClick={() => navigate(item.to)}
+                  aria-label={item.title}
                 >
-                  <div className="settings-unified-left">
-                    <span className="settings-unified-icon" aria-hidden="true">
+                  <div className="settings-unified-left" style={{ alignItems: "flex-start" }}>
+                    <span className="settings-unified-icon" aria-hidden="true" style={{ marginTop: 1 }}>
                       <Icon size={18} />
                     </span>
 
-                    <div className="settings-unified-titlewrap">
-                      <h4 className="settings-unified-title" style={{ margin: 0 }}>
-                        {row.title}{" "}
-                        {row.showUnreadBadge && unreadCount > 0 ? (
-                          <Badge variant="secondary">{unreadCount}</Badge>
+                    <div className="settings-unified-titlewrap" style={{ flex: 1 }}>
+                      <h4 className="settings-unified-title" style={{ margin: 0, display: "flex", gap: 10 }}>
+                        <span>{item.title}</span>
+                        {showCount ? (
+                          <span className="badge info" aria-label={`${blockedCount} blocked companies`}>
+                            {blockedCount}
+                          </span>
                         ) : null}
                       </h4>
+                      <p style={{ margin: "4px 0 0" }}>{item.description}</p>
                     </div>
                   </div>
 
@@ -128,6 +186,21 @@ export default function SettingsPage() {
                 </button>
               );
             })}
+          </div>
+
+          <div className="hr" />
+
+          <div style={{ display: "flex", justifyContent: "center", paddingTop: 2 }}>
+            <Button
+              variant="ghost"
+              type="button"
+              onClick={onLogout}
+              loading={loggingOut}
+              aria-label="Logout"
+              className="settings-logout"
+            >
+              Logout
+            </Button>
           </div>
         </Card>
       </div>
