@@ -261,6 +261,103 @@ a {
   min-width: 220px;
 }
 
+/* =========================================================
+   TopNav search (between brand and centered nav)
+   - Compact, rounded pill input
+   - Soft lavender fill + subtle border
+   - Accessible focus ring consistent with header
+   ========================================================= */
+
+.topbar-search {
+  flex: 0 1 360px; /* allows shrink/grow without pushing nav too far */
+  display: flex;
+  justify-content: center;
+  min-width: 180px;
+}
+
+.topbar-search-form {
+  width: 100%;
+  max-width: 360px;
+  height: 36px; /* within 60px header context */
+  border-radius: 999px;
+  border: 1px solid rgba(17, 24, 39, 0.10);
+  background: rgba(129, 140, 248, 0.08); /* soft indigo/lavender tint */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 12px;
+  transition: border-color var(--duration-fast) var(--ease), box-shadow var(--duration-fast) var(--ease),
+    background var(--duration-fast) var(--ease);
+}
+
+.topbar-search-icon {
+  display: inline-flex;
+  color: rgba(17, 24, 39, 0.60);
+}
+
+.topbar-search-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: rgba(17, 24, 39, 0.90);
+  font-size: 13px;
+}
+
+.topbar-search-input::placeholder {
+  color: rgba(17, 24, 39, 0.50);
+}
+
+.topbar-search-form:focus-within {
+  border-color: rgba(129, 140, 248, 0.40);
+  box-shadow: 0 0 0 4px rgba(129, 140, 248, 0.20);
+  background: rgba(129, 140, 248, 0.10);
+}
+
+.topbar-search-trigger {
+  appearance: none;
+  border: 1px solid rgba(17, 24, 39, 0.10);
+  background: rgba(129, 140, 248, 0.08);
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  color: rgba(17, 24, 39, 0.72);
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease), border-color var(--duration-fast) var(--ease),
+    box-shadow var(--duration-fast) var(--ease);
+}
+
+.topbar-search-trigger:hover {
+  background: rgba(129, 140, 248, 0.11);
+  border-color: rgba(129, 140, 248, 0.22);
+}
+
+.topbar-search-trigger:focus-visible {
+  box-shadow: 0 0 0 4px rgba(129, 140, 248, 0.20);
+}
+
+.topbar-search-close {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: rgba(17, 24, 39, 0.62);
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+  padding: 0 4px;
+  border-radius: 8px;
+}
+
+.topbar-search-close:hover {
+  background: rgba(17, 24, 39, 0.04);
+}
+
+.topbar-search-close:focus-visible {
+  box-shadow: 0 0 0 4px rgba(129, 140, 248, 0.20);
+}
+
 @media (max-width: 980px) {
   .brand {
     min-width: unset;
@@ -271,6 +368,29 @@ a {
   .nav {
     justify-content: flex-start;
     gap: 12px;
+  }
+
+  .topbar-search {
+    flex: 0 1 280px;
+    min-width: 140px;
+  }
+  .topbar-search-form {
+    max-width: 280px;
+  }
+}
+
+@media (max-width: 760px) {
+  /* Compact mode: reserve less space so nav remains usable */
+  .topbar-search {
+    flex: 0 0 auto;
+    min-width: unset;
+    justify-content: flex-start;
+  }
+
+  /* When expanded inline, keep it reasonably sized */
+  .topbar-search-form {
+    width: min(58vw, 280px);
+    max-width: unset;
   }
 }
 
