@@ -329,16 +329,6 @@ export default function Sidebar({ notificationCount = 0 }) {
     <aside className="sidebar" aria-label="Primary sidebar navigation">
       <div className="sidebar-inner">
         <div className="sidebar-top">
-          <div className="sidebar-brand" aria-label="Talenvia">
-            <div className="sidebar-brand-badge" aria-hidden="true">
-              T
-            </div>
-            <div className="sidebar-brand-title">
-              <strong>Talenvia</strong>
-              <span>Talent + Journey</span>
-            </div>
-          </div>
-
           <nav className="sidebar-nav" aria-label="Primary">
             <NavLink to="/" end className={({ isActive }) => `sidebar-link ${isActive ? "active" : ""}`}>
               <span className="sidebar-icon" aria-hidden="true">
