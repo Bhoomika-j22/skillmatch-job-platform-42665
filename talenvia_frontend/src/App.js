@@ -20,6 +20,7 @@ import ChangeEmailPage from "./pages/ChangeEmailPage";
 import ChangePasswordPage from "./pages/ChangePasswordPage";
 import SettingsPage from "./pages/SettingsPage";
 import SettingsDetailPage from "./pages/SettingsDetailPage";
+import SettingsAccountPage from "./pages/SettingsAccountPage";
 import BlockedCompaniesPage from "./pages/BlockedCompaniesPage";
 import NotFoundPage from "./pages/NotFoundPage";
 
@@ -131,6 +132,7 @@ function App() {
                   />
 
                   <Route path="/settings" element={<SettingsPage />} />
+                  <Route path="/settings/account" element={<SettingsAccountPage />} />
                   <Route path="/settings/details" element={<SettingsDetailPage />} />
                   <Route path="/settings/career-preferences" element={<CareerPreferencesPage />} />
                   <Route path="/settings/blocked-companies" element={<BlockedCompaniesPage />} />

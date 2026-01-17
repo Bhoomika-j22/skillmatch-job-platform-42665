@@ -54,6 +54,21 @@ function IconBlock({ size = 18 }) {
   );
 }
 
+function IconLogout({ size = 18 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+      <path
+        d="M10 17H7a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <path d="M14 12h7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path d="m18 8 3 4-3 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 function ChevronRight({ size = 18 }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
@@ -63,30 +78,28 @@ function ChevronRight({ size = 18 }) {
 }
 
 /**
- * Settings items required by the request:
- * - Account (navigates to existing settings detail screen that contains account controls)
- * - Career Preferences (navigates to existing career preferences page)
- * - Blocked Companies (new screen)
+ * Settings landing items (full-page cards -> route to dedicated full-page screens).
+ * Note: "Communication & Privacy" is intentionally excluded per requirements.
  */
 const SETTINGS_ITEMS = [
   {
     key: "account",
     title: "Account",
-    description: "Change your primary email, mobile number, or password",
+    description: "Change email, mobile number, or password",
     icon: IconUser,
-    to: "/settings/details",
+    to: "/settings/account",
   },
   {
     key: "career",
     title: "Career Preferences",
-    description: "Manage job preferences used for recommendations",
+    description: "Manage job recommendation preferences",
     icon: IconBriefcase,
     to: "/settings/career-preferences",
   },
   {
     key: "blocked",
     title: "Blocked Companies",
-    description: "Choose companies you don’t want to show your profile to",
+    description: "Hide your profile from selected companies",
     icon: IconBlock,
     to: "/settings/blocked-companies",
   },
@@ -94,7 +107,7 @@ const SETTINGS_ITEMS = [
 
 // PUBLIC_INTERFACE
 export default function SettingsPage() {
-  /** Naukri-inspired Settings page: 3 items (Account, Career Preferences, Blocked Companies) + Logout. */
+  /** Settings landing page: list of settings cards + Logout at bottom. */
   const navigate = useNavigate();
   const { toast } = useToast();
   const [loggingOut, setLoggingOut] = useState(false);
@@ -105,7 +118,6 @@ export default function SettingsPage() {
       if (!raw) return 0;
       const parsed = JSON.parse(raw);
       if (!Array.isArray(parsed)) return 0;
-      // Allow either string[] or {name}[] for flexibility.
       return parsed.filter(Boolean).length;
     } catch {
       return 0;
@@ -147,7 +159,7 @@ export default function SettingsPage() {
         </div>
       </div>
 
-      <div className="grid" style={{ maxWidth: 820 }}>
+      <div className="grid" style={{ maxWidth: 900 }}>
         <Card>
           <div className="list" aria-label="Settings options">
             {SETTINGS_ITEMS.map((item) => {
@@ -199,7 +211,12 @@ export default function SettingsPage() {
               aria-label="Logout"
               className="settings-logout"
             >
-              Logout
+              <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+                <span aria-hidden="true">
+                  <IconLogout size={18} />
+                </span>
+                Logout
+              </span>
             </Button>
           </div>
         </Card>
