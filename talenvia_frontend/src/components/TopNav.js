@@ -77,7 +77,7 @@ export default function TopNav({ notificationCount = 0 }) {
         </div>
 
         {/* Search between brand and nav */}
-        <div className={`topbar-search ${isCompact ? "topbar-search--compact" : ""}`}>
+        <div className={`topbar-search topbar-search--pro ${isCompact ? "topbar-search--compact" : ""}`}>
           {!showInlineSearch ? (
             <button
               type="button"

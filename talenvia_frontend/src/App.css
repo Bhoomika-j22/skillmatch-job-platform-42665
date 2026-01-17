@@ -108,11 +108,11 @@ a {
 .topbar-inner {
   max-width: 1200px;
   margin: 0 auto;
-  height: 60px; /* compact header height */
+  height: 64px; /* single header target height */
   padding: 0 20px; /* slightly more breathing room like reference */
   display: flex;
-  align-items: center;
-  gap: 16px;
+  align-items: center; /* vertical centering */
+  gap: 12px; /* tighten overall spacing */
 }
 
 /* Professional header variants (used by TopNav) */
@@ -129,7 +129,7 @@ a {
   display: flex;
   align-items: center;
   gap: 10px;
-  min-width: 220px;
+  min-width: 200px; /* reduce to close the gap to search */
 }
 
 .brand--pro {
@@ -175,16 +175,16 @@ a {
 .nav {
   display: flex;
   align-items: center;
-  gap: 16px; /* slightly tighter like the reference */
+  gap: 12px; /* slightly tighter */
   flex: 1;
-  justify-content: center;
+  justify-content: space-between; /* evenly space items */
   overflow-x: auto;
   padding: 2px 0;
   scrollbar-width: none;
 }
 
 .nav--pro {
-  gap: 16px;
+  gap: 12px;
 }
 
 .nav::-webkit-scrollbar {
@@ -269,21 +269,27 @@ a {
    ========================================================= */
 
 .topbar-search {
-  flex: 0 1 360px; /* allows shrink/grow without pushing nav too far */
+  /* Constrain search so it doesn't sprawl, and keep it snug to the brand */
+  flex: 0 1 320px;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   min-width: 180px;
+}
+
+/* Pro header tweak: slightly smaller max to match the reference proportions */
+.topbar-search--pro .topbar-search-form {
+  max-width: 320px;
 }
 
 .topbar-search-form {
   width: 100%;
   max-width: 360px;
-  height: 36px; /* within 60px header context */
+  height: 36px; /* fits comfortably inside 64px header */
   border-radius: 999px;
   border: 1px solid rgba(17, 24, 39, 0.10);
   background: rgba(129, 140, 248, 0.08); /* soft indigo/lavender tint */
   display: flex;
-  align-items: center;
+  align-items: center; /* vertical centering */
   gap: 10px;
   padding: 0 12px;
   transition: border-color var(--duration-fast) var(--ease), box-shadow var(--duration-fast) var(--ease),
