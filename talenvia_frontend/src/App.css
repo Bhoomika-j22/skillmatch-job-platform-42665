@@ -373,6 +373,11 @@ a {
   animation: dropdown-in var(--duration) var(--ease);
 }
 
+.profile-dropdown--wide {
+  min-width: 340px;
+  max-width: min(92vw, 420px);
+}
+
 @keyframes dropdown-in {
   from {
     opacity: 0;
@@ -415,6 +420,119 @@ a {
 .profile-item.danger:hover {
   background: rgba(239, 68, 68, 0.08);
   border-color: rgba(239, 68, 68, 0.16);
+}
+
+.profile-divider {
+  height: 1px;
+  background: rgba(17, 24, 39, 0.08);
+  margin: 8px 6px;
+  border-radius: 999px;
+}
+
+.profile-group {
+  padding: 6px 6px 2px;
+}
+
+.profile-group-title {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(17, 24, 39, 0.45);
+  padding: 8px 8px 6px;
+}
+
+.profile-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 8px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  transition: background var(--duration-fast) var(--ease), border-color var(--duration-fast) var(--ease);
+}
+
+.profile-row:hover {
+  background: rgba(129, 140, 248, 0.08);
+  border-color: rgba(79, 70, 229, 0.10);
+}
+
+.profile-row-main {
+  min-width: 0;
+  flex: 1;
+}
+
+.profile-row-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(17, 24, 39, 0.78);
+}
+
+.profile-row-value {
+  margin-top: 3px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: rgba(17, 24, 39, 0.72);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.profile-row-muted {
+  font-weight: 650;
+  color: rgba(17, 24, 39, 0.42);
+}
+
+.profile-row-edit {
+  appearance: none;
+  border: 1px solid rgba(17, 24, 39, 0.10);
+  background: rgba(255, 255, 255, 0.72);
+  border-radius: 999px;
+  height: 28px;
+  padding: 0 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  color: rgba(17, 24, 39, 0.74);
+  font-size: 12px;
+  font-weight: 700;
+  transition: background var(--duration-fast) var(--ease), border-color var(--duration-fast) var(--ease);
+  flex: 0 0 auto;
+}
+
+.profile-row-edit:hover {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(79, 70, 229, 0.18);
+}
+
+.profile-row-icon {
+  display: inline-flex;
+  color: rgba(17, 24, 39, 0.58);
+}
+
+.profile-row-editor {
+  margin-top: 8px;
+  display: grid;
+  gap: 8px;
+}
+
+.profile-row-help {
+  font-size: 12px;
+  color: rgba(17, 24, 39, 0.52);
+  margin-top: -2px;
+}
+
+.profile-row-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.profile-row-actionbtn.btn {
+  height: 32px;
+  padding: 0 10px;
 }
 
 /* Main content search (moved from header into main area) */
