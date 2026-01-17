@@ -2,7 +2,8 @@ import React, { useMemo } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 
-import TopNav from "./components/TopNav";
+import Sidebar from "./components/Sidebar";
+import MainSearchBar from "./components/MainSearchBar";
 import ToastProvider from "./components/ToastProvider";
 import DashboardPage from "./pages/DashboardPage";
 import JobsPage from "./pages/JobsPage";
@@ -73,30 +74,49 @@ function App() {
   return (
     <BrowserRouter>
       <ToastProvider>
-        <div className="app-shell">
-          <TopNav notificationCount={unreadCount} />
-          <main aria-label="Main content">
-            <Routes>
-              <Route path="/" element={<DashboardPage profile={profile} applications={applicationsWithLabels} />} />
-              <Route path="/jobs" element={<JobsPage profile={profile} onApply={handleApply} />} />
-              <Route path="/profile" element={<ProfilePage profile={profile} setProfile={setProfile} />} />
-              <Route
-                path="/challenges"
-                element={
-                  <ChallengesPage completedChallenges={completedChallenges} setCompletedChallenges={setCompletedChallenges} />
-                }
+        <div className="app-shell app-shell--sidebar">
+          <Sidebar notificationCount={unreadCount} />
+
+          <main className="app-main" aria-label="Main content">
+            <div className="app-main-inner">
+              <MainSearchBar
+                placeholder="Search jobs, skills, companies…"
+                onSearch={() => {
+                  // Intentionally non-destructive for now: per existing app behavior, there is no global search page yet.
+                  // This is the new placement for the search affordance, ready to be wired to filters/results later.
+                }}
               />
-              <Route path="/mock-tests" element={<MockTestsPage testHistory={testHistory} setTestHistory={setTestHistory} />} />
-              <Route
-                path="/applications"
-                element={<ApplicationsPage applications={applicationsWithLabels} setApplications={setApplications} />}
-              />
-              <Route
-                path="/notifications"
-                element={<NotificationsPage notifications={notifications} setNotifications={setNotifications} />}
-              />
-              <Route path="*" element={<NotFoundPage />} />
-            </Routes>
+
+              <div className="app-content">
+                <Routes>
+                  <Route path="/" element={<DashboardPage profile={profile} applications={applicationsWithLabels} />} />
+                  <Route path="/jobs" element={<JobsPage profile={profile} onApply={handleApply} />} />
+                  <Route path="/profile" element={<ProfilePage profile={profile} setProfile={setProfile} />} />
+                  <Route
+                    path="/challenges"
+                    element={
+                      <ChallengesPage
+                        completedChallenges={completedChallenges}
+                        setCompletedChallenges={setCompletedChallenges}
+                      />
+                    }
+                  />
+                  <Route
+                    path="/mock-tests"
+                    element={<MockTestsPage testHistory={testHistory} setTestHistory={setTestHistory} />}
+                  />
+                  <Route
+                    path="/applications"
+                    element={<ApplicationsPage applications={applicationsWithLabels} setApplications={setApplications} />}
+                  />
+                  <Route
+                    path="/notifications"
+                    element={<NotificationsPage notifications={notifications} setNotifications={setNotifications} />}
+                  />
+                  <Route path="*" element={<NotFoundPage />} />
+                </Routes>
+              </div>
+            </div>
           </main>
         </div>
       </ToastProvider>
