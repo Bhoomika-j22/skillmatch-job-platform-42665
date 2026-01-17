@@ -108,7 +108,7 @@ a {
   max-width: 1200px;
   margin: 0 auto;
   height: 60px; /* compact header height */
-  padding: 0 18px;
+  padding: 0 20px; /* slightly more breathing room like reference */
   display: flex;
   align-items: center;
   gap: 16px;
@@ -139,7 +139,8 @@ a {
   width: 38px;
   height: 38px;
   border-radius: 999px; /* circular logo */
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.95), rgba(168, 85, 247, 0.92));
+  /* soften saturation slightly to avoid harshness */
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.92), rgba(168, 85, 247, 0.88));
   box-shadow: none; /* flat */
   display: grid;
   place-items: center;
@@ -149,8 +150,8 @@ a {
 }
 
 .brand-badge--pro {
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
 }
 
 .brand-title {
@@ -162,18 +163,18 @@ a {
 .brand-title strong {
   font-size: 14px;
   letter-spacing: -0.01em;
-  color: rgba(17, 24, 39, 0.92); /* near-black */
+  color: rgba(17, 24, 39, 0.90); /* slightly softer than near-black */
 }
 
 .brand-title span {
-  font-size: 12px;
-  color: rgba(17, 24, 39, 0.62);
+  font-size: 11.5px; /* slightly smaller + more refined */
+  color: rgba(17, 24, 39, 0.58); /* softer subtitle */
 }
 
 .nav {
   display: flex;
   align-items: center;
-  gap: 18px; /* text-link spacing in center */
+  gap: 16px; /* slightly tighter like the reference */
   flex: 1;
   justify-content: center;
   overflow-x: auto;
@@ -182,7 +183,7 @@ a {
 }
 
 .nav--pro {
-  gap: 18px;
+  gap: 16px;
 }
 
 .nav::-webkit-scrollbar {
@@ -198,31 +199,31 @@ a {
   align-items: center;
   gap: 8px;
   /* Inactive = plain text; no background */
-  padding: 8px 10px;
+  padding: 7px 10px; /* slightly tighter vertical rhythm */
   border-radius: 999px;
-  color: rgba(17, 24, 39, 0.78);
+  color: rgba(17, 24, 39, 0.74); /* softer dark gray */
   border: 1px solid transparent;
   background: transparent;
   transition: background var(--duration-fast) var(--ease), color var(--duration-fast) var(--ease);
   white-space: nowrap;
-  font-size: 13px;
+  font-size: 12.75px; /* subtle refinement */
   font-weight: 500;
 }
 
 .nav-pill--pro {
-  padding: 8px 10px;
+  padding: 7px 10px;
 }
 
 .nav-pill:hover {
-  color: rgba(17, 24, 39, 0.92);
-  background: rgba(99, 102, 241, 0.08); /* soft indigo hover */
+  color: rgba(17, 24, 39, 0.90);
+  background: rgba(99, 102, 241, 0.06); /* softer hover, less saturated */
 }
 
 .nav-pill.active {
-  /* Active = light purple pill */
-  background: rgba(99, 102, 241, 0.16);
+  /* Active = light purple pill (softer + flatter) */
+  background: rgba(99, 102, 241, 0.14);
   border-color: transparent;
-  color: rgba(17, 24, 39, 0.92);
+  color: rgba(17, 24, 39, 0.90);
 }
 
 .nav-badge {
@@ -234,11 +235,11 @@ a {
   height: 18px;
   padding: 0 6px;
   border-radius: 999px;
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 700;
-  /* Reference: light pink background with dark text */
-  background: rgba(244, 114, 182, 0.22);
-  color: rgba(17, 24, 39, 0.85);
+  /* Reference: light pink background with dark text (softened) */
+  background: rgba(244, 114, 182, 0.18);
+  color: rgba(17, 24, 39, 0.82);
 }
 
 .topbar-actions {
