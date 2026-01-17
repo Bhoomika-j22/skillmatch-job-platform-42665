@@ -2974,3 +2974,209 @@ a {
   font-size: 13px;
   color: #6b7280;
 }
+
+/* =========================================================
+   Dashboard - Right side Profile Card
+   - Rounded white card, subtle shadow
+   - Circular avatar, name/role
+   - Resume upload section
+   - Light gray dividers
+   - Blue icons for sections/rows
+   ========================================================= */
+
+.dash-profilecard {
+  background: #ffffff;
+  border: 1px solid #e6eaf2;
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.06);
+  padding: 16px;
+}
+
+.dash-profilecard-head {
+  display: grid;
+  grid-template-columns: 54px 1fr;
+  gap: 12px;
+  align-items: center;
+}
+
+.dash-profilecard-avatar {
+  width: 54px;
+  height: 54px;
+  border-radius: 999px;
+  background: #eef2ff;
+  border: 1px solid rgba(37, 99, 235, 0.18);
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  color: rgba(17, 24, 39, 0.88);
+  letter-spacing: -0.02em;
+}
+
+.dash-profilecard-meta {
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.dash-profilecard-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111827;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dash-profilecard-role {
+  font-size: 12.5px;
+  font-weight: 650;
+  color: #2563eb;
+}
+
+.dash-profilecard-headline {
+  font-size: 12px;
+  color: #6b7280;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dash-profilecard-divider {
+  height: 1px;
+  background: #eef2f7;
+  margin: 12px 0;
+}
+
+.dash-profilecard-divider.light {
+  margin: 10px 0;
+}
+
+.dash-profilecard-section {
+  display: grid;
+  gap: 10px;
+}
+
+.dash-profilecard-section-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.dash-profilecard-section-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  background: rgba(37, 99, 235, 0.10);
+  border: 1px solid rgba(37, 99, 235, 0.16);
+  color: #2563eb;
+}
+
+.dash-profilecard-upload {
+  border: 1px solid #eef2f7;
+  border-radius: 12px;
+  background: rgba(245, 247, 251, 0.6);
+  padding: 12px;
+}
+
+.dash-profilecard-file {
+  display: none;
+}
+
+.dash-profilecard-upload-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.dash-profilecard-upload-text {
+  min-width: 0;
+}
+
+.dash-profilecard-upload-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #111827;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 34ch;
+}
+
+.dash-profilecard-upload-sub {
+  margin-top: 3px;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.dash-profilecard-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.dash-profilecard-row {
+  display: grid;
+  grid-template-columns: 26px 1fr auto;
+  align-items: center;
+  gap: 10px;
+}
+
+.dash-profilecard-row-icon {
+  width: 26px;
+  height: 26px;
+  border-radius: 9px;
+  display: grid;
+  place-items: center;
+  color: #2563eb; /* blue icons */
+  background: rgba(37, 99, 235, 0.08);
+  border: 1px solid rgba(37, 99, 235, 0.14);
+}
+
+.dash-profilecard-row-label {
+  font-size: 12px;
+  color: #6b7280;
+  font-weight: 600;
+}
+
+.dash-profilecard-row-value {
+  font-size: 12.5px;
+  color: #111827;
+  font-weight: 650;
+  max-width: 22ch;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dash-profilecard-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.dash-profilecard-skill {
+  height: 22px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #f3f6ff;
+  border: 1px solid rgba(37, 99, 235, 0.16);
+  color: #1d4ed8;
+  font-size: 12px;
+  font-weight: 650;
+  display: inline-flex;
+  align-items: center;
+}
+
+.dash-profilecard-muted {
+  font-size: 12px;
+  color: #9aa3b2;
+}

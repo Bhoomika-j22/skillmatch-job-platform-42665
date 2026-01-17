@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Badge, Button } from "../components/ui";
+import ProfileSideCard from "../components/ProfileSideCard";
 import { MOCK_JOBS } from "../data/mockData";
 
 /**
@@ -334,8 +335,10 @@ export default function DashboardPage({ profile, applications }) {
             </section>
           </aside>
 
-          {/* Right column - Application Tracker + extra panels */}
-          <aside className="dash-side" aria-label="Application Tracker and Actions">
+          {/* Right column - Profile card + Application Tracker + extra panels */}
+          <aside className="dash-side" aria-label="Profile and Actions">
+            <ProfileSideCard profile={profile} />
+
             <section className="dash-card">
               <div className="dash-card-head">
                 <h2 className="dash-card-title">Application Tracker</h2>
