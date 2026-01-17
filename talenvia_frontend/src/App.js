@@ -22,6 +22,8 @@ import SettingsPage from "./pages/SettingsPage";
 import SettingsDetailPage from "./pages/SettingsDetailPage";
 import SettingsAccountPage from "./pages/SettingsAccountPage";
 import BlockedCompaniesPage from "./pages/BlockedCompaniesPage";
+import AboutPage from "./pages/AboutPage";
+import HowItWorksPage from "./pages/HowItWorksPage";
 import NotFoundPage from "./pages/NotFoundPage";
 
 import { useLocalStorage } from "./hooks/useLocalStorage";
@@ -139,6 +141,9 @@ function App() {
                   <Route path="/account/change-mobile" element={<ChangeMobilePage />} />
                   <Route path="/account/change-email" element={<ChangeEmailPage />} />
                   <Route path="/account/change-password" element={<ChangePasswordPage />} />
+
+                  <Route path="/about" element={<AboutPage />} />
+                  <Route path="/how-it-works" element={<HowItWorksPage />} />
 
                   <Route path="*" element={<NotFoundPage />} />
                 </Routes>

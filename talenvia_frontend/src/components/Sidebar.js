@@ -281,6 +281,47 @@ function IconGear({ size = 18 }) {
   );
 }
 
+function IconInfo({ size = 18 }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+      focusable="false"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20Z" stroke="currentColor" strokeWidth="2" />
+      <path d="M12 10v6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path d="M12 7h.01" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function IconSpark({ size = 18 }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+      focusable="false"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M12 2l1.2 4.2L17.5 8l-4.3 1.8L12 14l-1.2-4.2L6.5 8l4.3-1.8L12 2Z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+      <path d="M19 13l.7 2.4L22 16l-2.3.6L19 19l-.7-2.4L16 16l2.3-.6L19 13Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" opacity="0.9" />
+      <path d="M4 14l.7 2.4L7 17l-2.3.6L4 20l-.7-2.4L1 17l2.3-.6L4 14Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" opacity="0.9" />
+    </svg>
+  );
+}
+
 // PUBLIC_INTERFACE
 export default function Sidebar({ notificationCount = 0 }) {
   /** Fixed left-side navigation sidebar with Talenvia branding and vertical nav. */
@@ -375,6 +416,20 @@ export default function Sidebar({ notificationCount = 0 }) {
                 <IconGear size={18} />
               </span>
               <span>Settings</span>
+            </NavLink>
+
+            <NavLink to="/about" className={({ isActive }) => `sidebar-link ${isActive ? "active" : ""}`}>
+              <span className="sidebar-icon" aria-hidden="true">
+                <IconInfo size={18} />
+              </span>
+              <span>About Us</span>
+            </NavLink>
+
+            <NavLink to="/how-it-works" className={({ isActive }) => `sidebar-link ${isActive ? "active" : ""}`}>
+              <span className="sidebar-icon" aria-hidden="true">
+                <IconSpark size={18} />
+              </span>
+              <span>How Talenvia Works</span>
             </NavLink>
           </nav>
 
