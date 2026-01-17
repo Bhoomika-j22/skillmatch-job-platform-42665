@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Badge, Button } from "../components/ui";
+import MainSearchBar from "../components/MainSearchBar";
 import { MOCK_JOBS } from "../data/mockData";
 
 /**
@@ -127,6 +128,7 @@ function ProgressRing({ value = 80, size = 76 }) {
 // PUBLIC_INTERFACE
 export default function DashboardPage({ profile, applications }) {
   /** Dashboard landing page matching the extracted 3-column design notes. */
+  const [query, setQuery] = useState("");
   const [chip, setChip] = useState("Recommended");
   const [sort, setSort] = useState("Relevance");
 
@@ -147,6 +149,23 @@ export default function DashboardPage({ profile, applications }) {
     if (chip === "Full-time") filtered = filtered.filter((j) => String(j.type).toLowerCase().includes("full"));
     if (chip === "Top Match") filtered = filtered.filter((j) => Number(j.match) >= 80);
 
+    const q = String(query || "").trim().toLowerCase();
+    if (q) {
+      filtered = filtered.filter((j) => {
+        const hay = [
+          j.title,
+          j.company,
+          j.location,
+          j.type,
+          ...(Array.isArray(j.tags) ? j.tags : []),
+        ]
+          .filter(Boolean)
+          .join(" • ")
+          .toLowerCase();
+        return hay.includes(q);
+      });
+    }
+
     if (sort === "Newest") {
       filtered = filtered.slice().sort((a, b) => (a.postedDaysAgo || 0) - (b.postedDaysAgo || 0));
     } else if (sort === "Match") {
@@ -154,7 +173,7 @@ export default function DashboardPage({ profile, applications }) {
     } // "Relevance" keeps default
 
     return filtered;
-  }, [chip, sort]);
+  }, [chip, sort, query]);
 
   const careerScore = useMemo(() => {
     // Demo scoring: skills contribute, applications contribute slightly; capped.
@@ -166,6 +185,17 @@ export default function DashboardPage({ profile, applications }) {
   return (
     <div className="dash">
       <main className="dash-main" aria-label="Dashboard content">
+        <section className="dash-page-search" aria-label="Search jobs">
+          <div className="dash-page-search-inner">
+            <MainSearchBar
+              variant="dashboard"
+              initialValue={query}
+              onSearch={(q) => setQuery(q)}
+              placeholder="Search jobs, skills, companies…"
+            />
+          </div>
+        </section>
+
         <div className="dash-grid">
           {/* Left column - Recommended Jobs */}
           <section className="dash-panel" aria-label="Recommended Jobs">

@@ -5,7 +5,7 @@ import "./App.css";
 import Sidebar from "./components/Sidebar";
 import ProfileMenu from "./components/ProfileMenu";
 import NotificationBell from "./components/NotificationBell";
-import MainSearchBar from "./components/MainSearchBar";
+
 import ToastProvider from "./components/ToastProvider";
 import DashboardPage from "./pages/DashboardPage";
 import JobsPage from "./pages/JobsPage";
@@ -96,10 +96,6 @@ function App() {
                 <div className="topheader-brand-title">
                   <strong>Talenvia</strong>
                 </div>
-              </div>
-
-              <div className="topheader-center" aria-label="Header search">
-                <MainSearchBar variant="header" />
               </div>
 
               <div className="topheader-right" aria-label="Header actions">

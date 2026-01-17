@@ -44,11 +44,12 @@ export default function MainSearchBar({
   }, [isCompact]);
 
   const isHeader = variant === "header";
-  const rootClass = isHeader ? "header-search" : "main-search";
-  const formClass = isHeader ? "header-search-form" : "main-search-form";
-  const iconClass = isHeader ? "header-search-icon" : "main-search-icon";
-  const inputClass = isHeader ? "header-search-input" : "main-search-input";
-  const inputId = isHeader ? "header-search-input" : "main-search-input";
+  const isDashboard = variant === "dashboard";
+  const rootClass = isHeader ? "header-search" : isDashboard ? "dash-page-search" : "main-search";
+  const formClass = isHeader ? "header-search-form" : isDashboard ? "dash-page-search-form" : "main-search-form";
+  const iconClass = isHeader ? "header-search-icon" : isDashboard ? "dash-page-search-icon" : "main-search-icon";
+  const inputClass = isHeader ? "header-search-input" : isDashboard ? "dash-page-search-input" : "main-search-input";
+  const inputId = isHeader ? "header-search-input" : isDashboard ? "dash-page-search-input" : "main-search-input";
 
   return (
     <div className={rootClass} aria-label="Search area">
