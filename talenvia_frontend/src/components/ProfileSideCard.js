@@ -199,6 +199,9 @@ export default function ProfileSideCard({ profile, setProfile }) {
   /**
    * Right-side profile card: rounded white background, subtle shadow, avatar,
    * name/role, resume upload, light dividers, and blue icons for info sections.
+   * 
+   * Now enhanced: avatar upload/replace, resume upload/replace/delete, external links clickable, 
+   * hover effects, editable contact fields, desktop responsive layout, and actions confirmations.
    *
    * Editing behavior (demo):
    * - Inline edit for: full name, job title/role, email, mobile, LinkedIn, GitHub, personal website.
@@ -206,8 +209,16 @@ export default function ProfileSideCard({ profile, setProfile }) {
    */
   const { toast } = useToast();
 
-  const fileInputRef = useRef(null);
+  // Avatar state/logic
+  const avatarInputRef = useRef(null);
+  const [avatarFile, setAvatarFile] = useState(null); // For uploading new image
+  const [avatarPreview, setAvatarPreview] = useState(profile?.avatarUrl || null); // Data URL or remote URL
+
+  // Resume state/logic
+  const resumeInputRef = useRef(null);
   const [resumeFile, setResumeFile] = useState(null);
+  const [resumeName, setResumeName] = useState(profile?.resumeName || "");
+  const [resumePreviewUrl, setResumePreviewUrl] = useState(profile?.resumeUrl || null);
 
   const [isEditing, setIsEditing] = useState(false);
   const [draft, setDraft] = useState({
@@ -256,6 +267,12 @@ export default function ProfileSideCard({ profile, setProfile }) {
       },
     });
     setErrors({});
+    // When entering edit mode, initialize avatar and resume state
+    setAvatarFile(null);
+    setAvatarPreview(profile?.avatarUrl || null);
+    setResumeFile(null);
+    setResumeName(profile?.resumeName || "");
+    setResumePreviewUrl(profile?.resumeUrl || null);
   }, [isEditing, profile]);
 
   function validate(nextDraft) {
@@ -273,13 +290,44 @@ export default function ProfileSideCard({ profile, setProfile }) {
     return nextErrors;
   }
 
+  // PUBLIC_INTERFACE
+  function onPickAvatarClick() {
+    avatarInputRef.current?.click();
+  }
+
+  function onAvatarSelected(e) {
+    const f = e.target.files?.[0] || null;
+    setAvatarFile(f);
+    if (f) {
+      // Preview locally
+      const reader = new FileReader();
+      reader.onloadend = () => setAvatarPreview(reader.result);
+      reader.readAsDataURL(f);
+    }
+  }
+
+  function removeAvatar() {
+    setAvatarFile(null);
+    setAvatarPreview(null);
+    toast({ title: "Avatar removed", message: "Profile picture is removed locally.", variant: "warn" });
+  }
+
   function onPickResumeClick() {
-    fileInputRef.current?.click();
+    resumeInputRef.current?.click();
   }
 
   function onResumeSelected(e) {
     const f = e.target.files?.[0] || null;
     setResumeFile(f);
+    setResumePreviewUrl(null);
+    setResumeName(f ? f.name : "");
+  }
+
+  function removeResume() {
+    setResumeFile(null);
+    setResumePreviewUrl(null);
+    setResumeName("");
+    toast({ title: "Resume removed", message: "Resume deleted locally.", variant: "warn" });
   }
 
   function startEditing() {
@@ -305,6 +353,7 @@ export default function ProfileSideCard({ profile, setProfile }) {
       return;
     }
 
+    // Prepare nextProfile with avatar/resume state
     const nextProfile = {
       ...(profile || {}),
       name: String(draft.name || "").trim(),
@@ -317,9 +366,12 @@ export default function ProfileSideCard({ profile, setProfile }) {
         github: String(draft.links.github || "").trim() ? normalizeUrl(draft.links.github) : "",
         portfolio: String(draft.links.portfolio || "").trim() ? normalizeUrl(draft.links.portfolio) : "",
       },
+      // Persist avatar as DataURL for demo/local, real apps use uploaded URL
+      avatarUrl: avatarPreview || null,
+      resumeUrl: resumePreviewUrl || null,
+      resumeName: resumeName || "",
     };
 
-    // Persist via App's useLocalStorage state.
     setProfile(nextProfile);
 
     setIsEditing(false);
@@ -329,8 +381,80 @@ export default function ProfileSideCard({ profile, setProfile }) {
   return (
     <section className="dash-profilecard" aria-label="Profile summary">
       <header className="dash-profilecard-head">
-        <div className="dash-profilecard-avatar" aria-hidden="true">
-          {initialsFromName(isEditing ? draft.name || name : name)}
+        <div
+          className="dash-profilecard-avatar"
+          aria-label="Profile avatar"
+          style={{
+            cursor: isEditing ? "pointer" : undefined,
+            transition: "box-shadow 0.15s",
+            boxShadow: isEditing ? "0 0 0 3px #a5b4fc66" : undefined,
+            overflow: "hidden",
+            border: avatarPreview ? "2px solid #6366f1" : undefined,
+            position: "relative",
+          }}
+          tabIndex={isEditing ? 0 : -1}
+          onClick={isEditing ? onPickAvatarClick : undefined}
+          title={isEditing ? "Click to upload/change profile photo" : undefined}
+          onKeyPress={
+            isEditing
+              ? (e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    onPickAvatarClick();
+                  }
+                }
+              : undefined
+          }
+        >
+          {/* Avatar preview or initials */}
+          {avatarPreview ? (
+            <img
+              src={avatarPreview}
+              alt="Avatar Preview"
+              style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "999px" }}
+            />
+          ) : (
+            initialsFromName(isEditing ? draft.name || name : name)
+          )}
+          {/* Remove avatar button (editing only, has avatar) */}
+          {isEditing && avatarPreview && (
+            <button
+              type="button"
+              style={{
+                position: "absolute",
+                top: 3,
+                right: 3,
+                background: "#fff",
+                color: "#ef4444",
+                border: "none",
+                borderRadius: "50%",
+                width: 22,
+                height: 22,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                boxShadow: "0 1px 4px 0 rgba(16,24,40,0.11)",
+                fontWeight: 900,
+                fontSize: 13,
+                cursor: "pointer",
+                zIndex: 2,
+              }}
+              onClick={(e) => { e.stopPropagation(); removeAvatar(); }}
+              aria-label="Remove avatar"
+              title="Remove profile picture"
+              tabIndex={0}
+              onKeyPress={(e) => { if (e.key === "Enter" || e.key === " ") { e.stopPropagation(); removeAvatar(); } }}
+            >
+              ×
+            </button>
+          )}
+          <input
+            ref={avatarInputRef}
+            type="file"
+            accept="image/*"
+            style={{ display: "none" }}
+            onChange={onAvatarSelected}
+            aria-label="Upload profile avatar"
+          />
         </div>
 
         <div className="dash-profilecard-meta">
@@ -340,7 +464,14 @@ export default function ProfileSideCard({ profile, setProfile }) {
 
           <div className="dash-profilecard-editbar">
             {!isEditing ? (
-              <Button type="button" size="sm" variant="secondary" className="dash-profilecard-editbtn" onClick={startEditing}>
+              <Button
+                type="button"
+                size="sm"
+                variant="secondary"
+                className="dash-profilecard-editbtn"
+                onClick={startEditing}
+                style={{ transition: "all 0.16s" }}
+              >
                 Edit
               </Button>
             ) : (
@@ -351,6 +482,7 @@ export default function ProfileSideCard({ profile, setProfile }) {
                   variant="primary"
                   className="dash-profilecard-editbtn"
                   onClick={saveEdits}
+                  style={{ minWidth: 54 }}
                 >
                   Save
                 </Button>
@@ -371,6 +503,7 @@ export default function ProfileSideCard({ profile, setProfile }) {
 
       <div className="dash-profilecard-divider" role="separator" />
 
+      {/* RESUME SECTION - PDF upload/replace/delete logic */}
       <section className="dash-profilecard-section" aria-label="Resume upload">
         <div className="dash-profilecard-section-title">
           <span className="dash-profilecard-section-icon" aria-hidden="true">
@@ -379,29 +512,67 @@ export default function ProfileSideCard({ profile, setProfile }) {
           Resume
         </div>
 
-        <div className="dash-profilecard-upload">
+        <div className="dash-profilecard-upload" style={{ display: "flex", flexDirection: "column", gap: 4 }}>
           <input
-            ref={fileInputRef}
+            ref={resumeInputRef}
             type="file"
             accept=".pdf,.doc,.docx"
             onChange={onResumeSelected}
             className="dash-profilecard-file"
             aria-label="Upload resume file"
+            tabIndex={isEditing ? 0 : -1}
           />
-
-          <div className="dash-profilecard-upload-row">
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <div className="dash-profilecard-upload-text">
-              <div className="dash-profilecard-upload-label">
-                {resumeFile ? resumeFile.name : "Upload your resume"}
+              <div className="dash-profilecard-upload-label" title={resumeName || "No resume uploaded"}>
+                {resumeName ? (
+                  resumeName.endsWith(".pdf")
+                    ? <span style={{ color: "#6366f1" }}>{resumeName}</span>
+                    : resumeName
+                ) : (
+                  <span style={{ color: "#888" }}>No resume uploaded</span>
+                )}
               </div>
               <div className="dash-profilecard-upload-sub">
-                PDF/DOC/DOCX • max size depends on server
+                PDF/DOC/DOCX • max size <span style={{ fontStyle: "italic", color: "#6b7280" }}>2MB</span>
               </div>
+              {resumeFile || resumePreviewUrl ? (
+                <div>
+                  <a
+                    href={resumePreviewUrl ? resumePreviewUrl : "#"}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="dash-viewlink"
+                    style={{ fontSize: "11.5px", marginTop: 2, display: "inline-block" }}
+                  >
+                    {resumePreviewUrl ? "View PDF" : ""}
+                  </a>
+                </div>
+              ) : null}
             </div>
-
-            <Button type="button" className="dash-applybtn" onClick={onPickResumeClick}>
-              Upload
-            </Button>
+            {isEditing && (
+              <>
+                <Button
+                  type="button"
+                  className="dash-applybtn"
+                  style={{ minWidth: 74 }}
+                  onClick={onPickResumeClick}
+                >
+                  {resumeFile || resumePreviewUrl ? "Replace" : "Upload"}
+                </Button>
+                {(resumeFile || resumePreviewUrl) && (
+                  <Button
+                    type="button"
+                    className="dash-applybtn"
+                    variant="ghost"
+                    style={{ color: "#ef4444" }}
+                    onClick={removeResume}
+                  >
+                    Delete
+                  </Button>
+                )}
+              </>
+            )}
           </div>
         </div>
       </section>
@@ -530,7 +701,19 @@ export default function ProfileSideCard({ profile, setProfile }) {
                   error={errors.portfolio}
                 />
               ) : web.portfolio && web.portfolio !== "—" ? (
-                <a href={normalizeUrl(web.portfolio)} target="_blank" rel="noreferrer">
+                <a
+                  href={normalizeUrl(web.portfolio)}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="dash-viewlink"
+                  style={{
+                    color: "#6366f1",
+                    textDecoration: "underline",
+                    transition: "color 0.13s",
+                  }}
+                  onMouseOver={e => e.currentTarget.style.color = "#3b82f6"}
+                  onMouseOut={e => e.currentTarget.style.color = "#6366f1"}
+                >
                   {web.portfolio}
                 </a>
               ) : (
@@ -538,7 +721,6 @@ export default function ProfileSideCard({ profile, setProfile }) {
               )}
             </span>
           </li>
-
           <li className="dash-profilecard-row">
             <span className="dash-profilecard-row-icon" aria-hidden="true">
               <ProfileIcon name="link" />
@@ -558,7 +740,19 @@ export default function ProfileSideCard({ profile, setProfile }) {
                   error={errors.linkedin}
                 />
               ) : web.linkedin && web.linkedin !== "—" ? (
-                <a href={normalizeUrl(web.linkedin)} target="_blank" rel="noreferrer">
+                <a
+                  href={normalizeUrl(web.linkedin)}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="dash-viewlink"
+                  style={{
+                    color: "#0A66C2",
+                    textDecoration: "underline",
+                    transition: "color 0.13s",
+                  }}
+                  onMouseOver={e => e.currentTarget.style.color = "#1450a3"}
+                  onMouseOut={e => e.currentTarget.style.color = "#0A66C2"}
+                >
                   {web.linkedin}
                 </a>
               ) : (
@@ -566,7 +760,6 @@ export default function ProfileSideCard({ profile, setProfile }) {
               )}
             </span>
           </li>
-
           <li className="dash-profilecard-row">
             <span className="dash-profilecard-row-icon" aria-hidden="true">
               <ProfileIcon name="link" />
@@ -586,7 +779,19 @@ export default function ProfileSideCard({ profile, setProfile }) {
                   error={errors.github}
                 />
               ) : web.github && web.github !== "—" ? (
-                <a href={normalizeUrl(web.github)} target="_blank" rel="noreferrer">
+                <a
+                  href={normalizeUrl(web.github)}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="dash-viewlink"
+                  style={{
+                    color: "#24292f",
+                    textDecoration: "underline",
+                    transition: "color 0.13s",
+                  }}
+                  onMouseOver={e => e.currentTarget.style.color = "#111827"}
+                  onMouseOut={e => e.currentTarget.style.color = "#24292f"}
+                >
                   {web.github}
                 </a>
               ) : (
