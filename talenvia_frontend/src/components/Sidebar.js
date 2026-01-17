@@ -222,6 +222,63 @@ function IconBell({ size = 18 }) {
   );
 }
 
+function IconSettings({ size = 18 }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+      focusable="false"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M19.4 15a8.2 8.2 0 0 0 .1-2l2-1.2-2-3.4-2.3.6a7.7 7.7 0 0 0-1.7-1l-.3-2.4H11l-.3 2.4c-.6.3-1.2.6-1.7 1l-2.3-.6-2 3.4 2 1.2a8.2 8.2 0 0 0 .1 2l-2 1.2 2 3.4 2.3-.6c.5.4 1.1.7 1.7 1l.3 2.4h4l.3-2.4c.6-.3 1.2-.6 1.7-1l2.3.6 2-3.4-2-1.2Z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+        opacity="0.95"
+      />
+    </svg>
+  );
+}
+
+function IconShield({ size = 18 }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+      focusable="false"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M12 3 20 7v6c0 5-3.5 8.4-8 10-4.5-1.6-8-5-8-10V7l8-4Z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M9.5 12.5 11 14l3.5-4"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        opacity="0.9"
+      />
+    </svg>
+  );
+}
+
 // PUBLIC_INTERFACE
 export default function Sidebar({ notificationCount = 0 }) {
   /** Fixed left-side navigation sidebar with Talenvia branding and vertical nav. */
@@ -304,6 +361,54 @@ export default function Sidebar({ notificationCount = 0 }) {
                 ) : null}
               </span>
             </NavLink>
+
+            {/* New groups requested: Settings and Account (placed directly below Notifications). */}
+            <div className="sidebar-group" role="group" aria-label="Settings">
+              <div className="sidebar-group-title">Settings</div>
+              <NavLink
+                to="/settings/career-preferences"
+                className={({ isActive }) => `sidebar-link sidebar-link--sub ${isActive ? "active" : ""}`}
+              >
+                <span className="sidebar-icon" aria-hidden="true">
+                  <IconSettings size={18} />
+                </span>
+                <span>Career Preferences</span>
+              </NavLink>
+            </div>
+
+            <div className="sidebar-group" role="group" aria-label="Account">
+              <div className="sidebar-group-title">Account</div>
+
+              <NavLink
+                to="/account/change-mobile"
+                className={({ isActive }) => `sidebar-link sidebar-link--sub ${isActive ? "active" : ""}`}
+              >
+                <span className="sidebar-icon" aria-hidden="true">
+                  <IconShield size={18} />
+                </span>
+                <span>Change Mobile</span>
+              </NavLink>
+
+              <NavLink
+                to="/account/change-email"
+                className={({ isActive }) => `sidebar-link sidebar-link--sub ${isActive ? "active" : ""}`}
+              >
+                <span className="sidebar-icon" aria-hidden="true">
+                  <IconShield size={18} />
+                </span>
+                <span>Change Email</span>
+              </NavLink>
+
+              <NavLink
+                to="/account/change-password"
+                className={({ isActive }) => `sidebar-link sidebar-link--sub ${isActive ? "active" : ""}`}
+              >
+                <span className="sidebar-icon" aria-hidden="true">
+                  <IconShield size={18} />
+                </span>
+                <span>Change Password</span>
+              </NavLink>
+            </div>
           </nav>
         </div>
 

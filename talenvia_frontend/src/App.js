@@ -13,6 +13,10 @@ import ChallengesPage from "./pages/ChallengesPage";
 import MockTestsPage from "./pages/MockTestsPage";
 import ApplicationsPage from "./pages/ApplicationsPage";
 import NotificationsPage, { getInitialNotifications } from "./pages/NotificationsPage";
+import CareerPreferencesPage from "./pages/CareerPreferencesPage";
+import ChangeMobilePage from "./pages/ChangeMobilePage";
+import ChangeEmailPage from "./pages/ChangeEmailPage";
+import ChangePasswordPage from "./pages/ChangePasswordPage";
 import NotFoundPage from "./pages/NotFoundPage";
 
 import { useLocalStorage } from "./hooks/useLocalStorage";
@@ -120,6 +124,12 @@ function App() {
                     path="/notifications"
                     element={<NotificationsPage notifications={notifications} setNotifications={setNotifications} />}
                   />
+
+                  <Route path="/settings/career-preferences" element={<CareerPreferencesPage />} />
+                  <Route path="/account/change-mobile" element={<ChangeMobilePage />} />
+                  <Route path="/account/change-email" element={<ChangeEmailPage />} />
+                  <Route path="/account/change-password" element={<ChangePasswordPage />} />
+
                   <Route path="*" element={<NotFoundPage />} />
                 </Routes>
               </div>
