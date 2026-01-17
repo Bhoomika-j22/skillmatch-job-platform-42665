@@ -1,72 +1,128 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { Card, Button, Input, Select } from "../components/ui";
-import { useToast } from "../components/ToastProvider";
-
-const SETTINGS_ITEMS = [
-  {
-    key: "communication",
-    title: "Communication & Privacy",
-    description: "Notification preferences and privacy controls.",
-    disabled: true,
-  },
-  {
-    key: "account",
-    title: "Account",
-    description: "Mobile, email, password and account security.",
-  },
-  {
-    key: "career",
-    title: "Career Preferences",
-    description: "Job roles, locations, experience and job type.",
-  },
-  {
-    key: "blocked",
-    title: "Blocked Companies",
-    description: "Companies you don't want to see in recommendations.",
-    disabled: true,
-  },
-];
-
-const ROLE_SUGGESTIONS = [
-  "Frontend Engineer",
-  "Backend Engineer",
-  "Full-stack Engineer",
-  "Product Designer",
-  "Data Analyst",
-  "Data Scientist",
-  "QA Engineer",
-  "DevOps Engineer",
-];
-
-const JOB_TYPES = ["Full-time", "Part-time", "Contract", "Internship"];
-const EXPERIENCES = ["Entry", "Mid", "Senior", "Lead"];
-const WORK_MODES = ["Remote", "Hybrid", "On-site"];
+import React, { useMemo } from "react";
+import { useNavigate } from "react-router-dom";
+import { Card, Badge } from "../components/ui";
 
 /**
- * Determine whether we should use a split view (list left + detail panel right).
- * We intentionally use window matchMedia here to avoid adding dependencies.
+ * Inline SVG icons (no extra dependencies).
  */
-function useIsDesktopSplit(breakpointPx = 980) {
-  const [isDesktop, setIsDesktop] = useState(() => {
-    if (typeof window === "undefined") return true;
-    return window.matchMedia(`(min-width: ${breakpointPx}px)`).matches;
-  });
+function IconUser({ size = 18 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+      <path
+        d="M20 21a8 8 0 0 0-16 0"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <path
+        d="M12 11a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
 
-  useEffect(() => {
-    const mq = window.matchMedia(`(min-width: ${breakpointPx}px)`);
-    const onChange = () => setIsDesktop(mq.matches);
-    // Support older browsers
-    if (mq.addEventListener) mq.addEventListener("change", onChange);
-    else mq.addListener(onChange);
+function IconBell({ size = 18 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+      <path
+        d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 7h18s-3 0-3-7Z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M13.73 21a2 2 0 0 1-3.46 0"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
 
-    return () => {
-      if (mq.removeEventListener) mq.removeEventListener("change", onChange);
-      else mq.removeListener(onChange);
-    };
-  }, [breakpointPx]);
+function IconSliders({ size = 18 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+      <path d="M4 21v-7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path d="M4 10V3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path d="M12 21v-9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path d="M12 8V3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path d="M20 21v-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path d="M20 12V3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path d="M2 14h4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path d="M10 10h4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path d="M18 16h4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  );
+}
 
-  return isDesktop;
+function IconBriefcase({ size = 18 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+      <path
+        d="M10 7V6a2 2 0 0 1 2-2h0a2 2 0 0 1 2 2v1"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <path
+        d="M4 7h16v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+      <path d="M4 12h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function IconPhone({ size = 18 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+      <path
+        d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.86 19.86 0 0 1 2.08 4.18 2 2 0 0 1 4.06 2h3a2 2 0 0 1 2 1.72c.12.86.3 1.7.54 2.5a2 2 0 0 1-.45 2.11L8 9.91a16 16 0 0 0 6.09 6.09l1.58-1.15a2 2 0 0 1 2.11-.45c.8.24 1.64.42 2.5.54A2 2 0 0 1 22 16.92Z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function IconMail({ size = 18 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+      <path
+        d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+      <path d="m22 6-10 7L2 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function IconLock({ size = 18 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+      <path
+        d="M19 11H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2Z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M7 11V7a5 5 0 0 1 10 0v4"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
 }
 
 function ChevronRight({ size = 18 }) {
@@ -85,511 +141,82 @@ function ChevronRight({ size = 18 }) {
   );
 }
 
-function ArrowLeft({ size = 18 }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden="true"
-      focusable="false"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path d="M15 18 9 12l6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function SectionHeader({ title, subtitle, onBack, right }) {
-  return (
-    <div className="settings-section-header">
-      <div className="settings-section-header-left">
-        {onBack ? (
-          <button type="button" className="settings-backbtn" onClick={onBack} aria-label="Back to Settings">
-            <ArrowLeft size={18} />
-            <span>Back</span>
-          </button>
-        ) : null}
-        <div>
-          <h2 className="settings-section-title">{title}</h2>
-          {subtitle ? <p className="settings-section-subtitle">{subtitle}</p> : null}
-        </div>
-      </div>
-      {right ? <div className="settings-section-header-right">{right}</div> : null}
-    </div>
-  );
-}
-
-function validateEmail(value) {
-  const v = String(value || "").trim();
-  if (!v) return "Email is required.";
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) return "Please enter a valid email address.";
-  return "";
-}
-
-function validateMobile(value) {
-  const v = String(value || "").trim();
-  if (!v) return "Mobile number is required.";
-  const digits = v.replace(/[^\d]/g, "");
-  if (digits.length < 8) return "Please enter a valid mobile number.";
-  return "";
-}
-
-function validatePassword(next, confirm) {
-  const n = String(next || "");
-  const c = String(confirm || "");
-  if (!n) return "New password is required.";
-  if (n.length < 8) return "Password must be at least 8 characters.";
-  if (c && c !== n) return "Passwords do not match.";
-  return "";
-}
+/**
+ * Centralized navigation targets for the unified Settings list.
+ * NOTE: "Settings" is kept as a row (per instructions) and routes to the detailed settings view.
+ * In this app, "/settings" is the settings hub itself, so "Settings" routes to the same page.
+ */
+const SETTINGS_ROWS = [
+  { key: "profile", title: "Profile & Skills", icon: IconUser, to: "/profile" },
+  { key: "notifications", title: "Notifications", icon: IconBell, to: "/notifications", showUnreadBadge: true },
+  { key: "settings", title: "Settings", icon: IconSliders, to: "/settings" },
+  { key: "career", title: "Career Preferences", icon: IconBriefcase, to: "/settings/career-preferences" },
+  { key: "mobile", title: "Change Mobile", icon: IconPhone, to: "/account/change-mobile" },
+  { key: "email", title: "Change Email", icon: IconMail, to: "/account/change-email" },
+  { key: "password", title: "Change Password", icon: IconLock, to: "/account/change-password" },
+];
 
 // PUBLIC_INTERFACE
 export default function SettingsPage() {
-  /** Settings screen with main list + two detailed sections and responsive split/stack navigation. */
+  /** Settings hub: unified single list (no section headers) with icon + title + chevron, matching Notifications list style. */
   const navigate = useNavigate();
-  const [params, setParams] = useSearchParams();
-  const { toast } = useToast();
-  const isDesktop = useIsDesktopSplit(980);
 
-  // "panel" controls which detailed view is shown: "career" | "account" | null
-  const panelParam = params.get("panel");
-  const panel = panelParam === "career" || panelParam === "account" ? panelParam : null;
-
-  // Demo local state for preferences/account (no backend wired).
-  const [career, setCareer] = useState({
-    role: "Frontend Engineer",
-    locations: "Remote",
-    experience: "Mid",
-    jobType: "Full-time",
-  });
-
-  const [account, setAccount] = useState({
-    mobile: "",
-    email: "",
-  });
-
-  // Account edit flow: mobile | email | password | null
-  const [accountFlow, setAccountFlow] = useState(null);
-
-  const [draftMobile, setDraftMobile] = useState("");
-  const [draftEmail, setDraftEmail] = useState("");
-  const [draftPwd, setDraftPwd] = useState({ current: "", next: "", confirm: "" });
-
-  const [errors, setErrors] = useState({ mobile: "", email: "", password: "" });
-
-  // Keep drafts aligned when opening flows.
-  useEffect(() => {
-    if (accountFlow === "mobile") setDraftMobile(account.mobile || "");
-    if (accountFlow === "email") setDraftEmail(account.email || "");
-    if (accountFlow === "password") setDraftPwd({ current: "", next: "", confirm: "" });
-    setErrors({ mobile: "", email: "", password: "" });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accountFlow]);
-
-  // If switching to desktop, keep the list visible and show detail side-by-side.
-  // If switching to mobile and a panel is open, we still allow it (stack mode).
-  useEffect(() => {
-    // On desktop, ensure a panel selection does not break layout; no special action required.
-    // On mobile, if a detail is open, we want the back button to return to list.
-  }, [isDesktop]);
-
-  const openPanel = (key) => {
-    if (key === "account" || key === "career") {
-      setParams({ panel: key });
-      if (key === "account") setAccountFlow(null);
-      return;
+  const unreadCount = useMemo(() => {
+    try {
+      const raw = window.localStorage.getItem("talenvia.notifications");
+      if (!raw) return 0;
+      const list = JSON.parse(raw);
+      if (!Array.isArray(list)) return 0;
+      return list.filter((n) => n && n.read === false).length;
+    } catch {
+      return 0;
     }
-    // For not-yet-built sections, show a friendly toast.
-    toast({
-      title: "Coming soon",
-      message: "This section is planned but not implemented yet in this demo.",
-      variant: "info",
-    });
-  };
-
-  const closePanel = () => {
-    setParams({});
-    setAccountFlow(null);
-  };
-
-  const showListOnly = !panel || (!isDesktop && panel); // on mobile, list hides when a panel is open (stack UX)
-  const showDetail = !!panel;
-
-  const settingsList = (
-    <div className="settings-list" role="list" aria-label="Settings options">
-      {SETTINGS_ITEMS.map((it) => (
-        <button
-          key={it.key}
-          type="button"
-          className={`settings-item ${it.disabled ? "disabled" : ""}`}
-          onClick={() => (it.disabled ? openPanel(it.key) : openPanel(it.key))}
-          aria-disabled={it.disabled ? "true" : "false"}
-          role="listitem"
-        >
-          <div className="settings-item-main">
-            <div className="settings-item-title">{it.title}</div>
-            <div className="settings-item-desc">{it.description}</div>
-          </div>
-          <span className="settings-item-right" aria-hidden="true">
-            <ChevronRight size={18} />
-          </span>
-        </button>
-      ))}
-    </div>
-  );
-
-  const saveCareer = () => {
-    toast({
-      title: "Saved",
-      message: "Career preferences updated successfully (demo).",
-      variant: "success",
-    });
-  };
-
-  const careerPanel = (
-    <div className="settings-panel">
-      <SectionHeader
-        title="Career Preferences"
-        subtitle="Update job roles, location preference, experience and job type."
-        onBack={!isDesktop ? closePanel : null}
-        right={
-          <Button type="button" variant="primary" size="sm" onClick={saveCareer}>
-            Save
-          </Button>
-        }
-      />
-
-      <Card title="Preferences" className="settings-card">
-        <div className="settings-form-grid">
-          <div>
-            <label className="mini" htmlFor="career-role">
-              Job role
-            </label>
-            <Input
-              id="career-role"
-              value={career.role}
-              onChange={(e) => setCareer((p) => ({ ...p, role: e.target.value }))}
-              placeholder="e.g., Data Analyst"
-              list="roles"
-            />
-            <datalist id="roles">
-              {ROLE_SUGGESTIONS.map((r) => (
-                <option key={r} value={r} />
-              ))}
-            </datalist>
-          </div>
-
-          <div>
-            <label className="mini" htmlFor="career-location">
-              Location / Work mode
-            </label>
-            <Select
-              id="career-location"
-              value={career.locations}
-              onChange={(e) => setCareer((p) => ({ ...p, locations: e.target.value }))}
-            >
-              {WORK_MODES.map((m) => (
-                <option key={m} value={m}>
-                  {m}
-                </option>
-              ))}
-            </Select>
-          </div>
-
-          <div>
-            <label className="mini" htmlFor="career-exp">
-              Experience
-            </label>
-            <Select
-              id="career-exp"
-              value={career.experience}
-              onChange={(e) => setCareer((p) => ({ ...p, experience: e.target.value }))}
-            >
-              {EXPERIENCES.map((x) => (
-                <option key={x} value={x}>
-                  {x}
-                </option>
-              ))}
-            </Select>
-          </div>
-
-          <div>
-            <label className="mini" htmlFor="career-type">
-              Job type
-            </label>
-            <Select
-              id="career-type"
-              value={career.jobType}
-              onChange={(e) => setCareer((p) => ({ ...p, jobType: e.target.value }))}
-            >
-              {JOB_TYPES.map((t) => (
-                <option key={t} value={t}>
-                  {t}
-                </option>
-              ))}
-            </Select>
-          </div>
-        </div>
-
-        <div className="hr" />
-        <p className="mini" style={{ margin: 0 }}>
-          These settings improve matching and recommendations once backend persistence is connected.
-        </p>
-      </Card>
-    </div>
-  );
-
-  const accountSummary = useMemo(() => {
-    const parts = [];
-    if (account.mobile) parts.push("Mobile set");
-    if (account.email) parts.push("Email set");
-    if (!parts.length) return "No account details updated yet.";
-    return parts.join(" • ");
-  }, [account.email, account.mobile]);
-
-  const saveMobile = () => {
-    const err = validateMobile(draftMobile);
-    setErrors((e) => ({ ...e, mobile: err }));
-    if (err) return;
-    setAccount((a) => ({ ...a, mobile: draftMobile.trim() }));
-    toast({ title: "Updated", message: "Mobile number updated successfully.", variant: "success" });
-    setAccountFlow(null);
-  };
-
-  const saveEmail = () => {
-    const err = validateEmail(draftEmail);
-    setErrors((e) => ({ ...e, email: err }));
-    if (err) return;
-    setAccount((a) => ({ ...a, email: draftEmail.trim() }));
-    toast({ title: "Updated", message: "Email updated successfully.", variant: "success" });
-    setAccountFlow(null);
-  };
-
-  const savePassword = () => {
-    const err = validatePassword(draftPwd.next, draftPwd.confirm);
-    setErrors((e) => ({ ...e, password: err }));
-    if (err) return;
-
-    // Demo-only behavior. Real apps must never store passwords client-side.
-    toast({ title: "Updated", message: "Password updated successfully (demo).", variant: "success" });
-    setAccountFlow(null);
-  };
-
-  const accountPanel = (
-    <div className="settings-panel">
-      <SectionHeader
-        title="Account"
-        subtitle="Manage mobile number, email address and password."
-        onBack={!isDesktop ? closePanel : null}
-        right={
-          <Button
-            type="button"
-            variant="ghost"
-            size="sm"
-            onClick={() => {
-              // Provide a helpful route to existing standalone pages (optional).
-              toast({ title: "Tip", message: "You can also use the dedicated routes from the sidebar.", variant: "info" });
-            }}
-          >
-            Help
-          </Button>
-        }
-      />
-
-      <Card title="Account overview" className="settings-card">
-        <p className="mini" style={{ marginTop: 0 }}>
-          {accountSummary}
-        </p>
-
-        <div className="settings-actions">
-          <button type="button" className="settings-action" onClick={() => setAccountFlow("mobile")}>
-            <div className="settings-action-main">
-              <div className="settings-action-title">Change Mobile Number</div>
-              <div className="settings-action-sub">{account.mobile ? account.mobile : "Not set"}</div>
-            </div>
-            <ChevronRight size={18} />
-          </button>
-
-          <button type="button" className="settings-action" onClick={() => setAccountFlow("email")}>
-            <div className="settings-action-main">
-              <div className="settings-action-title">Change Email</div>
-              <div className="settings-action-sub">{account.email ? account.email : "Not set"}</div>
-            </div>
-            <ChevronRight size={18} />
-          </button>
-
-          <button type="button" className="settings-action" onClick={() => setAccountFlow("password")}>
-            <div className="settings-action-main">
-              <div className="settings-action-title">Change Password</div>
-              <div className="settings-action-sub">Minimum 8 characters</div>
-            </div>
-            <ChevronRight size={18} />
-          </button>
-        </div>
-
-        {accountFlow ? (
-          <>
-            <div className="hr" />
-            <div className="settings-flow">
-              {accountFlow === "mobile" ? (
-                <>
-                  <div className="settings-flow-head">
-                    <h3 className="settings-flow-title">Update mobile number</h3>
-                    <div className="settings-flow-actions">
-                      <Button type="button" size="sm" variant="ghost" onClick={() => setAccountFlow(null)}>
-                        Cancel
-                      </Button>
-                      <Button type="button" size="sm" variant="primary" onClick={saveMobile}>
-                        Save
-                      </Button>
-                    </div>
-                  </div>
-                  <Input
-                    label="New mobile number"
-                    value={draftMobile}
-                    onChange={(e) => setDraftMobile(e.target.value)}
-                    placeholder="e.g., +1 555 123 4567"
-                    inputMode="tel"
-                    error={errors.mobile}
-                  />
-                </>
-              ) : null}
-
-              {accountFlow === "email" ? (
-                <>
-                  <div className="settings-flow-head">
-                    <h3 className="settings-flow-title">Update email address</h3>
-                    <div className="settings-flow-actions">
-                      <Button type="button" size="sm" variant="ghost" onClick={() => setAccountFlow(null)}>
-                        Cancel
-                      </Button>
-                      <Button type="button" size="sm" variant="primary" onClick={saveEmail}>
-                        Save
-                      </Button>
-                    </div>
-                  </div>
-                  <Input
-                    label="New email address"
-                    value={draftEmail}
-                    onChange={(e) => setDraftEmail(e.target.value)}
-                    placeholder="you@example.com"
-                    inputMode="email"
-                    error={errors.email}
-                  />
-                </>
-              ) : null}
-
-              {accountFlow === "password" ? (
-                <>
-                  <div className="settings-flow-head">
-                    <h3 className="settings-flow-title">Update password</h3>
-                    <div className="settings-flow-actions">
-                      <Button type="button" size="sm" variant="ghost" onClick={() => setAccountFlow(null)}>
-                        Cancel
-                      </Button>
-                      <Button type="button" size="sm" variant="primary" onClick={savePassword}>
-                        Save
-                      </Button>
-                    </div>
-                  </div>
-
-                  <Input
-                    label="Current password"
-                    type="password"
-                    value={draftPwd.current}
-                    onChange={(e) => setDraftPwd((p) => ({ ...p, current: e.target.value }))}
-                    placeholder="••••••••"
-                    autoComplete="current-password"
-                  />
-                  <Input
-                    label="New password"
-                    type="password"
-                    value={draftPwd.next}
-                    onChange={(e) => setDraftPwd((p) => ({ ...p, next: e.target.value }))}
-                    placeholder="••••••••"
-                    autoComplete="new-password"
-                    error={errors.password}
-                  />
-                  <Input
-                    label="Confirm new password"
-                    type="password"
-                    value={draftPwd.confirm}
-                    onChange={(e) => setDraftPwd((p) => ({ ...p, confirm: e.target.value }))}
-                    placeholder="••••••••"
-                    autoComplete="new-password"
-                    error={errors.password}
-                  />
-                  <div className="mini">
-                    Note: this is a frontend-only demo. Real apps must validate and update passwords on the server.
-                  </div>
-                </>
-              ) : null}
-            </div>
-          </>
-        ) : null}
-
-        <div className="hr" />
-        <div className="settings-secondary-actions">
-          <Button type="button" variant="secondary" onClick={() => navigate("/account/change-mobile")}>
-            Use dedicated Change Mobile page
-          </Button>
-          <Button type="button" variant="secondary" onClick={() => navigate("/account/change-email")}>
-            Use dedicated Change Email page
-          </Button>
-          <Button type="button" variant="secondary" onClick={() => navigate("/account/change-password")}>
-            Use dedicated Change Password page
-          </Button>
-        </div>
-      </Card>
-    </div>
-  );
-
-  const detail = panel === "career" ? careerPanel : panel === "account" ? accountPanel : null;
+  }, []);
 
   return (
     <div className="container">
       <div className="page-header">
         <div>
           <h1 className="page-title">Settings</h1>
-          <p className="page-subtitle">Manage account, privacy and career preferences.</p>
+          <p className="page-subtitle">Manage your profile, notifications, account security, and career preferences.</p>
         </div>
-
-        {/* Desktop convenience: allow closing the side panel to return to list-only */}
-        {isDesktop && panel ? (
-          <Button type="button" variant="ghost" size="sm" onClick={closePanel} aria-label="Close settings panel">
-            Close
-          </Button>
-        ) : null}
       </div>
 
-      <div className={`settings-layout ${isDesktop ? "split" : "stack"} ${panel ? "has-detail" : ""}`}>
-        {/* List column (desktop always visible; mobile visible only when no panel selected) */}
-        {isDesktop || !panel ? (
-          <div className="settings-col settings-col-list">
-            <Card title="Settings" className="settings-card">
-              {settingsList}
-            </Card>
-          </div>
-        ) : null}
+      <div className="grid" style={{ maxWidth: 760 }}>
+        <Card title="Settings">
+          <div className="list" aria-label="Settings options">
+            {SETTINGS_ROWS.map((row) => {
+              const Icon = row.icon;
+              return (
+                <button
+                  key={row.key}
+                  type="button"
+                  className="list-item settings-unified-item"
+                  onClick={() => navigate(row.to)}
+                  aria-label={row.title}
+                >
+                  <div className="settings-unified-left">
+                    <span className="settings-unified-icon" aria-hidden="true">
+                      <Icon size={18} />
+                    </span>
+                    <div className="settings-unified-titlewrap">
+                      <h4 className="settings-unified-title" style={{ margin: 0 }}>
+                        {row.title}{" "}
+                        {row.showUnreadBadge && unreadCount > 0 ? (
+                          <Badge variant="secondary">{unreadCount}</Badge>
+                        ) : null}
+                      </h4>
+                    </div>
+                  </div>
 
-        {/* Detail column */}
-        {showDetail ? (
-          <div className="settings-col settings-col-detail" aria-label="Settings detail">
-            <Card title={panel === "career" ? "Career Preferences" : "Account"} className="settings-card settings-detail-card">
-              {detail}
-            </Card>
+                  <span className="settings-unified-right" aria-hidden="true">
+                    <ChevronRight size={18} />
+                  </span>
+                </button>
+              );
+            })}
           </div>
-        ) : isDesktop ? (
-          <div className="settings-col settings-col-detail" aria-label="Settings detail">
-            <Card title="Select an item" className="settings-card settings-detail-card">
-              <p className="mini" style={{ marginTop: 0 }}>
-                Choose an option on the left to view and edit settings.
-              </p>
-            </Card>
-          </div>
-        ) : null}
+        </Card>
       </div>
     </div>
   );

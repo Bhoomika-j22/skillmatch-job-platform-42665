@@ -1314,6 +1314,61 @@ a {
   font-size: 13px;
 }
 
+/* =========================================================
+   Unified Settings list rows
+   - Reuse Notifications list-item visuals
+   - Add icon + chevron layout + button reset
+   ========================================================= */
+
+.list-item.settings-unified-item {
+  width: 100%;
+  cursor: pointer;
+  text-align: left;
+  appearance: none;
+}
+
+.list-item.settings-unified-item:focus-visible {
+  box-shadow: var(--focus-ring-strong);
+  border-radius: 14px;
+}
+
+.settings-unified-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.settings-unified-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: rgba(129, 140, 248, 0.12);
+  border: 1px solid rgba(79, 70, 229, 0.14);
+  color: rgba(79, 70, 229, 0.92);
+  flex: 0 0 auto;
+}
+
+.settings-unified-titlewrap {
+  min-width: 0;
+}
+
+.settings-unified-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(17, 24, 39, 0.90);
+  letter-spacing: -0.01em;
+}
+
+.settings-unified-right {
+  display: inline-flex;
+  align-items: center;
+  color: rgba(17, 24, 39, 0.45);
+  flex: 0 0 auto;
+}
+
 .split {
   display: grid;
   grid-template-columns: 320px 1fr;
