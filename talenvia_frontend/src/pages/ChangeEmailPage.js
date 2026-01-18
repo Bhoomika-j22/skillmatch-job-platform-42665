@@ -13,7 +13,9 @@ export default function ChangeEmailPage() {
       <div className="page-header">
         <div>
           <h1 className="page-title">Change Email</h1>
-          <p className="page-subtitle">Update the email address used for account notifications and login.</p>
+          <p className="page-subtitle">
+            Update the email address used for account notifications and login.
+          </p>
         </div>
       </div>
 

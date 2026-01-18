@@ -14,7 +14,9 @@ import ProfilePage from "./pages/ProfilePage";
 import ChallengesPage from "./pages/ChallengesPage";
 import MockTestsPage from "./pages/MockTestsPage";
 import ApplicationsPage from "./pages/ApplicationsPage";
-import NotificationsPage, { getInitialNotifications } from "./pages/NotificationsPage";
+import NotificationsPage, {
+  getInitialNotifications,
+} from "./pages/NotificationsPage";
 import CareerPreferencesPage from "./pages/CareerPreferencesPage";
 import ChangeMobilePage from "./pages/ChangeMobilePage";
 import ChangeEmailPage from "./pages/ChangeEmailPage";
@@ -43,12 +45,27 @@ function App() {
     skills: ["React", "CSS", "REST APIs"],
   });
 
-  const [applications, setApplications] = useLocalStorage("talenvia.applications", []);
-  const [completedChallenges, setCompletedChallenges] = useLocalStorage("talenvia.challenges.completed", []);
-  const [testHistory, setTestHistory] = useLocalStorage("talenvia.tests.history", []);
-  const [notifications, setNotifications] = useLocalStorage("talenvia.notifications", getInitialNotifications());
+  const [applications, setApplications] = useLocalStorage(
+    "talenvia.applications",
+    [],
+  );
+  const [completedChallenges, setCompletedChallenges] = useLocalStorage(
+    "talenvia.challenges.completed",
+    [],
+  );
+  const [testHistory, setTestHistory] = useLocalStorage(
+    "talenvia.tests.history",
+    [],
+  );
+  const [notifications, setNotifications] = useLocalStorage(
+    "talenvia.notifications",
+    getInitialNotifications(),
+  );
 
-  const unreadCount = useMemo(() => notifications.filter((n) => !n.read).length, [notifications]);
+  const unreadCount = useMemo(
+    () => notifications.filter((n) => !n.read).length,
+    [notifications],
+  );
 
   const handleApply = (job, opts = {}) => {
     const id = `app_${job.id}_${Date.now()}`;
@@ -67,7 +84,14 @@ function App() {
 
     // add a notification
     setNotifications((prev) => [
-      { id: `n_${Date.now()}`, type: "application", title: "Application tracked", body: `Added ${job.title} at ${job.company}.`, time: "now", read: false },
+      {
+        id: `n_${Date.now()}`,
+        type: "application",
+        title: "Application tracked",
+        body: `Added ${job.title} at ${job.company}.`,
+        time: "now",
+        read: false,
+      },
       ...(prev || []),
     ]);
   };
@@ -79,7 +103,8 @@ function App() {
       const mins = dt ? Math.round((Date.now() - dt.getTime()) / 60000) : null;
       let label = a.trackedAtLabel || "recently";
       if (mins !== null && mins < 60) label = `${mins}m ago`;
-      else if (mins !== null) label = `${Math.max(1, Math.round(mins / 60))}h ago`;
+      else if (mins !== null)
+        label = `${Math.max(1, Math.round(mins / 60))}h ago`;
       return { ...a, trackedAtLabel: label };
     });
   }, [applications]);
@@ -111,7 +136,10 @@ function App() {
               </div>
 
               <div className="topheader-right" aria-label="Header actions">
-                <NotificationBell notifications={notifications} setNotifications={setNotifications} />
+                <NotificationBell
+                  notifications={notifications}
+                  setNotifications={setNotifications}
+                />
                 <ProfileMenu profileName={profile?.name} />
               </div>
             </div>
@@ -123,9 +151,27 @@ function App() {
             <div className="app-main-inner app-main-inner--with-topheader">
               <div className="app-content">
                 <Routes>
-                  <Route path="/" element={<DashboardPage profile={profile} applications={applicationsWithLabels} />} />
-                  <Route path="/jobs" element={<JobsPage profile={profile} onApply={handleApply} />} />
-                  <Route path="/profile" element={<ProfilePage profile={profile} setProfile={setProfile} />} />
+                  <Route
+                    path="/"
+                    element={
+                      <DashboardPage
+                        profile={profile}
+                        applications={applicationsWithLabels}
+                      />
+                    }
+                  />
+                  <Route
+                    path="/jobs"
+                    element={
+                      <JobsPage profile={profile} onApply={handleApply} />
+                    }
+                  />
+                  <Route
+                    path="/profile"
+                    element={
+                      <ProfilePage profile={profile} setProfile={setProfile} />
+                    }
+                  />
                   <Route
                     path="/challenges"
                     element={
@@ -137,26 +183,65 @@ function App() {
                   />
                   <Route
                     path="/mock-tests"
-                    element={<MockTestsPage testHistory={testHistory} setTestHistory={setTestHistory} />}
+                    element={
+                      <MockTestsPage
+                        testHistory={testHistory}
+                        setTestHistory={setTestHistory}
+                      />
+                    }
                   />
                   <Route
                     path="/applications"
-                    element={<ApplicationsPage applications={applicationsWithLabels} setApplications={setApplications} />}
+                    element={
+                      <ApplicationsPage
+                        applications={applicationsWithLabels}
+                        setApplications={setApplications}
+                      />
+                    }
                   />
                   <Route
                     path="/notifications"
-                    element={<NotificationsPage notifications={notifications} setNotifications={setNotifications} />}
+                    element={
+                      <NotificationsPage
+                        notifications={notifications}
+                        setNotifications={setNotifications}
+                      />
+                    }
                   />
 
                   <Route path="/settings" element={<SettingsPage />} />
-                  <Route path="/settings/account" element={<SettingsAccountPage />} />
-                  <Route path="/settings/details" element={<SettingsDetailPage />} />
-                  <Route path="/settings/career-preferences" element={<CareerPreferencesPage />} />
-                  <Route path="/settings/blocked-companies" element={<BlockedCompaniesPage />} />
-                  <Route path="/settings/blocked-companies" element={<BlockedCompaniesPage />} />
-                  <Route path="/account/change-mobile" element={<ChangeMobilePage />} />
-                  <Route path="/account/change-email" element={<ChangeEmailPage />} />
-                  <Route path="/account/change-password" element={<ChangePasswordPage />} />
+                  <Route
+                    path="/settings/account"
+                    element={<SettingsAccountPage />}
+                  />
+                  <Route
+                    path="/settings/details"
+                    element={<SettingsDetailPage />}
+                  />
+                  <Route
+                    path="/settings/career-preferences"
+                    element={<CareerPreferencesPage />}
+                  />
+                  <Route
+                    path="/settings/blocked-companies"
+                    element={<BlockedCompaniesPage />}
+                  />
+                  <Route
+                    path="/settings/blocked-companies"
+                    element={<BlockedCompaniesPage />}
+                  />
+                  <Route
+                    path="/account/change-mobile"
+                    element={<ChangeMobilePage />}
+                  />
+                  <Route
+                    path="/account/change-email"
+                    element={<ChangeEmailPage />}
+                  />
+                  <Route
+                    path="/account/change-password"
+                    element={<ChangePasswordPage />}
+                  />
 
                   <Route path="/about" element={<AboutPage />} />
                   <Route path="/how-it-works" element={<HowItWorksPage />} />

@@ -25,12 +25,16 @@ function ChevronDown({ size = 16 }) {
       focusable="false"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <path d="m6 9 6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        d="m6 9 6 6 6-6"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
-
-
 
 // PUBLIC_INTERFACE
 export default function ProfileMenu({ profileName = "" }) {
@@ -41,7 +45,10 @@ export default function ProfileMenu({ profileName = "" }) {
   const [open, setOpen] = useState(false);
   const rootRef = useRef(null);
   const triggerRef = useRef(null);
-  const triggerId = useMemo(() => `profile-trigger-${Math.random().toString(16).slice(2)}`, []);
+  const triggerId = useMemo(
+    () => `profile-trigger-${Math.random().toString(16).slice(2)}`,
+    [],
+  );
 
   const displayName = String(profileName || "").trim() || "Guest";
   const initials = useMemo(() => getInitials(displayName), [displayName]);
@@ -113,14 +120,28 @@ export default function ProfileMenu({ profileName = "" }) {
       </button>
 
       {open ? (
-        <div className="profile-dropdown" role="menu" aria-labelledby={triggerId}>
-          <button type="button" className="profile-item" role="menuitem" onClick={goProfile}>
+        <div
+          className="profile-dropdown"
+          role="menu"
+          aria-labelledby={triggerId}
+        >
+          <button
+            type="button"
+            className="profile-item"
+            role="menuitem"
+            onClick={goProfile}
+          >
             Profile
           </button>
 
           <div className="profile-divider" role="separator" />
 
-          <button type="button" className="profile-item danger" role="menuitem" onClick={logout}>
+          <button
+            type="button"
+            className="profile-item danger"
+            role="menuitem"
+            onClick={logout}
+          >
             Logout
           </button>
         </div>

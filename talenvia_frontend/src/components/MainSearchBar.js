@@ -11,8 +11,17 @@ function SearchIcon({ size = 16 }) {
       focusable="false"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <path d="M11 19a8 8 0 1 1 0-16 8 8 0 0 1 0 16Z" stroke="currentColor" strokeWidth="2" />
-      <path d="M21 21l-4.35-4.35" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path
+        d="M11 19a8 8 0 1 1 0-16 8 8 0 0 1 0 16Z"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+      <path
+        d="M21 21l-4.35-4.35"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
@@ -45,11 +54,31 @@ export default function MainSearchBar({
 
   const isHeader = variant === "header";
   const isDashboard = variant === "dashboard";
-  const rootClass = isHeader ? "header-search" : isDashboard ? "dash-page-search" : "main-search";
-  const formClass = isHeader ? "header-search-form" : isDashboard ? "dash-page-search-form" : "main-search-form";
-  const iconClass = isHeader ? "header-search-icon" : isDashboard ? "dash-page-search-icon" : "main-search-icon";
-  const inputClass = isHeader ? "header-search-input" : isDashboard ? "dash-page-search-input" : "main-search-input";
-  const inputId = isHeader ? "header-search-input" : isDashboard ? "dash-page-search-input" : "main-search-input";
+  const rootClass = isHeader
+    ? "header-search"
+    : isDashboard
+      ? "dash-page-search"
+      : "main-search";
+  const formClass = isHeader
+    ? "header-search-form"
+    : isDashboard
+      ? "dash-page-search-form"
+      : "main-search-form";
+  const iconClass = isHeader
+    ? "header-search-icon"
+    : isDashboard
+      ? "dash-page-search-icon"
+      : "main-search-icon";
+  const inputClass = isHeader
+    ? "header-search-input"
+    : isDashboard
+      ? "dash-page-search-input"
+      : "main-search-input";
+  const inputId = isHeader
+    ? "header-search-input"
+    : isDashboard
+      ? "dash-page-search-input"
+      : "main-search-input";
 
   return (
     <div className={rootClass} aria-label="Search area">

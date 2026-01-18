@@ -4,15 +4,35 @@ import { Button, Card } from "../components/ui";
 
 function IconArrowLeft({ size = 18 }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
-      <path d="M15 18 9 12l6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path
+        d="M15 18 9 12l6-6"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
 
 function IconStar({ size = 18 }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+      focusable="false"
+    >
       <path
         d="M12 2l3 7 7 .5-5.5 4.6 1.8 7.4L12 17.8 5.7 21.5l1.8-7.4L2 9.5 9 9l3-7Z"
         stroke="currentColor"
@@ -32,8 +52,15 @@ export default function AboutPage() {
     <div className="container">
       <div className="page-header" style={{ alignItems: "flex-start" }}>
         <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-          <Button variant="ghost" type="button" onClick={() => navigate("/")} aria-label="Back to Dashboard">
-            <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+          <Button
+            variant="ghost"
+            type="button"
+            onClick={() => navigate("/")}
+            aria-label="Back to Dashboard"
+          >
+            <span
+              style={{ display: "inline-flex", alignItems: "center", gap: 8 }}
+            >
               <span aria-hidden="true">
                 <IconArrowLeft size={18} />
               </span>
@@ -44,7 +71,8 @@ export default function AboutPage() {
           <div>
             <h1 className="page-title">About Talenvia</h1>
             <p className="page-subtitle">
-              A modern, skill-first job platform designed to help you move from “searching” to “shortlisted” with clarity.
+              A modern, skill-first job platform designed to help you move from
+              “searching” to “shortlisted” with clarity.
             </p>
           </div>
         </div>
@@ -56,9 +84,10 @@ export default function AboutPage() {
             <div>
               <h2 className="info-title">Our mission</h2>
               <p className="info-lead">
-                Talenvia helps candidates find roles that actually match their skills, preferences, and growth goals—without
-                endless scrolling. We bring structure to your job search through a clean dashboard, smart recommendations,
-                and progress-based tools.
+                Talenvia helps candidates find roles that actually match their
+                skills, preferences, and growth goals—without endless scrolling.
+                We bring structure to your job search through a clean dashboard,
+                smart recommendations, and progress-based tools.
               </p>
             </div>
 

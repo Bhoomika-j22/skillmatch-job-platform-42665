@@ -13,7 +13,9 @@ export default function ChangeMobilePage() {
       <div className="page-header">
         <div>
           <h1 className="page-title">Change Mobile</h1>
-          <p className="page-subtitle">Update the mobile number associated with your account.</p>
+          <p className="page-subtitle">
+            Update the mobile number associated with your account.
+          </p>
         </div>
       </div>
 
@@ -37,7 +39,8 @@ export default function ChangeMobilePage() {
               onClick={() =>
                 toast({
                   title: "Requested (demo)",
-                  message: "Mobile update flow is not connected to backend yet.",
+                  message:
+                    "Mobile update flow is not connected to backend yet.",
                   variant: "info",
                 })
               }

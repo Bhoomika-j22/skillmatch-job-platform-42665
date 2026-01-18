@@ -3,9 +3,18 @@ import React, { forwardRef, useId } from "react";
 /** Small presentational components mapped to App.css utility classes. */
 
 // PUBLIC_INTERFACE
-export function Card({ title, header, footer, compact = false, children, className = "" }) {
+export function Card({
+  title,
+  header,
+  footer,
+  compact = false,
+  children,
+  className = "",
+}) {
   /** Card container with optional title, header/footer slots, and compact mode. */
-  const cls = ["card", compact ? "compact" : "", className].filter(Boolean).join(" ");
+  const cls = ["card", compact ? "compact" : "", className]
+    .filter(Boolean)
+    .join(" ");
   return (
     <section className={cls.trim()}>
       {(title || header) && (
@@ -25,7 +34,9 @@ export function Card({ title, header, footer, compact = false, children, classNa
 // PUBLIC_INTERFACE
 export function Badge({ variant = "default", children, className = "" }) {
   /** Rounded badge with theme variants: default|primary|secondary|success|error|warn|info */
-  const cls = ["badge", variant !== "default" ? variant : "", className].filter(Boolean).join(" ");
+  const cls = ["badge", variant !== "default" ? variant : "", className]
+    .filter(Boolean)
+    .join(" ");
   return <span className={cls}>{children}</span>;
 }
 
@@ -40,11 +51,18 @@ export function Button({
   ...props
 }) {
   /** Button with variants: default | primary | secondary | ghost; sizes: sm|md|lg; optional loading state. */
-  const cls = ["btn", variant !== "default" ? variant : "", size, className].filter(Boolean).join(" ");
+  const cls = ["btn", variant !== "default" ? variant : "", size, className]
+    .filter(Boolean)
+    .join(" ");
   const isDisabled = !!disabled || !!loading;
 
   return (
-    <button className={cls.trim()} disabled={isDisabled} aria-disabled={isDisabled} {...props}>
+    <button
+      className={cls.trim()}
+      disabled={isDisabled}
+      aria-disabled={isDisabled}
+      {...props}
+    >
       {loading ? <span className="btn-spinner" aria-hidden="true" /> : null}
       <span>{children}</span>
     </button>
@@ -54,7 +72,7 @@ export function Button({
 // PUBLIC_INTERFACE
 export const Input = forwardRef(function Input(
   { label, helperText, error, id, className = "", ...props },
-  ref
+  ref,
 ) {
   /**
    * Text input with app styling and optional label/helper/error text.
@@ -90,11 +108,26 @@ export const Input = forwardRef(function Input(
     );
   }
 
-  return <input ref={ref} id={inputId} className={`input ${className}`.trim()} {...props} />;
+  return (
+    <input
+      ref={ref}
+      id={inputId}
+      className={`input ${className}`.trim()}
+      {...props}
+    />
+  );
 });
 
 // PUBLIC_INTERFACE
-export function Select({ label, helperText, error, id, className = "", children, ...props }) {
+export function Select({
+  label,
+  helperText,
+  error,
+  id,
+  className = "",
+  children,
+  ...props
+}) {
   /** Select with app styling and optional label/helper/error text. */
   const autoId = useId();
   const selectId = id || autoId;

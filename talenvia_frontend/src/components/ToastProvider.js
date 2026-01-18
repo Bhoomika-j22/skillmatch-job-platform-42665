@@ -1,4 +1,11 @@
-import React, { createContext, useCallback, useContext, useMemo, useRef, useState } from "react";
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { Button } from "./ui";
 
 const ToastContext = createContext(null);
@@ -31,26 +38,32 @@ export default function ToastProvider({ children }) {
   }, []);
 
   const toast = useCallback(
-    (
-      {
+    ({
+      title,
+      message = "",
+      variant = "info",
+      durationMs = 2600,
+      actionLabel,
+      onAction,
+      dismissLabel = "Dismiss",
+    } = {}) => {
+      const id = `t_${Date.now()}_${idRef.current++}`;
+      const next = {
+        id,
         title,
-        message = "",
-        variant = "info",
-        durationMs = 2600,
+        message,
+        variant,
         actionLabel,
         onAction,
-        dismissLabel = "Dismiss",
-      } = {}
-    ) => {
-      const id = `t_${Date.now()}_${idRef.current++}`;
-      const next = { id, title, message, variant, actionLabel, onAction, dismissLabel };
+        dismissLabel,
+      };
       setToasts((prev) => [next, ...(prev || [])].slice(0, 4));
 
       if (durationMs > 0) {
         window.setTimeout(() => remove(id), durationMs);
       }
     },
-    [remove]
+    [remove],
   );
 
   const value = useMemo(() => ({ toast }), [toast]);

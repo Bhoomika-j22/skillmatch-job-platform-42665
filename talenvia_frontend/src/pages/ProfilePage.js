@@ -19,7 +19,11 @@ export default function ProfilePage({ profile, setProfile }) {
     if (!s) return;
     if (skills.map((x) => x.toLowerCase()).includes(s.toLowerCase())) {
       setSkillInput("");
-      toast({ title: "Already added", message: `${s} is already in your skills.`, variant: "info" });
+      toast({
+        title: "Already added",
+        message: `${s} is already in your skills.`,
+        variant: "info",
+      });
       return;
     }
     setProfile((p) => ({ ...p, skills: [...(p.skills || []), s] }));
@@ -30,13 +34,17 @@ export default function ProfilePage({ profile, setProfile }) {
   const removeSkill = (skill) => {
     const ok = window.confirm(`Remove skill "${skill}"?`);
     if (!ok) return;
-    setProfile((p) => ({ ...p, skills: (p.skills || []).filter((x) => x !== skill) }));
+    setProfile((p) => ({
+      ...p,
+      skills: (p.skills || []).filter((x) => x !== skill),
+    }));
     toast({ title: "Skill removed", message: skill, variant: "warn" });
   };
 
   const matchHint = useMemo(() => {
     if (skills.length === 0) return "Add 5–8 skills to unlock better matching.";
-    if (skills.length < 5) return "Good start — add a few more for higher match accuracy.";
+    if (skills.length < 5)
+      return "Good start — add a few more for higher match accuracy.";
     return "Great coverage — your matches should look strong.";
   }, [skills.length]);
 
@@ -45,15 +53,31 @@ export default function ProfilePage({ profile, setProfile }) {
       <div className="page-header">
         <div>
           <h1 className="page-title">Profile & Skills</h1>
-          <p className="page-subtitle">Build a skill-based profile that powers job matches, tests, and challenges.</p>
+          <p className="page-subtitle">
+            Build a skill-based profile that powers job matches, tests, and
+            challenges.
+          </p>
         </div>
-        <div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
+        <div
+          style={{
+            display: "flex",
+            gap: 10,
+            flexWrap: "wrap",
+            alignItems: "center",
+          }}
+        >
           <Badge variant="primary">{skills.length} skills</Badge>
           <Button
             size="sm"
             variant="primary"
             type="button"
-            onClick={() => toast({ title: "Profile saved", message: "Your profile is stored locally (demo).", variant: "success" })}
+            onClick={() =>
+              toast({
+                title: "Profile saved",
+                message: "Your profile is stored locally (demo).",
+                variant: "success",
+              })
+            }
             aria-label="Save profile"
           >
             Save
@@ -73,7 +97,9 @@ export default function ProfilePage({ profile, setProfile }) {
           <Input
             id="name"
             value={profile.name}
-            onChange={(e) => setProfile((p) => ({ ...p, name: e.target.value }))}
+            onChange={(e) =>
+              setProfile((p) => ({ ...p, name: e.target.value }))
+            }
             placeholder="Your name"
           />
           <div style={{ height: 10 }} />
@@ -84,12 +110,17 @@ export default function ProfilePage({ profile, setProfile }) {
           <Input
             id="role"
             value={profile.targetRole}
-            onChange={(e) => setProfile((p) => ({ ...p, targetRole: e.target.value }))}
+            onChange={(e) =>
+              setProfile((p) => ({ ...p, targetRole: e.target.value }))
+            }
             placeholder="e.g., Frontend Engineer"
           />
           <div style={{ height: 10 }} />
 
-          <div className="grid" style={{ gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+          <div
+            className="grid"
+            style={{ gridTemplateColumns: "1fr 1fr", gap: 12 }}
+          >
             <div>
               <label className="mini" htmlFor="level">
                 Level
@@ -97,7 +128,9 @@ export default function ProfilePage({ profile, setProfile }) {
               <Select
                 id="level"
                 value={profile.level}
-                onChange={(e) => setProfile((p) => ({ ...p, level: e.target.value }))}
+                onChange={(e) =>
+                  setProfile((p) => ({ ...p, level: e.target.value }))
+                }
               >
                 {LEVELS.map((l) => (
                   <option key={l} value={l}>
@@ -113,7 +146,9 @@ export default function ProfilePage({ profile, setProfile }) {
               <Select
                 id="pref"
                 value={profile.preference}
-                onChange={(e) => setProfile((p) => ({ ...p, preference: e.target.value }))}
+                onChange={(e) =>
+                  setProfile((p) => ({ ...p, preference: e.target.value }))
+                }
               >
                 {LOC_PREF.map((p) => (
                   <option key={p} value={p}>
@@ -146,7 +181,9 @@ export default function ProfilePage({ profile, setProfile }) {
             </Button>
           </div>
 
-          <div style={{ marginTop: 12, display: "flex", flexWrap: "wrap", gap: 8 }}>
+          <div
+            style={{ marginTop: 12, display: "flex", flexWrap: "wrap", gap: 8 }}
+          >
             {skills.map((s) => (
               <button
                 key={s}
@@ -160,12 +197,17 @@ export default function ProfilePage({ profile, setProfile }) {
                 {s} <span aria-hidden="true">×</span>
               </button>
             ))}
-            {skills.length === 0 ? <span className="mini">No skills yet. Add a few to get started.</span> : null}
+            {skills.length === 0 ? (
+              <span className="mini">
+                No skills yet. Add a few to get started.
+              </span>
+            ) : null}
           </div>
 
           <div className="hr" />
           <p className="mini" style={{ margin: 0 }}>
-            Tip: keep skills specific (e.g., “React Hooks”, “REST APIs”, “PostgreSQL”).
+            Tip: keep skills specific (e.g., “React Hooks”, “REST APIs”,
+            “PostgreSQL”).
           </p>
         </Card>
       </div>

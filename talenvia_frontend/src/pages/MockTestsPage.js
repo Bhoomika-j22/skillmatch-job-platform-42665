@@ -8,19 +8,35 @@ export default function MockTestsPage({ testHistory, setTestHistory }) {
   /** Mock tests list and a basic "start/finish" flow stored locally. */
   const { toast } = useToast();
   const [activeId, setActiveId] = useState("");
-  const active = useMemo(() => MOCK_TESTS.find((t) => t.id === activeId) || null, [activeId]);
+  const active = useMemo(
+    () => MOCK_TESTS.find((t) => t.id === activeId) || null,
+    [activeId],
+  );
 
   const start = (id) => setActiveId(id);
 
   const finish = () => {
     if (!active) return;
-    const score = Math.max(50, Math.min(100, Math.round(60 + Math.random() * 35)));
+    const score = Math.max(
+      50,
+      Math.min(100, Math.round(60 + Math.random() * 35)),
+    );
     setTestHistory((prev) => [
-      { id: `${active.id}_${Date.now()}`, testId: active.id, title: active.title, score, at: new Date().toISOString() },
+      {
+        id: `${active.id}_${Date.now()}`,
+        testId: active.id,
+        title: active.title,
+        score,
+        at: new Date().toISOString(),
+      },
       ...(prev || []),
     ]);
     setActiveId("");
-    toast({ title: "Score saved", message: `${active.title} • ${score}%`, variant: "success" });
+    toast({
+      title: "Score saved",
+      message: `${active.title} • ${score}%`,
+      variant: "success",
+    });
   };
 
   return (
@@ -28,7 +44,9 @@ export default function MockTestsPage({ testHistory, setTestHistory }) {
       <div className="page-header">
         <div>
           <h1 className="page-title">Mock Tests</h1>
-          <p className="page-subtitle">Practice with timed tests and track your scores over time.</p>
+          <p className="page-subtitle">
+            Practice with timed tests and track your scores over time.
+          </p>
         </div>
         <Badge variant="primary">{(testHistory || []).length} attempts</Badge>
       </div>
@@ -37,7 +55,11 @@ export default function MockTestsPage({ testHistory, setTestHistory }) {
         <Card title="Available tests">
           <div className="list">
             {MOCK_TESTS.map((t) => (
-              <div key={t.id} className="list-item" style={{ alignItems: "center" }}>
+              <div
+                key={t.id}
+                className="list-item"
+                style={{ alignItems: "center" }}
+              >
                 <div>
                   <h4 style={{ margin: 0 }}>{t.title}</h4>
                   <p style={{ margin: "4px 0 0" }}>
@@ -46,7 +68,11 @@ export default function MockTestsPage({ testHistory, setTestHistory }) {
                     </span>
                   </p>
                 </div>
-                <Button variant="primary" type="button" onClick={() => start(t.id)}>
+                <Button
+                  variant="primary"
+                  type="button"
+                  onClick={() => start(t.id)}
+                >
                   Start
                 </Button>
               </div>
@@ -67,7 +93,8 @@ export default function MockTestsPage({ testHistory, setTestHistory }) {
               </div>
               <div className="hr" />
               <p className="mini" style={{ marginTop: 0 }}>
-                Placeholder experience: click “Finish” to record a simulated score.
+                Placeholder experience: click “Finish” to record a simulated
+                score.
               </p>
               <Button variant="primary" type="button" onClick={finish}>
                 Finish & Save Score
@@ -79,8 +106,14 @@ export default function MockTestsPage({ testHistory, setTestHistory }) {
             </>
           ) : (
             <>
-              <p style={{ marginTop: 0, color: "var(--muted)" }}>Select a test to begin.</p>
-              <Select value={activeId} onChange={(e) => setActiveId(e.target.value)} aria-label="Select a test">
+              <p style={{ marginTop: 0, color: "var(--muted)" }}>
+                Select a test to begin.
+              </p>
+              <Select
+                value={activeId}
+                onChange={(e) => setActiveId(e.target.value)}
+                aria-label="Select a test"
+              >
                 <option value="">Choose…</option>
                 {MOCK_TESTS.map((t) => (
                   <option key={t.id} value={t.id}>
@@ -98,14 +131,20 @@ export default function MockTestsPage({ testHistory, setTestHistory }) {
           {(testHistory || []).length ? (
             <div className="list">
               {(testHistory || []).slice(0, 8).map((h) => (
-                <div key={h.id} className="list-item" style={{ alignItems: "center" }}>
+                <div
+                  key={h.id}
+                  className="list-item"
+                  style={{ alignItems: "center" }}
+                >
                   <div>
                     <h4 style={{ margin: 0 }}>{h.title}</h4>
                     <p style={{ margin: "4px 0 0" }} className="mini">
                       {new Date(h.at).toLocaleString()}
                     </p>
                   </div>
-                  <Badge variant={h.score >= 80 ? "primary" : "secondary"}>{h.score}%</Badge>
+                  <Badge variant={h.score >= 80 ? "primary" : "secondary"}>
+                    {h.score}%
+                  </Badge>
                 </div>
               ))}
             </div>

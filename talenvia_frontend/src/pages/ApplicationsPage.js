@@ -26,7 +26,9 @@ export default function ApplicationsPage({ applications, setApplications }) {
   }, [applications, filter]);
 
   const updateStatus = (id, status) => {
-    setApplications((prev) => prev.map((a) => (a.id === id ? { ...a, status } : a)));
+    setApplications((prev) =>
+      prev.map((a) => (a.id === id ? { ...a, status } : a)),
+    );
   };
 
   const addNoteToFirst = () => {
@@ -34,10 +36,22 @@ export default function ApplicationsPage({ applications, setApplications }) {
     const first = applications[0];
     setApplications((prev) =>
       prev.map((a) =>
-        a.id === first.id ? { ...a, notes: [...(a.notes || []), { text: note.trim(), at: new Date().toISOString() }] } : a
-      )
+        a.id === first.id
+          ? {
+              ...a,
+              notes: [
+                ...(a.notes || []),
+                { text: note.trim(), at: new Date().toISOString() },
+              ],
+            }
+          : a,
+      ),
     );
-    toast({ title: "Note added", message: `Added to ${first.jobTitle}`, variant: "success" });
+    toast({
+      title: "Note added",
+      message: `Added to ${first.jobTitle}`,
+      variant: "success",
+    });
     setNote("");
   };
 
@@ -46,11 +60,24 @@ export default function ApplicationsPage({ applications, setApplications }) {
       <div className="page-header">
         <div>
           <h1 className="page-title">Applications</h1>
-          <p className="page-subtitle">Your pipeline at a glance: update statuses and keep notes.</p>
+          <p className="page-subtitle">
+            Your pipeline at a glance: update statuses and keep notes.
+          </p>
         </div>
-        <div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
+        <div
+          style={{
+            display: "flex",
+            gap: 10,
+            flexWrap: "wrap",
+            alignItems: "center",
+          }}
+        >
           <Badge variant="primary">{summary.total} total</Badge>
-          <Select value={filter} onChange={(e) => setFilter(e.target.value)} aria-label="Filter by status">
+          <Select
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+            aria-label="Filter by status"
+          >
             <option value="All">All</option>
             {STATUSES.map((s) => (
               <option key={s} value={s}>
@@ -75,11 +102,21 @@ export default function ApplicationsPage({ applications, setApplications }) {
       <div className="grid grid-2" style={{ marginTop: 16 }}>
         <Card title="Quick Note (demo)">
           <p className="mini" style={{ marginTop: 0 }}>
-            Adds a note to your most recent tracked application (placeholder behavior).
+            Adds a note to your most recent tracked application (placeholder
+            behavior).
           </p>
-          <Input value={note} onChange={(e) => setNote(e.target.value)} placeholder="e.g., Recruiter asked for portfolio…" />
+          <Input
+            value={note}
+            onChange={(e) => setNote(e.target.value)}
+            placeholder="e.g., Recruiter asked for portfolio…"
+          />
           <div style={{ height: 10 }} />
-          <Button variant="primary" type="button" onClick={addNoteToFirst} disabled={!note.trim() || applications.length === 0}>
+          <Button
+            variant="primary"
+            type="button"
+            onClick={addNoteToFirst}
+            disabled={!note.trim() || applications.length === 0}
+          >
             Add Note
           </Button>
         </Card>
@@ -94,28 +131,52 @@ export default function ApplicationsPage({ applications, setApplications }) {
           </div>
           <div className="hr" />
           <p className="mini" style={{ margin: 0 }}>
-            In the full product, statuses would sync to backend via REACT_APP_API_BASE.
+            In the full product, statuses would sync to backend via
+            REACT_APP_API_BASE.
           </p>
         </Card>
       </div>
 
       <div style={{ marginTop: 16 }} className="grid">
         {filtered.map((a) => (
-          <div key={a.id} className="list-item" style={{ alignItems: "center" }}>
+          <div
+            key={a.id}
+            className="list-item"
+            style={{ alignItems: "center" }}
+          >
             <div>
               <h4 style={{ margin: 0 }}>
                 {a.jobTitle} <span className="mini">at {a.company}</span>
               </h4>
               <p style={{ margin: "4px 0 0" }}>
                 Status:{" "}
-                <strong style={{ color: a.status === "Rejected" ? "var(--error)" : "var(--text)" }}>{a.status}</strong>
+                <strong
+                  style={{
+                    color:
+                      a.status === "Rejected" ? "var(--error)" : "var(--text)",
+                  }}
+                >
+                  {a.status}
+                </strong>
                 {" • "}
                 <span className="mini">Tracked {a.trackedAtLabel}</span>
               </p>
             </div>
 
-            <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap", justifyContent: "flex-end" }}>
-              <Select value={a.status} onChange={(e) => updateStatus(a.id, e.target.value)} aria-label="Update status">
+            <div
+              style={{
+                display: "flex",
+                gap: 8,
+                alignItems: "center",
+                flexWrap: "wrap",
+                justifyContent: "flex-end",
+              }}
+            >
+              <Select
+                value={a.status}
+                onChange={(e) => updateStatus(a.id, e.target.value)}
+                aria-label="Update status"
+              >
                 {STATUSES.map((s) => (
                   <option key={s} value={s}>
                     {s}
@@ -127,10 +188,16 @@ export default function ApplicationsPage({ applications, setApplications }) {
                 variant="ghost"
                 size="sm"
                 onClick={() => {
-                  const ok = window.confirm(`Remove "${a.jobTitle}" from applications?`);
+                  const ok = window.confirm(
+                    `Remove "${a.jobTitle}" from applications?`,
+                  );
                   if (!ok) return;
                   setApplications((prev) => prev.filter((x) => x.id !== a.id));
-                  toast({ title: "Removed", message: `${a.jobTitle}`, variant: "warn" });
+                  toast({
+                    title: "Removed",
+                    message: `${a.jobTitle}`,
+                    variant: "warn",
+                  });
                 }}
               >
                 Remove
@@ -141,7 +208,9 @@ export default function ApplicationsPage({ applications, setApplications }) {
 
         {filtered.length === 0 ? (
           <Card title="No applications">
-            <p style={{ margin: 0, color: "var(--muted)" }}>Track an application from the Jobs page to start.</p>
+            <p style={{ margin: 0, color: "var(--muted)" }}>
+              Track an application from the Jobs page to start.
+            </p>
           </Card>
         ) : null}
       </div>

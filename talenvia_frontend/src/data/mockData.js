@@ -45,7 +45,8 @@ export const MOCK_CHALLENGES = [
   {
     id: "c1",
     title: "React Component Sprint",
-    description: "Build an accessible modal with focus-trap and keyboard navigation.",
+    description:
+      "Build an accessible modal with focus-trap and keyboard navigation.",
     reward: "250 XP",
     difficulty: "Medium",
   },
@@ -59,20 +60,57 @@ export const MOCK_CHALLENGES = [
   {
     id: "c3",
     title: "API Design Duel",
-    description: "Design REST endpoints for application tracking with pagination.",
+    description:
+      "Design REST endpoints for application tracking with pagination.",
     reward: "320 XP",
     difficulty: "Hard",
   },
 ];
 
 export const MOCK_TESTS = [
-  { id: "t1", title: "Frontend Fundamentals", durationMin: 25, questions: 20, focus: "React + CSS" },
-  { id: "t2", title: "Backend Basics", durationMin: 30, questions: 25, focus: "Node + APIs" },
-  { id: "t3", title: "Data Skills", durationMin: 20, questions: 15, focus: "SQL + analytics" },
+  {
+    id: "t1",
+    title: "Frontend Fundamentals",
+    durationMin: 25,
+    questions: 20,
+    focus: "React + CSS",
+  },
+  {
+    id: "t2",
+    title: "Backend Basics",
+    durationMin: 30,
+    questions: 25,
+    focus: "Node + APIs",
+  },
+  {
+    id: "t3",
+    title: "Data Skills",
+    durationMin: 20,
+    questions: 15,
+    focus: "SQL + analytics",
+  },
 ];
 
 export const MOCK_NOTIFICATIONS = [
-  { id: "n1", type: "application", title: "Application viewed", body: "Nebula Systems viewed your application.", time: "2h" },
-  { id: "n2", type: "challenge", title: "Challenge unlocked", body: "New 'API Design Duel' challenge is available.", time: "1d" },
-  { id: "n3", type: "job", title: "New jobs matched", body: "3 new jobs match your React + UI skills.", time: "2d" },
+  {
+    id: "n1",
+    type: "application",
+    title: "Application viewed",
+    body: "Nebula Systems viewed your application.",
+    time: "2h",
+  },
+  {
+    id: "n2",
+    type: "challenge",
+    title: "Challenge unlocked",
+    body: "New 'API Design Duel' challenge is available.",
+    time: "1d",
+  },
+  {
+    id: "n3",
+    type: "job",
+    title: "New jobs matched",
+    body: "3 new jobs match your React + UI skills.",
+    time: "2d",
+  },
 ];

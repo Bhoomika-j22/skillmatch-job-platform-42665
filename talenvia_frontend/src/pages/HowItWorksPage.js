@@ -4,15 +4,35 @@ import { Button, Card } from "../components/ui";
 
 function IconArrowLeft({ size = 18 }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
-      <path d="M15 18 9 12l6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path
+        d="M15 18 9 12l6-6"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
 
 function IconCheck({ size = 18 }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+      focusable="false"
+    >
       <path
         d="M20 6 9 17l-5-5"
         stroke="currentColor"
@@ -26,7 +46,14 @@ function IconCheck({ size = 18 }) {
 
 function IconBolt({ size = 18 }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+      focusable="false"
+    >
       <path
         d="M13 2 3 14h7l-1 8 12-14h-7l-1-6Z"
         stroke="currentColor"
@@ -69,8 +96,15 @@ export default function HowItWorksPage() {
     <div className="container">
       <div className="page-header" style={{ alignItems: "flex-start" }}>
         <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-          <Button variant="ghost" type="button" onClick={() => navigate("/")} aria-label="Back to Dashboard">
-            <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+          <Button
+            variant="ghost"
+            type="button"
+            onClick={() => navigate("/")}
+            aria-label="Back to Dashboard"
+          >
+            <span
+              style={{ display: "inline-flex", alignItems: "center", gap: 8 }}
+            >
               <span aria-hidden="true">
                 <IconArrowLeft size={18} />
               </span>
@@ -80,7 +114,9 @@ export default function HowItWorksPage() {
 
           <div>
             <h1 className="page-title">How Talenvia Works</h1>
-            <p className="page-subtitle">A simple flow: profile → recommendations → tracking → improvement.</p>
+            <p className="page-subtitle">
+              A simple flow: profile → recommendations → tracking → improvement.
+            </p>
           </div>
         </div>
       </div>
@@ -91,7 +127,8 @@ export default function HowItWorksPage() {
             <div>
               <h2 className="info-title">Your journey in 4 steps</h2>
               <p className="info-lead">
-                Talenvia is built to keep you focused on high-signal actions that move you closer to interviews.
+                Talenvia is built to keep you focused on high-signal actions
+                that move you closer to interviews.
               </p>
             </div>
 
@@ -102,7 +139,11 @@ export default function HowItWorksPage() {
                 const Icon = s.icon;
                 return (
                   <div key={s.title} className="info-row">
-                    <span className="info-row-icon" aria-hidden="true" title={`Step ${idx + 1}`}>
+                    <span
+                      className="info-row-icon"
+                      aria-hidden="true"
+                      title={`Step ${idx + 1}`}
+                    >
                       <Icon size={18} />
                     </span>
 
@@ -117,11 +158,27 @@ export default function HowItWorksPage() {
 
             <div className="hr" />
 
-            <div style={{ display: "flex", justifyContent: "space-between", gap: 10, flexWrap: "wrap" }}>
-              <Button type="button" onClick={() => navigate("/profile")} aria-label="Go to Profile and Skills">
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                gap: 10,
+                flexWrap: "wrap",
+              }}
+            >
+              <Button
+                type="button"
+                onClick={() => navigate("/profile")}
+                aria-label="Go to Profile and Skills"
+              >
                 Go to Profile &amp; Skills
               </Button>
-              <Button variant="primary" type="button" onClick={() => navigate("/jobs")} aria-label="Browse Jobs">
+              <Button
+                variant="primary"
+                type="button"
+                onClick={() => navigate("/jobs")}
+                aria-label="Browse Jobs"
+              >
                 Browse Jobs
               </Button>
             </div>

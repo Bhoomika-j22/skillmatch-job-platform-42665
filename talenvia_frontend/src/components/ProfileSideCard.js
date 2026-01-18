@@ -199,8 +199,8 @@ export default function ProfileSideCard({ profile, setProfile }) {
   /**
    * Right-side profile card: rounded white background, subtle shadow, avatar,
    * name/role, resume upload, light dividers, and blue icons for info sections.
-   * 
-   * Now enhanced: avatar upload/replace, resume upload/replace/delete, external links clickable, 
+   *
+   * Now enhanced: avatar upload/replace, resume upload/replace/delete, external links clickable,
    * hover effects, editable contact fields, desktop responsive layout, and actions confirmations.
    *
    * Editing behavior (demo):
@@ -211,14 +211,15 @@ export default function ProfileSideCard({ profile, setProfile }) {
 
   // Avatar state/logic
   const avatarInputRef = useRef(null);
-  const [avatarFile, setAvatarFile] = useState(null); // For uploading new image
   const [avatarPreview, setAvatarPreview] = useState(profile?.avatarUrl || null); // Data URL or remote URL
 
   // Resume state/logic
   const resumeInputRef = useRef(null);
   const [resumeFile, setResumeFile] = useState(null);
   const [resumeName, setResumeName] = useState(profile?.resumeName || "");
-  const [resumePreviewUrl, setResumePreviewUrl] = useState(profile?.resumeUrl || null);
+  const [resumePreviewUrl, setResumePreviewUrl] = useState(
+    profile?.resumeUrl || null,
+  );
 
   const [isEditing, setIsEditing] = useState(false);
   const [draft, setDraft] = useState({
@@ -268,7 +269,6 @@ export default function ProfileSideCard({ profile, setProfile }) {
     });
     setErrors({});
     // When entering edit mode, initialize avatar and resume state
-    setAvatarFile(null);
     setAvatarPreview(profile?.avatarUrl || null);
     setResumeFile(null);
     setResumeName(profile?.resumeName || "");
@@ -280,12 +280,17 @@ export default function ProfileSideCard({ profile, setProfile }) {
     const fullName = String(nextDraft?.name || "").trim();
     if (!fullName) nextErrors.name = "Full name is required.";
 
-    if (!isValidEmail(nextDraft?.email)) nextErrors.email = "Enter a valid email (e.g., name@domain.com).";
-    if (!isValidMobile(nextDraft?.phone)) nextErrors.phone = "Mobile must be digits only (7–15 digits).";
+    if (!isValidEmail(nextDraft?.email))
+      nextErrors.email = "Enter a valid email (e.g., name@domain.com).";
+    if (!isValidMobile(nextDraft?.phone))
+      nextErrors.phone = "Mobile must be digits only (7–15 digits).";
 
-    if (!isValidUrl(nextDraft?.links?.linkedin)) nextErrors.linkedin = "Enter a valid URL.";
-    if (!isValidUrl(nextDraft?.links?.github)) nextErrors.github = "Enter a valid URL.";
-    if (!isValidUrl(nextDraft?.links?.portfolio)) nextErrors.portfolio = "Enter a valid URL.";
+    if (!isValidUrl(nextDraft?.links?.linkedin))
+      nextErrors.linkedin = "Enter a valid URL.";
+    if (!isValidUrl(nextDraft?.links?.github))
+      nextErrors.github = "Enter a valid URL.";
+    if (!isValidUrl(nextDraft?.links?.portfolio))
+      nextErrors.portfolio = "Enter a valid URL.";
 
     return nextErrors;
   }
@@ -297,7 +302,6 @@ export default function ProfileSideCard({ profile, setProfile }) {
 
   function onAvatarSelected(e) {
     const f = e.target.files?.[0] || null;
-    setAvatarFile(f);
     if (f) {
       // Preview locally
       const reader = new FileReader();
@@ -307,9 +311,12 @@ export default function ProfileSideCard({ profile, setProfile }) {
   }
 
   function removeAvatar() {
-    setAvatarFile(null);
     setAvatarPreview(null);
-    toast({ title: "Avatar removed", message: "Profile picture is removed locally.", variant: "warn" });
+    toast({
+      title: "Avatar removed",
+      message: "Profile picture is removed locally.",
+      variant: "warn",
+    });
   }
 
   function onPickResumeClick() {
@@ -327,7 +334,11 @@ export default function ProfileSideCard({ profile, setProfile }) {
     setResumeFile(null);
     setResumePreviewUrl(null);
     setResumeName("");
-    toast({ title: "Resume removed", message: "Resume deleted locally.", variant: "warn" });
+    toast({
+      title: "Resume removed",
+      message: "Resume deleted locally.",
+      variant: "warn",
+    });
   }
 
   function startEditing() {
@@ -343,13 +354,21 @@ export default function ProfileSideCard({ profile, setProfile }) {
     const nextErrors = validate(draft);
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length) {
-      toast({ title: "Fix validation errors", message: "Please review the highlighted fields.", variant: "error" });
+      toast({
+        title: "Fix validation errors",
+        message: "Please review the highlighted fields.",
+        variant: "error",
+      });
       return;
     }
 
     if (typeof setProfile !== "function") {
       // Component can still render read-only if setProfile is not provided.
-      toast({ title: "Cannot save", message: "Profile update handler not connected.", variant: "error" });
+      toast({
+        title: "Cannot save",
+        message: "Profile update handler not connected.",
+        variant: "error",
+      });
       return;
     }
 
@@ -362,9 +381,15 @@ export default function ProfileSideCard({ profile, setProfile }) {
       phone: String(draft.phone || "").trim(),
       links: {
         ...(profile?.links || {}),
-        linkedin: String(draft.links.linkedin || "").trim() ? normalizeUrl(draft.links.linkedin) : "",
-        github: String(draft.links.github || "").trim() ? normalizeUrl(draft.links.github) : "",
-        portfolio: String(draft.links.portfolio || "").trim() ? normalizeUrl(draft.links.portfolio) : "",
+        linkedin: String(draft.links.linkedin || "").trim()
+          ? normalizeUrl(draft.links.linkedin)
+          : "",
+        github: String(draft.links.github || "").trim()
+          ? normalizeUrl(draft.links.github)
+          : "",
+        portfolio: String(draft.links.portfolio || "").trim()
+          ? normalizeUrl(draft.links.portfolio)
+          : "",
       },
       // Persist avatar as DataURL for demo/local, real apps use uploaded URL
       avatarUrl: avatarPreview || null,
@@ -375,7 +400,11 @@ export default function ProfileSideCard({ profile, setProfile }) {
     setProfile(nextProfile);
 
     setIsEditing(false);
-    toast({ title: "Profile updated", message: "Saved locally (demo).", variant: "success" });
+    toast({
+      title: "Profile updated",
+      message: "Saved locally (demo).",
+      variant: "success",
+    });
   }
 
   return (
@@ -410,7 +439,12 @@ export default function ProfileSideCard({ profile, setProfile }) {
             <img
               src={avatarPreview}
               alt="Avatar Preview"
-              style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "999px" }}
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                borderRadius: "999px",
+              }}
             />
           ) : (
             initialsFromName(isEditing ? draft.name || name : name)
@@ -438,11 +472,19 @@ export default function ProfileSideCard({ profile, setProfile }) {
                 cursor: "pointer",
                 zIndex: 2,
               }}
-              onClick={(e) => { e.stopPropagation(); removeAvatar(); }}
+              onClick={(e) => {
+                e.stopPropagation();
+                removeAvatar();
+              }}
               aria-label="Remove avatar"
               title="Remove profile picture"
               tabIndex={0}
-              onKeyPress={(e) => { if (e.key === "Enter" || e.key === " ") { e.stopPropagation(); removeAvatar(); } }}
+              onKeyPress={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.stopPropagation();
+                  removeAvatar();
+                }
+              }}
             >
               ×
             </button>
@@ -458,8 +500,12 @@ export default function ProfileSideCard({ profile, setProfile }) {
         </div>
 
         <div className="dash-profilecard-meta">
-          <div className="dash-profilecard-name">{isEditing ? draft.name || "—" : name}</div>
-          <div className="dash-profilecard-role">{isEditing ? draft.role || "—" : role}</div>
+          <div className="dash-profilecard-name">
+            {isEditing ? draft.name || "—" : name}
+          </div>
+          <div className="dash-profilecard-role">
+            {isEditing ? draft.role || "—" : role}
+          </div>
           <div className="dash-profilecard-headline">{headline}</div>
 
           <div className="dash-profilecard-editbar">
@@ -475,7 +521,11 @@ export default function ProfileSideCard({ profile, setProfile }) {
                 Edit
               </Button>
             ) : (
-              <div className="dash-profilecard-editactions" role="group" aria-label="Profile edit actions">
+              <div
+                className="dash-profilecard-editactions"
+                role="group"
+                aria-label="Profile edit actions"
+              >
                 <Button
                   type="button"
                   size="sm"
@@ -512,7 +562,10 @@ export default function ProfileSideCard({ profile, setProfile }) {
           Resume
         </div>
 
-        <div className="dash-profilecard-upload" style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+        <div
+          className="dash-profilecard-upload"
+          style={{ display: "flex", flexDirection: "column", gap: 4 }}
+        >
           <input
             ref={resumeInputRef}
             type="file"
@@ -524,17 +577,25 @@ export default function ProfileSideCard({ profile, setProfile }) {
           />
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <div className="dash-profilecard-upload-text">
-              <div className="dash-profilecard-upload-label" title={resumeName || "No resume uploaded"}>
+              <div
+                className="dash-profilecard-upload-label"
+                title={resumeName || "No resume uploaded"}
+              >
                 {resumeName ? (
-                  resumeName.endsWith(".pdf")
-                    ? <span style={{ color: "#6366f1" }}>{resumeName}</span>
-                    : resumeName
+                  resumeName.endsWith(".pdf") ? (
+                    <span style={{ color: "#6366f1" }}>{resumeName}</span>
+                  ) : (
+                    resumeName
+                  )
                 ) : (
                   <span style={{ color: "#888" }}>No resume uploaded</span>
                 )}
               </div>
               <div className="dash-profilecard-upload-sub">
-                PDF/DOC/DOCX • max size <span style={{ fontStyle: "italic", color: "#6b7280" }}>2MB</span>
+                PDF/DOC/DOCX • max size{" "}
+                <span style={{ fontStyle: "italic", color: "#6b7280" }}>
+                  2MB
+                </span>
               </div>
               {resumeFile || resumePreviewUrl ? (
                 <div>
@@ -543,7 +604,11 @@ export default function ProfileSideCard({ profile, setProfile }) {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="dash-viewlink"
-                    style={{ fontSize: "11.5px", marginTop: 2, display: "inline-block" }}
+                    style={{
+                      fontSize: "11.5px",
+                      marginTop: 2,
+                      display: "inline-block",
+                    }}
                   >
                     {resumePreviewUrl ? "View PDF" : ""}
                   </a>
@@ -579,7 +644,10 @@ export default function ProfileSideCard({ profile, setProfile }) {
 
       <div className="dash-profilecard-divider light" role="separator" />
 
-      <section className="dash-profilecard-section" aria-label="Contact information">
+      <section
+        className="dash-profilecard-section"
+        aria-label="Contact information"
+      >
         <div className="dash-profilecard-section-title">
           <span className="dash-profilecard-section-icon" aria-hidden="true">
             <ProfileIcon name="mail" />
@@ -600,7 +668,10 @@ export default function ProfileSideCard({ profile, setProfile }) {
                   onChange={(e) => {
                     const next = { ...draft, phone: e.target.value };
                     setDraft(next);
-                    setErrors((prev) => ({ ...(prev || {}), phone: undefined }));
+                    setErrors((prev) => ({
+                      ...(prev || {}),
+                      phone: undefined,
+                    }));
                   }}
                   placeholder="Digits only"
                   inputMode="numeric"
@@ -625,7 +696,10 @@ export default function ProfileSideCard({ profile, setProfile }) {
                   onChange={(e) => {
                     const next = { ...draft, email: e.target.value };
                     setDraft(next);
-                    setErrors((prev) => ({ ...(prev || {}), email: undefined }));
+                    setErrors((prev) => ({
+                      ...(prev || {}),
+                      email: undefined,
+                    }));
                   }}
                   placeholder="name@domain.com"
                   inputMode="email"
@@ -692,9 +766,15 @@ export default function ProfileSideCard({ profile, setProfile }) {
                 <Input
                   value={draft.links.portfolio}
                   onChange={(e) => {
-                    const next = { ...draft, links: { ...draft.links, portfolio: e.target.value } };
+                    const next = {
+                      ...draft,
+                      links: { ...draft.links, portfolio: e.target.value },
+                    };
                     setDraft(next);
-                    setErrors((prev) => ({ ...(prev || {}), portfolio: undefined }));
+                    setErrors((prev) => ({
+                      ...(prev || {}),
+                      portfolio: undefined,
+                    }));
                   }}
                   placeholder="https://your-site.com"
                   aria-label="Personal website"
@@ -711,8 +791,8 @@ export default function ProfileSideCard({ profile, setProfile }) {
                     textDecoration: "underline",
                     transition: "color 0.13s",
                   }}
-                  onMouseOver={e => e.currentTarget.style.color = "#3b82f6"}
-                  onMouseOut={e => e.currentTarget.style.color = "#6366f1"}
+                  onMouseOver={(e) => (e.currentTarget.style.color = "#3b82f6")}
+                  onMouseOut={(e) => (e.currentTarget.style.color = "#6366f1")}
                 >
                   {web.portfolio}
                 </a>
@@ -731,9 +811,15 @@ export default function ProfileSideCard({ profile, setProfile }) {
                 <Input
                   value={draft.links.linkedin}
                   onChange={(e) => {
-                    const next = { ...draft, links: { ...draft.links, linkedin: e.target.value } };
+                    const next = {
+                      ...draft,
+                      links: { ...draft.links, linkedin: e.target.value },
+                    };
                     setDraft(next);
-                    setErrors((prev) => ({ ...(prev || {}), linkedin: undefined }));
+                    setErrors((prev) => ({
+                      ...(prev || {}),
+                      linkedin: undefined,
+                    }));
                   }}
                   placeholder="https://linkedin.com/in/…"
                   aria-label="LinkedIn profile"
@@ -750,8 +836,8 @@ export default function ProfileSideCard({ profile, setProfile }) {
                     textDecoration: "underline",
                     transition: "color 0.13s",
                   }}
-                  onMouseOver={e => e.currentTarget.style.color = "#1450a3"}
-                  onMouseOut={e => e.currentTarget.style.color = "#0A66C2"}
+                  onMouseOver={(e) => (e.currentTarget.style.color = "#1450a3")}
+                  onMouseOut={(e) => (e.currentTarget.style.color = "#0A66C2")}
                 >
                   {web.linkedin}
                 </a>
@@ -770,9 +856,15 @@ export default function ProfileSideCard({ profile, setProfile }) {
                 <Input
                   value={draft.links.github}
                   onChange={(e) => {
-                    const next = { ...draft, links: { ...draft.links, github: e.target.value } };
+                    const next = {
+                      ...draft,
+                      links: { ...draft.links, github: e.target.value },
+                    };
                     setDraft(next);
-                    setErrors((prev) => ({ ...(prev || {}), github: undefined }));
+                    setErrors((prev) => ({
+                      ...(prev || {}),
+                      github: undefined,
+                    }));
                   }}
                   placeholder="https://github.com/…"
                   aria-label="GitHub profile"
@@ -789,8 +881,8 @@ export default function ProfileSideCard({ profile, setProfile }) {
                     textDecoration: "underline",
                     transition: "color 0.13s",
                   }}
-                  onMouseOver={e => e.currentTarget.style.color = "#111827"}
-                  onMouseOut={e => e.currentTarget.style.color = "#24292f"}
+                  onMouseOver={(e) => (e.currentTarget.style.color = "#111827")}
+                  onMouseOut={(e) => (e.currentTarget.style.color = "#24292f")}
                 >
                   {web.github}
                 </a>

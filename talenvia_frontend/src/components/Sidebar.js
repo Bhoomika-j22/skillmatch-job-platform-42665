@@ -95,9 +95,25 @@ function IconDocument({ size = 18 }) {
         strokeWidth="2"
         strokeLinejoin="round"
       />
-      <path d="M14 3v5h5" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
-      <path d="M8 13h8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-      <path d="M8 17h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" opacity="0.85" />
+      <path
+        d="M14 3v5h5"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M8 13h8"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <path
+        d="M8 17h6"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        opacity="0.85"
+      />
     </svg>
   );
 }
@@ -133,8 +149,18 @@ function IconTarget({ size = 18 }) {
         strokeLinecap="round"
         opacity="0.9"
       />
-      <path d="M14.5 9.5 21 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-      <path d="M18.5 3H21v2.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path
+        d="M14.5 9.5 21 3"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <path
+        d="M18.5 3H21v2.5"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
@@ -162,8 +188,19 @@ function IconClipboard({ size = 18 }) {
         strokeWidth="2"
         strokeLinecap="round"
       />
-      <path d="M10 10h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-      <path d="M10 14h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" opacity="0.9" />
+      <path
+        d="M10 10h6"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <path
+        d="M10 14h6"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        opacity="0.9"
+      />
     </svg>
   );
 }
@@ -224,35 +261,6 @@ function IconBell({ size = 18 }) {
 
 
 
-function IconShield({ size = 18 }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden="true"
-      focusable="false"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M12 3 20 7v6c0 5-3.5 8.4-8 10-4.5-1.6-8-5-8-10V7l8-4Z"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M9.5 12.5 11 14l3.5-4"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        opacity="0.9"
-      />
-    </svg>
-  );
-}
-
 function IconGear({ size = 18 }) {
   return (
     <svg
@@ -292,9 +300,23 @@ function IconInfo({ size = 18 }) {
       focusable="false"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20Z" stroke="currentColor" strokeWidth="2" />
-      <path d="M12 10v6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-      <path d="M12 7h.01" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+      <path
+        d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20Z"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+      <path
+        d="M12 10v6"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <path
+        d="M12 7h.01"
+        stroke="currentColor"
+        strokeWidth="3"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
@@ -316,8 +338,20 @@ function IconSpark({ size = 18 }) {
         strokeWidth="2"
         strokeLinejoin="round"
       />
-      <path d="M19 13l.7 2.4L22 16l-2.3.6L19 19l-.7-2.4L16 16l2.3-.6L19 13Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" opacity="0.9" />
-      <path d="M4 14l.7 2.4L7 17l-2.3.6L4 20l-.7-2.4L1 17l2.3-.6L4 14Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" opacity="0.9" />
+      <path
+        d="M19 13l.7 2.4L22 16l-2.3.6L19 19l-.7-2.4L16 16l2.3-.6L19 13Z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+        opacity="0.9"
+      />
+      <path
+        d="M4 14l.7 2.4L7 17l-2.3.6L4 20l-.7-2.4L1 17l2.3-.6L4 14Z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+        opacity="0.9"
+      />
     </svg>
   );
 }
@@ -330,14 +364,25 @@ export default function Sidebar({ notificationCount = 0 }) {
       <div className="sidebar-inner">
         <div className="sidebar-top">
           <nav className="sidebar-nav" aria-label="Primary">
-            <NavLink to="/" end className={({ isActive }) => `sidebar-link ${isActive ? "active" : ""}`}>
+            <NavLink
+              to="/"
+              end
+              className={({ isActive }) =>
+                `sidebar-link ${isActive ? "active" : ""}`
+              }
+            >
               <span className="sidebar-icon" aria-hidden="true">
                 <IconDashboard size={18} />
               </span>
               <span>Dashboard</span>
             </NavLink>
 
-            <NavLink to="/jobs" className={({ isActive }) => `sidebar-link ${isActive ? "active" : ""}`}>
+            <NavLink
+              to="/jobs"
+              className={({ isActive }) =>
+                `sidebar-link ${isActive ? "active" : ""}`
+              }
+            >
               <span className="sidebar-icon" aria-hidden="true">
                 <IconBriefcase size={18} />
               </span>
@@ -345,64 +390,109 @@ export default function Sidebar({ notificationCount = 0 }) {
             </NavLink>
 
             {/* Saved Jobs is a UI placeholder: no dedicated route yet. */}
-            <NavLink to="/applications" className={({ isActive }) => `sidebar-link ${isActive ? "active" : ""}`}>
+            <NavLink
+              to="/applications"
+              className={({ isActive }) =>
+                `sidebar-link ${isActive ? "active" : ""}`
+              }
+            >
               <span className="sidebar-icon" aria-hidden="true">
                 <IconHeart size={18} />
               </span>
               <span>Saved Jobs</span>
             </NavLink>
 
-            <NavLink to="/applications" className={({ isActive }) => `sidebar-link ${isActive ? "active" : ""}`}>
+            <NavLink
+              to="/applications"
+              className={({ isActive }) =>
+                `sidebar-link ${isActive ? "active" : ""}`
+              }
+            >
               <span className="sidebar-icon" aria-hidden="true">
                 <IconDocument size={18} />
               </span>
               <span>Applications</span>
             </NavLink>
 
-            <NavLink to="/challenges" className={({ isActive }) => `sidebar-link ${isActive ? "active" : ""}`}>
+            <NavLink
+              to="/challenges"
+              className={({ isActive }) =>
+                `sidebar-link ${isActive ? "active" : ""}`
+              }
+            >
               <span className="sidebar-icon" aria-hidden="true">
                 <IconTarget size={18} />
               </span>
               <span>Challenges</span>
             </NavLink>
 
-            <NavLink to="/mock-tests" className={({ isActive }) => `sidebar-link ${isActive ? "active" : ""}`}>
+            <NavLink
+              to="/mock-tests"
+              className={({ isActive }) =>
+                `sidebar-link ${isActive ? "active" : ""}`
+              }
+            >
               <span className="sidebar-icon" aria-hidden="true">
                 <IconClipboard size={18} />
               </span>
               <span>Mock Tests</span>
             </NavLink>
 
-            <NavLink to="/profile" className={({ isActive }) => `sidebar-link ${isActive ? "active" : ""}`}>
+            <NavLink
+              to="/profile"
+              className={({ isActive }) =>
+                `sidebar-link ${isActive ? "active" : ""}`
+              }
+            >
               <span className="sidebar-icon" aria-hidden="true">
                 <IconUser size={18} />
               </span>
               <span>Profile &amp; Skills</span>
             </NavLink>
 
-            <NavLink to="/notifications" className={({ isActive }) => `sidebar-link ${isActive ? "active" : ""}`}>
+            <NavLink
+              to="/notifications"
+              className={({ isActive }) =>
+                `sidebar-link ${isActive ? "active" : ""}`
+              }
+            >
               <span className="sidebar-icon" aria-hidden="true">
                 <IconBell size={18} />
               </span>
 
-              <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+              <span
+                style={{ display: "inline-flex", alignItems: "center", gap: 8 }}
+              >
                 Notifications
                 {notificationCount ? (
-                  <span className="sidebar-badge" aria-label={`${notificationCount} unread notifications`}>
+                  <span
+                    className="sidebar-badge"
+                    aria-label={`${notificationCount} unread notifications`}
+                  >
                     {notificationCount}
                   </span>
                 ) : null}
               </span>
             </NavLink>
 
-            <NavLink to="/settings" className={({ isActive }) => `sidebar-link ${isActive ? "active" : ""}`}>
+            <NavLink
+              to="/settings"
+              className={({ isActive }) =>
+                `sidebar-link ${isActive ? "active" : ""}`
+              }
+            >
               <span className="sidebar-icon" aria-hidden="true">
                 <IconGear size={18} />
               </span>
               <span>Settings</span>
             </NavLink>
 
-            <NavLink to="/about" className={({ isActive }) => `sidebar-link ${isActive ? "active" : ""}`}>
+            <NavLink
+              to="/about"
+              className={({ isActive }) =>
+                `sidebar-link ${isActive ? "active" : ""}`
+              }
+            >
               <span className="sidebar-icon" aria-hidden="true">
                 <IconInfo size={18} />
               </span>
@@ -410,14 +500,23 @@ export default function Sidebar({ notificationCount = 0 }) {
             </NavLink>
 
             {/* Kept as existing route for now (separate from About). */}
-            <NavLink to="/how-it-works" className={({ isActive }) => `sidebar-link ${isActive ? "active" : ""}`}>
+            <NavLink
+              to="/how-it-works"
+              className={({ isActive }) =>
+                `sidebar-link ${isActive ? "active" : ""}`
+              }
+            >
               <span className="sidebar-icon" aria-hidden="true">
                 <IconSpark size={18} />
               </span>
               <span>How Talenvia Works</span>
             </NavLink>
 
-            <div className="sidebar-divider" role="separator" aria-hidden="true" />
+            <div
+              className="sidebar-divider"
+              role="separator"
+              aria-hidden="true"
+            />
           </nav>
         </div>
 
@@ -427,7 +526,12 @@ export default function Sidebar({ notificationCount = 0 }) {
             size="md"
             type="button"
             className="sidebar-cta"
-            onClick={() => window.open(process.env.REACT_APP_FRONTEND_URL || window.location.origin, "_blank")}
+            onClick={() =>
+              window.open(
+                process.env.REACT_APP_FRONTEND_URL || window.location.origin,
+                "_blank",
+              )
+            }
             aria-label="Open My Workspace in a new tab"
             title="My Workspace"
           >
@@ -438,7 +542,8 @@ export default function Sidebar({ notificationCount = 0 }) {
           </Button>
 
           <div className="sidebar-mini">
-            <span style={{ opacity: 0.8 }}>Tip:</span> Use the search above to filter results on each page.
+            <span style={{ opacity: 0.8 }}>Tip:</span> Use the search above to
+            filter results on each page.
           </div>
         </div>
       </div>

@@ -4,9 +4,7 @@
  */
 
 const API_BASE =
-  process.env.REACT_APP_API_BASE ||
-  process.env.REACT_APP_BACKEND_URL ||
-  "";
+  process.env.REACT_APP_API_BASE || process.env.REACT_APP_BACKEND_URL || "";
 
 /**
  * PUBLIC_INTERFACE
@@ -34,7 +32,9 @@ export async function apiRequest(path, options = {}) {
   const contentType = res.headers.get("content-type") || "";
   const isJson = contentType.includes("application/json");
 
-  const payload = isJson ? await res.json().catch(() => null) : await res.text().catch(() => "");
+  const payload = isJson
+    ? await res.json().catch(() => null)
+    : await res.text().catch(() => "");
 
   if (!res.ok) {
     const message =

@@ -19,7 +19,11 @@ export default function NotificationsPage({ notifications, setNotifications }) {
 
   const markAllRead = () => {
     setNotifications((prev) => prev.map((n) => ({ ...n, read: true })));
-    toast({ title: "All caught up", message: "Marked all notifications as read.", variant: "success" });
+    toast({
+      title: "All caught up",
+      message: "Marked all notifications as read.",
+      variant: "success",
+    });
   };
 
   return (
@@ -27,10 +31,23 @@ export default function NotificationsPage({ notifications, setNotifications }) {
       <div className="page-header">
         <div>
           <h1 className="page-title">Notifications</h1>
-          <p className="page-subtitle">Stay up to date on job matches, applications, and challenge updates.</p>
+          <p className="page-subtitle">
+            Stay up to date on job matches, applications, and challenge updates.
+          </p>
         </div>
-        <div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
-          <Select value={type} onChange={(e) => setType(e.target.value)} aria-label="Filter notifications by type">
+        <div
+          style={{
+            display: "flex",
+            gap: 10,
+            flexWrap: "wrap",
+            alignItems: "center",
+          }}
+        >
+          <Select
+            value={type}
+            onChange={(e) => setType(e.target.value)}
+            aria-label="Filter notifications by type"
+          >
             {TYPES.map((t) => (
               <option key={t} value={t}>
                 {t === "All" ? "All types" : t}
@@ -50,27 +67,49 @@ export default function NotificationsPage({ notifications, setNotifications }) {
             <strong>{wsUrl ? wsUrl : "not configured"}</strong>
           </p>
           <p className="mini" style={{ margin: 0 }}>
-            This UI is ready to receive server events once the backend WS is available.
+            This UI is ready to receive server events once the backend WS is
+            available.
           </p>
         </Card>
 
         {filtered.map((n) => (
-          <div key={n.id} className="list-item" style={{ alignItems: "center" }}>
+          <div
+            key={n.id}
+            className="list-item"
+            style={{ alignItems: "center" }}
+          >
             <div>
               <h4 style={{ margin: 0 }}>
                 {n.title}{" "}
-                {!n.read ? <Badge variant="secondary">New</Badge> : <Badge>Read</Badge>}
+                {!n.read ? (
+                  <Badge variant="secondary">New</Badge>
+                ) : (
+                  <Badge>Read</Badge>
+                )}
               </h4>
               <p style={{ margin: "4px 0 0" }}>{n.body}</p>
             </div>
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 8 }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-end",
+                gap: 8,
+              }}
+            >
               <span className="mini">{n.time}</span>
               <Button
                 type="button"
                 size="sm"
                 onClick={() => {
-                  setNotifications((prev) => prev.map((x) => (x.id === n.id ? { ...x, read: true } : x)));
-                  toast({ title: "Marked read", message: n.title, variant: "info" });
+                  setNotifications((prev) =>
+                    prev.map((x) => (x.id === n.id ? { ...x, read: true } : x)),
+                  );
+                  toast({
+                    title: "Marked read",
+                    message: n.title,
+                    variant: "info",
+                  });
                 }}
                 disabled={!!n.read}
               >
@@ -82,7 +121,9 @@ export default function NotificationsPage({ notifications, setNotifications }) {
 
         {filtered.length === 0 ? (
           <Card title="No notifications">
-            <p style={{ margin: 0, color: "var(--muted)" }}>You’re all caught up.</p>
+            <p style={{ margin: 0, color: "var(--muted)" }}>
+              You’re all caught up.
+            </p>
           </Card>
         ) : null}
       </div>

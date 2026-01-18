@@ -21,7 +21,12 @@ function IconBell({ size = 18 }) {
         strokeWidth="2"
         strokeLinejoin="round"
       />
-      <path d="M10 19a2 2 0 0 0 4 0" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path
+        d="M10 19a2 2 0 0 0 4 0"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
@@ -32,7 +37,11 @@ function IconBell({ size = 18 }) {
  */
 
 // PUBLIC_INTERFACE
-export default function NotificationBell({ notifications = [], setNotifications, maxItems = 4 }) {
+export default function NotificationBell({
+  notifications = [],
+  setNotifications,
+  maxItems = 4,
+}) {
   /** Notification bell dropdown with recent notifications and a demo logout action. */
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -41,7 +50,10 @@ export default function NotificationBell({ notifications = [], setNotifications,
   const rootRef = useRef(null);
   const triggerRef = useRef(null);
 
-  const unreadCount = useMemo(() => (notifications || []).filter((n) => !n.read).length, [notifications]);
+  const unreadCount = useMemo(
+    () => (notifications || []).filter((n) => !n.read).length,
+    [notifications],
+  );
 
   const items = useMemo(() => {
     const list = Array.isArray(notifications) ? notifications : [];
@@ -52,13 +64,19 @@ export default function NotificationBell({ notifications = [], setNotifications,
 
   const markRead = (id) => {
     if (!setNotifications) return;
-    setNotifications((prev) => (prev || []).map((n) => (n.id === id ? { ...n, read: true } : n)));
+    setNotifications((prev) =>
+      (prev || []).map((n) => (n.id === id ? { ...n, read: true } : n)),
+    );
   };
 
   const markAllRead = () => {
     if (!setNotifications) return;
     setNotifications((prev) => (prev || []).map((n) => ({ ...n, read: true })));
-    toast({ title: "All caught up", message: "Marked all notifications as read.", variant: "success" });
+    toast({
+      title: "All caught up",
+      message: "Marked all notifications as read.",
+      variant: "success",
+    });
   };
 
   const logout = () => {
@@ -110,14 +128,21 @@ export default function NotificationBell({ notifications = [], setNotifications,
           <IconBell size={18} />
         </span>
         {unreadCount ? (
-          <span className="notify-dot" aria-label={`${unreadCount} unread notifications`}>
+          <span
+            className="notify-dot"
+            aria-label={`${unreadCount} unread notifications`}
+          >
             {unreadCount > 99 ? "99+" : unreadCount}
           </span>
         ) : null}
       </button>
 
       {open ? (
-        <div className="notify-dropdown" role="menu" aria-label="Notifications menu">
+        <div
+          className="notify-dropdown"
+          role="menu"
+          aria-label="Notifications menu"
+        >
           <div className="notify-header" role="none">
             <div className="notify-header-title">
               <strong>Notifications</strong>
@@ -128,7 +153,14 @@ export default function NotificationBell({ notifications = [], setNotifications,
               ) : null}
             </div>
 
-            <button type="button" className="notify-linkbtn" onClick={() => (close(), navigate("/notifications"))}>
+            <button
+              type="button"
+              className="notify-linkbtn"
+              onClick={() => {
+                close();
+                navigate("/notifications");
+              }}
+            >
               View all
             </button>
           </div>
@@ -152,7 +184,9 @@ export default function NotificationBell({ notifications = [], setNotifications,
                     <div className="notify-item-main">
                       <div className="notify-item-title">
                         <span>{n.title}</span>
-                        {!n.read ? <span className="notify-item-pill">New</span> : null}
+                        {!n.read ? (
+                          <span className="notify-item-pill">New</span>
+                        ) : null}
                       </div>
                       <div className="notify-item-body">{n.body}</div>
                     </div>
@@ -167,7 +201,11 @@ export default function NotificationBell({ notifications = [], setNotifications,
             )}
 
             {unreadCount ? (
-              <button type="button" className="notify-utility" onClick={markAllRead}>
+              <button
+                type="button"
+                className="notify-utility"
+                onClick={markAllRead}
+              >
                 Mark all read
               </button>
             ) : null}
@@ -175,7 +213,12 @@ export default function NotificationBell({ notifications = [], setNotifications,
 
           <div className="notify-divider" role="separator" />
 
-          <button type="button" className="notify-logout" role="menuitem" onClick={logout}>
+          <button
+            type="button"
+            className="notify-logout"
+            role="menuitem"
+            onClick={logout}
+          >
             Logout
           </button>
         </div>

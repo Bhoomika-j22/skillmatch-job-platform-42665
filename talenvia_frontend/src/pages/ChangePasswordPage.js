@@ -17,7 +17,9 @@ export default function ChangePasswordPage() {
       <div className="page-header">
         <div>
           <h1 className="page-title">Change Password</h1>
-          <p className="page-subtitle">Choose a strong password you don’t use elsewhere.</p>
+          <p className="page-subtitle">
+            Choose a strong password you don’t use elsewhere.
+          </p>
         </div>
       </div>
 
@@ -62,11 +64,16 @@ export default function ChangePasswordPage() {
             aria-invalid={mismatch ? "true" : "false"}
           />
           {mismatch ? (
-            <div className="field-help" style={{ color: "rgba(239, 68, 68, 0.85)" }}>
+            <div
+              className="field-help"
+              style={{ color: "rgba(239, 68, 68, 0.85)" }}
+            >
               Passwords do not match.
             </div>
           ) : (
-            <div className="field-help">Use at least 8 characters with a mix of letters and numbers.</div>
+            <div className="field-help">
+              Use at least 8 characters with a mix of letters and numbers.
+            </div>
           )}
 
           <div className="hr" />
@@ -77,11 +84,14 @@ export default function ChangePasswordPage() {
               onClick={() =>
                 toast({
                   title: "Requested (demo)",
-                  message: "Password update flow is not connected to backend yet.",
+                  message:
+                    "Password update flow is not connected to backend yet.",
                   variant: "info",
                 })
               }
-              disabled={!currentPassword || !nextPassword || !confirm || mismatch}
+              disabled={
+                !currentPassword || !nextPassword || !confirm || mismatch
+              }
             >
               Update password
             </Button>

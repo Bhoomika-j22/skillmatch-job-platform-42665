@@ -16,14 +16,22 @@ export default function JobsPage({ profile, onApply }) {
   const applyAndToast = (job, opts) => {
     onApply(job, opts);
     toast({
-      title: opts?.auto ? "Application submitted (demo)" : "Application tracked",
+      title: opts?.auto
+        ? "Application submitted (demo)"
+        : "Application tracked",
       message: `${job.title} • ${job.company}`,
       variant: "success",
     });
   };
 
-  const locations = useMemo(() => ["Any", ...Array.from(new Set(MOCK_JOBS.map((j) => j.location)))], []);
-  const types = useMemo(() => ["Any", ...Array.from(new Set(MOCK_JOBS.map((j) => j.type)))], []);
+  const locations = useMemo(
+    () => ["Any", ...Array.from(new Set(MOCK_JOBS.map((j) => j.location)))],
+    [],
+  );
+  const types = useMemo(
+    () => ["Any", ...Array.from(new Set(MOCK_JOBS.map((j) => j.type)))],
+    [],
+  );
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -47,11 +55,15 @@ export default function JobsPage({ profile, onApply }) {
       <div className="page-header">
         <div>
           <h1 className="page-title">Job Listings</h1>
-          <p className="page-subtitle">Search jobs and filter by match score, location, and type.</p>
+          <p className="page-subtitle">
+            Search jobs and filter by match score, location, and type.
+          </p>
         </div>
         <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
           <Badge variant="primary">{filtered.length} results</Badge>
-          <Badge variant="secondary">API: {process.env.REACT_APP_API_BASE || "not configured"}</Badge>
+          <Badge variant="secondary">
+            API: {process.env.REACT_APP_API_BASE || "not configured"}
+          </Badge>
         </div>
       </div>
 
@@ -87,7 +99,11 @@ export default function JobsPage({ profile, onApply }) {
             <label className="mini" htmlFor="job-location">
               Location
             </label>
-            <Select id="job-location" value={location} onChange={(e) => setLocation(e.target.value)}>
+            <Select
+              id="job-location"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+            >
               {locations.map((l) => (
                 <option key={l} value={l}>
                   {l}
@@ -100,7 +116,11 @@ export default function JobsPage({ profile, onApply }) {
             <label className="mini" htmlFor="job-type">
               Type
             </label>
-            <Select id="job-type" value={jobType} onChange={(e) => setJobType(e.target.value)}>
+            <Select
+              id="job-type"
+              value={jobType}
+              onChange={(e) => setJobType(e.target.value)}
+            >
               {types.map((t) => (
                 <option key={t} value={t}>
                   {t}
@@ -125,7 +145,14 @@ export default function JobsPage({ profile, onApply }) {
 
             <div className="hr" />
             <div className="mini">Your top skills:</div>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 8 }}>
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: 8,
+                marginTop: 8,
+              }}
+            >
               {inferredSkills.length ? (
                 inferredSkills.map((s) => (
                   <Badge key={s} variant="primary">
@@ -133,7 +160,9 @@ export default function JobsPage({ profile, onApply }) {
                   </Badge>
                 ))
               ) : (
-                <span className="mini">Add skills in Profile to improve matching.</span>
+                <span className="mini">
+                  Add skills in Profile to improve matching.
+                </span>
               )}
             </div>
           </Card>
@@ -142,32 +171,79 @@ export default function JobsPage({ profile, onApply }) {
         <div className="grid" style={{ alignContent: "start" }}>
           {filtered.map((job) => (
             <Card key={job.id} className="">
-              <div style={{ display: "flex", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  gap: 12,
+                  flexWrap: "wrap",
+                }}
+              >
                 <div>
-                  <h3 style={{ margin: 0, fontSize: 16, letterSpacing: "-0.01em" }}>{job.title}</h3>
-                  <p style={{ margin: "6px 0 0", color: "var(--muted)", fontSize: 13 }}>
+                  <h3
+                    style={{
+                      margin: 0,
+                      fontSize: 16,
+                      letterSpacing: "-0.01em",
+                    }}
+                  >
+                    {job.title}
+                  </h3>
+                  <p
+                    style={{
+                      margin: "6px 0 0",
+                      color: "var(--muted)",
+                      fontSize: 13,
+                    }}
+                  >
                     {job.company} • {job.location} • {job.type} • {job.level}
                   </p>
                 </div>
                 <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-                  <Badge variant={job.match >= 80 ? "primary" : "secondary"}>{job.match}% match</Badge>
+                  <Badge variant={job.match >= 80 ? "primary" : "secondary"}>
+                    {job.match}% match
+                  </Badge>
                   <span className="mini">{job.postedDaysAgo}d ago</span>
                 </div>
               </div>
 
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 10 }}>
+              <div
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: 8,
+                  marginTop: 10,
+                }}
+              >
                 {job.tags.map((t) => (
                   <Badge key={t}>{t}</Badge>
                 ))}
               </div>
 
-              <div style={{ display: "flex", justifyContent: "space-between", gap: 12, marginTop: 12, flexWrap: "wrap" }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  gap: 12,
+                  marginTop: 12,
+                  flexWrap: "wrap",
+                }}
+              >
                 <div className="mini">Salary: {job.salary}</div>
                 <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-                  <Button type="button" size="sm" onClick={() => applyAndToast(job)}>
+                  <Button
+                    type="button"
+                    size="sm"
+                    onClick={() => applyAndToast(job)}
+                  >
                     Track Application
                   </Button>
-                  <Button variant="primary" size="sm" type="button" onClick={() => applyAndToast(job, { auto: true })}>
+                  <Button
+                    variant="primary"
+                    size="sm"
+                    type="button"
+                    onClick={() => applyAndToast(job, { auto: true })}
+                  >
                     Quick Apply
                   </Button>
                 </div>
@@ -177,7 +253,9 @@ export default function JobsPage({ profile, onApply }) {
 
           {filtered.length === 0 ? (
             <Card title="No results">
-              <p style={{ margin: 0, color: "var(--muted)" }}>Try widening your filters or adding more skills.</p>
+              <p style={{ margin: 0, color: "var(--muted)" }}>
+                Try widening your filters or adding more skills.
+              </p>
             </Card>
           ) : null}
         </div>

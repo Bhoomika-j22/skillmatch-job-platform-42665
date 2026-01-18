@@ -3,8 +3,9 @@
 */
 
 :root {
-  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial,
-    "Apple Color Emoji", "Segoe UI Emoji";
+  --font-sans:
+    "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
 
   /* Cosmic Energy palette */
   --primary: #4f46e5; /* indigo-600 */
@@ -20,7 +21,7 @@
   --text: #111827;
   --muted: #4b5563; /* slightly darker than before for AA contrast */
   --muted-2: #6b7280;
-  --border: rgba(17, 24, 39, 0.10);
+  --border: rgba(17, 24, 39, 0.1);
 
   --shadow-xs: 0 1px 1px rgba(17, 24, 39, 0.05);
   --shadow-sm: 0 1px 2px rgba(17, 24, 39, 0.06);
@@ -55,8 +56,16 @@ body {
   margin: 0;
   font-family: var(--font-sans);
   background:
-    radial-gradient(1200px 600px at 10% 0%, rgba(79, 70, 229, 0.10), transparent 50%),
-    radial-gradient(900px 550px at 80% 10%, rgba(236, 72, 153, 0.10), transparent 55%),
+    radial-gradient(
+      1200px 600px at 10% 0%,
+      rgba(79, 70, 229, 0.1),
+      transparent 50%
+    ),
+    radial-gradient(
+      900px 550px at 80% 10%,
+      rgba(236, 72, 153, 0.1),
+      transparent 55%
+    ),
     var(--bg);
   color: var(--text);
 }
@@ -131,7 +140,11 @@ a {
   z-index: 25;
   border-right: 1px solid rgba(17, 24, 39, 0.08);
   /* Requirements: soft lavender background (#f5f5ff) */
-  background: linear-gradient(180deg, rgba(245, 245, 255, 0.96), rgba(255, 255, 255, 0.94));
+  background: linear-gradient(
+    180deg,
+    rgba(245, 245, 255, 0.96),
+    rgba(255, 255, 255, 0.94)
+  );
   backdrop-filter: blur(10px);
 }
 
@@ -172,7 +185,9 @@ a {
   border-radius: 999px;
   color: rgba(17, 24, 39, 0.74);
   border: 1px solid transparent;
-  transition: background var(--duration-fast) var(--ease), color var(--duration-fast) var(--ease);
+  transition:
+    background var(--duration-fast) var(--ease),
+    color var(--duration-fast) var(--ease);
   font-size: 13px;
   font-weight: 550;
   line-height: 1;
@@ -270,7 +285,7 @@ a {
 
 .sidebar-mini {
   font-size: 12px;
-  color: rgba(17, 24, 39, 0.60);
+  color: rgba(17, 24, 39, 0.6);
   padding: 0 6px;
 }
 
@@ -322,7 +337,11 @@ a {
   width: 34px;
   height: 34px;
   border-radius: 999px;
-  background: linear-gradient(135deg, rgba(79, 70, 229, 0.95), rgba(236, 72, 153, 0.80));
+  background: linear-gradient(
+    135deg,
+    rgba(79, 70, 229, 0.95),
+    rgba(236, 72, 153, 0.8)
+  );
   display: grid;
   place-items: center;
   color: #fff;
@@ -336,8 +355,6 @@ a {
   color: rgba(17, 24, 39, 0.92);
   white-space: nowrap;
 }
-
-
 
 /* Center: search */
 .topheader-center {
@@ -374,13 +391,15 @@ a {
   width: min(640px, 100%);
   height: 40px;
   border-radius: 999px;
-  border: 1px solid rgba(17, 24, 39, 0.10);
+  border: 1px solid rgba(17, 24, 39, 0.1);
   background: rgba(249, 250, 251, 1);
   display: flex;
   align-items: center;
   gap: 10px;
   padding: 0 14px;
-  transition: border-color var(--duration-fast) var(--ease), box-shadow var(--duration-fast) var(--ease),
+  transition:
+    border-color var(--duration-fast) var(--ease),
+    box-shadow var(--duration-fast) var(--ease),
     background var(--duration-fast) var(--ease);
 }
 
@@ -418,7 +437,7 @@ a {
 
 .notify-trigger {
   appearance: none;
-  border: 1px solid rgba(17, 24, 39, 0.10);
+  border: 1px solid rgba(17, 24, 39, 0.1);
   background: rgba(255, 255, 255, 0.72);
   backdrop-filter: blur(10px);
   border-radius: 999px;
@@ -445,7 +464,7 @@ a {
 }
 
 .notify-trigger.open {
-  border-color: rgba(129, 140, 248, 0.40);
+  border-color: rgba(129, 140, 248, 0.4);
   box-shadow: 0 0 0 4px rgba(129, 140, 248, 0.18);
   transform: translateY(-1px);
 }
@@ -468,7 +487,7 @@ a {
   font-size: 11px;
   font-weight: 800;
   background: rgba(244, 114, 182, 0.24);
-  border: 1px solid rgba(236, 72, 153, 0.20);
+  border: 1px solid rgba(236, 72, 153, 0.2);
   color: rgba(17, 24, 39, 0.86);
 }
 
@@ -478,7 +497,7 @@ a {
   top: calc(100% + 8px);
   width: min(320px, 92vw);
   border-radius: 14px;
-  border: 1px solid rgba(17, 24, 39, 0.10);
+  border: 1px solid rgba(17, 24, 39, 0.1);
   background: rgba(255, 255, 255, 0.94);
   backdrop-filter: blur(12px);
   box-shadow: var(--shadow-soft);
@@ -493,7 +512,11 @@ a {
   gap: 10px;
   padding: 12px 12px 10px;
   border-bottom: 1px solid rgba(17, 24, 39, 0.08);
-  background: linear-gradient(180deg, rgba(79, 70, 229, 0.08), rgba(255, 255, 255, 0.0));
+  background: linear-gradient(
+    180deg,
+    rgba(79, 70, 229, 0.08),
+    rgba(255, 255, 255, 0)
+  );
 }
 
 .notify-header-title {
@@ -514,12 +537,14 @@ a {
   cursor: pointer;
   padding: 6px 8px;
   border-radius: 10px;
-  transition: background var(--duration-fast) var(--ease), border-color var(--duration-fast) var(--ease);
+  transition:
+    background var(--duration-fast) var(--ease),
+    border-color var(--duration-fast) var(--ease);
 }
 
 .notify-linkbtn:hover {
   background: rgba(129, 140, 248, 0.12);
-  border-color: rgba(79, 70, 229, 0.10);
+  border-color: rgba(79, 70, 229, 0.1);
 }
 
 .notify-scroll {
@@ -537,7 +562,7 @@ a {
   appearance: none;
   width: 100%;
   text-align: left;
-  border: 1px solid rgba(17, 24, 39, 0.10);
+  border: 1px solid rgba(17, 24, 39, 0.1);
   background: rgba(255, 255, 255, 0.82);
   border-radius: 14px;
   padding: 10px 10px;
@@ -574,7 +599,7 @@ a {
   gap: 8px;
   font-size: 13px;
   font-weight: 800;
-  color: rgba(17, 24, 39, 0.90);
+  color: rgba(17, 24, 39, 0.9);
 }
 
 .notify-item-body {
@@ -600,21 +625,21 @@ a {
   padding: 2px 8px;
   border-radius: 999px;
   border: 1px solid rgba(236, 72, 153, 0.22);
-  background: rgba(236, 72, 153, 0.10);
+  background: rgba(236, 72, 153, 0.1);
   color: rgba(17, 24, 39, 0.82);
 }
 
 .notify-empty {
   padding: 12px 10px 4px;
   font-size: 13px;
-  color: rgba(17, 24, 39, 0.60);
+  color: rgba(17, 24, 39, 0.6);
 }
 
 .notify-utility {
   margin-top: 10px;
   appearance: none;
   width: 100%;
-  border: 1px solid rgba(17, 24, 39, 0.10);
+  border: 1px solid rgba(17, 24, 39, 0.1);
   background: rgba(255, 255, 255, 0.72);
   border-radius: 12px;
   padding: 10px 10px;
@@ -622,11 +647,13 @@ a {
   font-weight: 750;
   font-size: 12.5px;
   color: rgba(17, 24, 39, 0.78);
-  transition: background var(--duration-fast) var(--ease), border-color var(--duration-fast) var(--ease);
+  transition:
+    background var(--duration-fast) var(--ease),
+    border-color var(--duration-fast) var(--ease);
 }
 
 .notify-utility:hover {
-  background: rgba(129, 140, 248, 0.10);
+  background: rgba(129, 140, 248, 0.1);
   border-color: rgba(79, 70, 229, 0.16);
 }
 
@@ -650,7 +677,7 @@ a {
   appearance: none;
   width: 100%;
   text-align: left;
-  border: 1px solid rgba(17, 24, 39, 0.10);
+  border: 1px solid rgba(17, 24, 39, 0.1);
   background: rgba(255, 255, 255, 0.82);
   border-radius: 14px;
   padding: 10px 10px;
@@ -659,7 +686,10 @@ a {
   gap: 10px;
   align-items: center;
   cursor: pointer;
-  transition: background var(--duration-fast) var(--ease), border-color var(--duration-fast) var(--ease), transform var(--duration-fast) var(--ease);
+  transition:
+    background var(--duration-fast) var(--ease),
+    border-color var(--duration-fast) var(--ease),
+    transform var(--duration-fast) var(--ease);
 }
 
 .notify-setting:hover {
@@ -688,7 +718,7 @@ a {
 .notify-setting-title {
   font-size: 13px;
   font-weight: 850;
-  color: rgba(17, 24, 39, 0.90);
+  color: rgba(17, 24, 39, 0.9);
 }
 
 .notify-setting-sub {
@@ -735,7 +765,7 @@ a {
 
 .profile-trigger {
   appearance: none;
-  border: 1px solid rgba(17, 24, 39, 0.10);
+  border: 1px solid rgba(17, 24, 39, 0.1);
   background: rgba(255, 255, 255, 0.72);
   backdrop-filter: blur(10px);
   border-radius: 999px;
@@ -745,7 +775,7 @@ a {
   align-items: center;
   gap: 10px;
   cursor: pointer;
-  color: rgba(17, 24, 39, 0.90);
+  color: rgba(17, 24, 39, 0.9);
   transition:
     background var(--duration-fast) var(--ease),
     border-color var(--duration-fast) var(--ease),
@@ -761,7 +791,7 @@ a {
 }
 
 .profile-trigger.open {
-  border-color: rgba(129, 140, 248, 0.40);
+  border-color: rgba(129, 140, 248, 0.4);
   box-shadow: 0 0 0 4px rgba(129, 140, 248, 0.18);
   transform: translateY(-1px);
 }
@@ -801,7 +831,7 @@ a {
   top: calc(100% + 8px);
   min-width: 180px;
   border-radius: 14px;
-  border: 1px solid rgba(17, 24, 39, 0.10);
+  border: 1px solid rgba(17, 24, 39, 0.1);
   background: rgba(255, 255, 255, 0.94);
   backdrop-filter: blur(12px);
   box-shadow: var(--shadow-soft);
@@ -837,20 +867,22 @@ a {
   font-weight: 600;
   color: rgba(17, 24, 39, 0.86);
   cursor: pointer;
-  transition: background var(--duration-fast) var(--ease), border-color var(--duration-fast) var(--ease);
+  transition:
+    background var(--duration-fast) var(--ease),
+    border-color var(--duration-fast) var(--ease);
 }
 
 .profile-item:hover {
-  background: rgba(129, 140, 248, 0.10);
+  background: rgba(129, 140, 248, 0.1);
   border-color: rgba(79, 70, 229, 0.12);
 }
 
 .profile-item:focus-visible {
-  box-shadow: 0 0 0 4px rgba(129, 140, 248, 0.20);
+  box-shadow: 0 0 0 4px rgba(129, 140, 248, 0.2);
 }
 
 .profile-item.danger {
-  color: rgba(239, 68, 68, 0.90);
+  color: rgba(239, 68, 68, 0.9);
 }
 
 .profile-item.danger:hover {
@@ -886,12 +918,14 @@ a {
   padding: 8px 8px;
   border-radius: 12px;
   border: 1px solid transparent;
-  transition: background var(--duration-fast) var(--ease), border-color var(--duration-fast) var(--ease);
+  transition:
+    background var(--duration-fast) var(--ease),
+    border-color var(--duration-fast) var(--ease);
 }
 
 .profile-row:hover {
   background: rgba(129, 140, 248, 0.08);
-  border-color: rgba(79, 70, 229, 0.10);
+  border-color: rgba(79, 70, 229, 0.1);
 }
 
 .profile-row-main {
@@ -922,7 +956,7 @@ a {
 
 .profile-row-edit {
   appearance: none;
-  border: 1px solid rgba(17, 24, 39, 0.10);
+  border: 1px solid rgba(17, 24, 39, 0.1);
   background: rgba(255, 255, 255, 0.72);
   border-radius: 999px;
   height: 28px;
@@ -934,7 +968,9 @@ a {
   color: rgba(17, 24, 39, 0.74);
   font-size: 12px;
   font-weight: 700;
-  transition: background var(--duration-fast) var(--ease), border-color var(--duration-fast) var(--ease);
+  transition:
+    background var(--duration-fast) var(--ease),
+    border-color var(--duration-fast) var(--ease);
   flex: 0 0 auto;
 }
 
@@ -970,8 +1006,6 @@ a {
   height: 32px;
   padding: 0 10px;
 }
-
-
 
 /* Responsive: collapse sidebar to top on small screens */
 @media (max-width: 980px) {
@@ -1036,7 +1070,11 @@ a {
   top: 0;
   z-index: 30;
   /* Reference: subtle lavender/off-white gradient, almost white */
-  background: linear-gradient(180deg, rgba(246, 244, 255, 0.96), rgba(255, 255, 255, 0.96));
+  background: linear-gradient(
+    180deg,
+    rgba(246, 244, 255, 0.96),
+    rgba(255, 255, 255, 0.96)
+  );
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(17, 24, 39, 0.08);
   /* No/very subtle shadow per requirements */
@@ -1079,7 +1117,11 @@ a {
   height: 38px;
   border-radius: 999px; /* circular logo */
   /* Softer indigo-violet gradient: slightly cooler hue, lower saturation, a touch more lightness */
-  background: linear-gradient(135deg, rgba(129, 140, 248, 0.90), rgba(196, 181, 253, 0.88));
+  background: linear-gradient(
+    135deg,
+    rgba(129, 140, 248, 0.9),
+    rgba(196, 181, 253, 0.88)
+  );
   box-shadow: none; /* flat */
   display: grid;
   place-items: center;
@@ -1102,7 +1144,7 @@ a {
 .brand-title strong {
   font-size: 14px;
   letter-spacing: -0.01em;
-  color: rgba(17, 24, 39, 0.90); /* slightly softer than near-black */
+  color: rgba(17, 24, 39, 0.9); /* slightly softer than near-black */
 }
 
 .brand-title span {
@@ -1143,7 +1185,9 @@ a {
   color: rgba(17, 24, 39, 0.74); /* softer dark gray */
   border: 1px solid transparent;
   background: transparent;
-  transition: background var(--duration-fast) var(--ease), color var(--duration-fast) var(--ease);
+  transition:
+    background var(--duration-fast) var(--ease),
+    color var(--duration-fast) var(--ease);
   white-space: nowrap;
   font-size: 12.75px; /* subtle refinement */
   font-weight: 500;
@@ -1151,7 +1195,7 @@ a {
 
 .nav-pill:focus-visible {
   /* Header-specific focus: soft indigo-violet halo without looking "neon" */
-  box-shadow: 0 0 0 4px rgba(129, 140, 248, 0.20);
+  box-shadow: 0 0 0 4px rgba(129, 140, 248, 0.2);
 }
 
 .nav-pill--pro {
@@ -1159,7 +1203,7 @@ a {
 }
 
 .nav-pill:hover {
-  color: rgba(17, 24, 39, 0.90);
+  color: rgba(17, 24, 39, 0.9);
   /* Lighter + slightly more violet indigo tint (reduced saturation) */
   background: rgba(129, 140, 248, 0.065);
 }
@@ -1224,19 +1268,21 @@ a {
   max-width: 360px;
   height: 36px; /* fits comfortably inside 64px header */
   border-radius: 999px;
-  border: 1px solid rgba(17, 24, 39, 0.10);
+  border: 1px solid rgba(17, 24, 39, 0.1);
   background: rgba(129, 140, 248, 0.08); /* soft indigo/lavender tint */
   display: flex;
   align-items: center; /* vertical centering */
   gap: 10px;
   padding: 0 12px;
-  transition: border-color var(--duration-fast) var(--ease), box-shadow var(--duration-fast) var(--ease),
+  transition:
+    border-color var(--duration-fast) var(--ease),
+    box-shadow var(--duration-fast) var(--ease),
     background var(--duration-fast) var(--ease);
 }
 
 .topbar-search-icon {
   display: inline-flex;
-  color: rgba(17, 24, 39, 0.60);
+  color: rgba(17, 24, 39, 0.6);
 }
 
 .topbar-search-input {
@@ -1244,23 +1290,23 @@ a {
   border: none;
   outline: none;
   background: transparent;
-  color: rgba(17, 24, 39, 0.90);
+  color: rgba(17, 24, 39, 0.9);
   font-size: 13px;
 }
 
 .topbar-search-input::placeholder {
-  color: rgba(17, 24, 39, 0.50);
+  color: rgba(17, 24, 39, 0.5);
 }
 
 .topbar-search-form:focus-within {
-  border-color: rgba(129, 140, 248, 0.40);
-  box-shadow: 0 0 0 4px rgba(129, 140, 248, 0.20);
-  background: rgba(129, 140, 248, 0.10);
+  border-color: rgba(129, 140, 248, 0.4);
+  box-shadow: 0 0 0 4px rgba(129, 140, 248, 0.2);
+  background: rgba(129, 140, 248, 0.1);
 }
 
 .topbar-search-trigger {
   appearance: none;
-  border: 1px solid rgba(17, 24, 39, 0.10);
+  border: 1px solid rgba(17, 24, 39, 0.1);
   background: rgba(129, 140, 248, 0.08);
   width: 36px;
   height: 36px;
@@ -1269,7 +1315,9 @@ a {
   place-items: center;
   color: rgba(17, 24, 39, 0.72);
   cursor: pointer;
-  transition: background var(--duration-fast) var(--ease), border-color var(--duration-fast) var(--ease),
+  transition:
+    background var(--duration-fast) var(--ease),
+    border-color var(--duration-fast) var(--ease),
     box-shadow var(--duration-fast) var(--ease);
 }
 
@@ -1279,7 +1327,7 @@ a {
 }
 
 .topbar-search-trigger:focus-visible {
-  box-shadow: 0 0 0 4px rgba(129, 140, 248, 0.20);
+  box-shadow: 0 0 0 4px rgba(129, 140, 248, 0.2);
 }
 
 .topbar-search-close {
@@ -1299,7 +1347,7 @@ a {
 }
 
 .topbar-search-close:focus-visible {
-  box-shadow: 0 0 0 4px rgba(129, 140, 248, 0.20);
+  box-shadow: 0 0 0 4px rgba(129, 140, 248, 0.2);
 }
 
 @media (max-width: 980px) {
@@ -1353,8 +1401,12 @@ a {
   margin-bottom: 16px;
   padding: 14px 14px;
   border-radius: var(--radius);
-  background: linear-gradient(180deg, rgba(79, 70, 229, 0.10), rgba(249, 250, 251, 0.0));
-  border: 1px solid rgba(79, 70, 229, 0.10);
+  background: linear-gradient(
+    180deg,
+    rgba(79, 70, 229, 0.1),
+    rgba(249, 250, 251, 0)
+  );
+  border: 1px solid rgba(79, 70, 229, 0.1);
 }
 
 .page-title {
@@ -1458,31 +1510,31 @@ a {
 
 .badge.primary {
   border-color: rgba(79, 70, 229, 0.25);
-  background: rgba(79, 70, 229, 0.10);
+  background: rgba(79, 70, 229, 0.1);
 }
 
 .badge.secondary {
   border-color: rgba(236, 72, 153, 0.25);
-  background: rgba(236, 72, 153, 0.10);
+  background: rgba(236, 72, 153, 0.1);
 }
 
 .badge.success {
-  border-color: rgba(16, 185, 129, 0.30);
+  border-color: rgba(16, 185, 129, 0.3);
   background: rgba(16, 185, 129, 0.12);
 }
 
 .badge.error {
-  border-color: rgba(239, 68, 68, 0.30);
-  background: rgba(239, 68, 68, 0.10);
+  border-color: rgba(239, 68, 68, 0.3);
+  background: rgba(239, 68, 68, 0.1);
 }
 
 .badge.warn {
-  border-color: rgba(245, 158, 11, 0.30);
+  border-color: rgba(245, 158, 11, 0.3);
   background: rgba(245, 158, 11, 0.14);
 }
 
 .badge.info {
-  border-color: rgba(59, 130, 246, 0.30);
+  border-color: rgba(59, 130, 246, 0.3);
   background: rgba(59, 130, 246, 0.12);
 }
 
@@ -1528,7 +1580,11 @@ a {
 .btn.primary {
   color: white;
   border-color: rgba(79, 70, 229, 0.3);
-  background: linear-gradient(135deg, rgba(79, 70, 229, 0.95), rgba(236, 72, 153, 0.85));
+  background: linear-gradient(
+    135deg,
+    rgba(79, 70, 229, 0.95),
+    rgba(236, 72, 153, 0.85)
+  );
 }
 
 .btn.primary:hover {
@@ -1536,7 +1592,7 @@ a {
 }
 
 .btn.secondary {
-  border-color: rgba(79, 70, 229, 0.20);
+  border-color: rgba(79, 70, 229, 0.2);
   background: rgba(79, 70, 229, 0.08);
 }
 
@@ -1618,7 +1674,9 @@ a {
   font-size: 13px;
   background: var(--surface);
   color: var(--text);
-  transition: box-shadow var(--duration-fast) var(--ease), border-color var(--duration-fast) var(--ease);
+  transition:
+    box-shadow var(--duration-fast) var(--ease),
+    border-color var(--duration-fast) var(--ease);
 }
 
 .input:focus,
@@ -1743,7 +1801,7 @@ a {
 .settings-unified-title {
   font-size: 14px;
   font-weight: 700;
-  color: rgba(17, 24, 39, 0.90);
+  color: rgba(17, 24, 39, 0.9);
   letter-spacing: -0.01em;
 }
 
@@ -1776,7 +1834,7 @@ a {
   width: 34px;
   height: 34px;
   border-radius: 12px;
-  background: rgba(129, 140, 248, 0.10);
+  background: rgba(129, 140, 248, 0.1);
   border: 1px solid rgba(79, 70, 229, 0.12);
   color: rgba(79, 70, 229, 0.92);
 }
@@ -1840,7 +1898,7 @@ a {
   appearance: none;
   width: 100%;
   text-align: left;
-  border: 1px solid rgba(17, 24, 39, 0.10);
+  border: 1px solid rgba(17, 24, 39, 0.1);
   background: rgba(255, 255, 255, 0.85);
   border-radius: 14px;
   padding: 12px 12px;
@@ -1849,8 +1907,11 @@ a {
   justify-content: space-between;
   gap: 12px;
   cursor: pointer;
-  transition: transform var(--duration) var(--ease), box-shadow var(--duration) var(--ease),
-    border-color var(--duration) var(--ease), background var(--duration) var(--ease);
+  transition:
+    transform var(--duration) var(--ease),
+    box-shadow var(--duration) var(--ease),
+    border-color var(--duration) var(--ease),
+    background var(--duration) var(--ease);
 }
 
 .settings-item:hover {
@@ -1871,7 +1932,7 @@ a {
 .settings-item-title {
   font-size: 14px;
   font-weight: 700;
-  color: rgba(17, 24, 39, 0.90);
+  color: rgba(17, 24, 39, 0.9);
 }
 
 .settings-item-desc {
@@ -1913,12 +1974,12 @@ a {
 .settings-section-subtitle {
   margin: 5px 0 0;
   font-size: 12.75px;
-  color: rgba(17, 24, 39, 0.60);
+  color: rgba(17, 24, 39, 0.6);
 }
 
 .settings-backbtn {
   appearance: none;
-  border: 1px solid rgba(17, 24, 39, 0.10);
+  border: 1px solid rgba(17, 24, 39, 0.1);
   background: rgba(255, 255, 255, 0.85);
   border-radius: 999px;
   height: 32px;
@@ -1977,7 +2038,11 @@ a {
   border: 1px solid rgba(79, 70, 229, 0.12);
   border-radius: 14px;
   padding: 12px 12px;
-  background: linear-gradient(135deg, rgba(79, 70, 229, 0.05), rgba(236, 72, 153, 0.025));
+  background: linear-gradient(
+    135deg,
+    rgba(79, 70, 229, 0.05),
+    rgba(236, 72, 153, 0.025)
+  );
 }
 
 .info-row-icon {
@@ -2004,7 +2069,7 @@ a {
 
 .info-row-body {
   margin: 4px 0 0;
-  color: rgba(17, 24, 39, 0.70);
+  color: rgba(17, 24, 39, 0.7);
   line-height: 1.45;
   font-size: 13px;
 }
@@ -2030,7 +2095,7 @@ a {
   appearance: none;
   width: 100%;
   text-align: left;
-  border: 1px solid rgba(17, 24, 39, 0.10);
+  border: 1px solid rgba(17, 24, 39, 0.1);
   background: rgba(129, 140, 248, 0.06);
   border-radius: 14px;
   padding: 12px 12px;
@@ -2039,11 +2104,14 @@ a {
   justify-content: space-between;
   gap: 12px;
   cursor: pointer;
-  transition: background var(--duration) var(--ease), border-color var(--duration) var(--ease), transform var(--duration) var(--ease);
+  transition:
+    background var(--duration) var(--ease),
+    border-color var(--duration) var(--ease),
+    transform var(--duration) var(--ease);
 }
 
 .settings-action:hover {
-  background: rgba(129, 140, 248, 0.10);
+  background: rgba(129, 140, 248, 0.1);
   border-color: rgba(79, 70, 229, 0.18);
   transform: translateY(-1px);
 }
@@ -2055,13 +2123,13 @@ a {
 .settings-action-title {
   font-size: 13.5px;
   font-weight: 750;
-  color: rgba(17, 24, 39, 0.90);
+  color: rgba(17, 24, 39, 0.9);
 }
 
 .settings-action-sub {
   margin-top: 4px;
   font-size: 12.5px;
-  color: rgba(17, 24, 39, 0.60);
+  color: rgba(17, 24, 39, 0.6);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -2073,7 +2141,7 @@ a {
   gap: 10px;
   padding: 12px;
   border-radius: 14px;
-  border: 1px solid rgba(17, 24, 39, 0.10);
+  border: 1px solid rgba(17, 24, 39, 0.1);
   background: rgba(255, 255, 255, 0.82);
 }
 
@@ -2263,7 +2331,11 @@ a {
   width: 34px;
   height: 34px;
   border-radius: 10px;
-  background: linear-gradient(135deg, rgba(37, 99, 235, 0.95), rgba(79, 70, 229, 0.85));
+  background: linear-gradient(
+    135deg,
+    rgba(37, 99, 235, 0.95),
+    rgba(79, 70, 229, 0.85)
+  );
   color: #fff;
   display: grid;
   place-items: center;
@@ -2360,7 +2432,9 @@ a {
   place-items: center;
   cursor: pointer;
   color: #6b7280;
-  transition: background var(--duration-fast) var(--ease), border-color var(--duration-fast) var(--ease);
+  transition:
+    background var(--duration-fast) var(--ease),
+    border-color var(--duration-fast) var(--ease);
 }
 
 .dash-iconbtn:hover {
@@ -2424,14 +2498,16 @@ a {
 .dash-page-search-form {
   height: 44px;
   border-radius: 999px;
-  border: 1px solid rgba(17, 24, 39, 0.10);
+  border: 1px solid rgba(17, 24, 39, 0.1);
   background: rgba(255, 255, 255, 0.92);
   display: flex;
   align-items: center;
   gap: 10px;
   padding: 0 14px;
   box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
-  transition: border-color var(--duration-fast) var(--ease), box-shadow var(--duration-fast) var(--ease),
+  transition:
+    border-color var(--duration-fast) var(--ease),
+    box-shadow var(--duration-fast) var(--ease),
     background var(--duration-fast) var(--ease);
 }
 
@@ -2553,7 +2629,9 @@ a {
   border-radius: 999px;
   font-size: 12px;
   cursor: pointer;
-  transition: background var(--duration-fast) var(--ease), border-color var(--duration-fast) var(--ease);
+  transition:
+    background var(--duration-fast) var(--ease),
+    border-color var(--duration-fast) var(--ease);
 }
 .dash-chip:hover {
   background: #f3f4f6;
@@ -2600,7 +2678,10 @@ a {
   justify-content: space-between;
   gap: 12px;
   background: #ffffff;
-  transition: box-shadow var(--duration) var(--ease), border-color var(--duration) var(--ease), transform var(--duration) var(--ease);
+  transition:
+    box-shadow var(--duration) var(--ease),
+    border-color var(--duration) var(--ease),
+    transform var(--duration) var(--ease);
 }
 
 .dash-jobcard:hover {
@@ -2778,7 +2859,7 @@ a {
   font-size: 20px;
   font-weight: 700;
   color: #111827;
-  line-height: 1.0;
+  line-height: 1;
 }
 
 .dash-ring-label {
@@ -3092,7 +3173,7 @@ a {
   border-radius: 10px;
   display: grid;
   place-items: center;
-  background: rgba(37, 99, 235, 0.10);
+  background: rgba(37, 99, 235, 0.1);
   border: 1px solid rgba(37, 99, 235, 0.16);
   color: #2563eb;
 }

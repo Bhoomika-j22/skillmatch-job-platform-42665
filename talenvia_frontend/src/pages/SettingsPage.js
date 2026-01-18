@@ -8,8 +8,20 @@ import { useToast } from "../components/ToastProvider";
  */
 function IconUser({ size = 18 }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
-      <path d="M20 21a8 8 0 0 0-16 0" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path
+        d="M20 21a8 8 0 0 0-16 0"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
       <path
         d="M12 11a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z"
         stroke="currentColor"
@@ -22,7 +34,14 @@ function IconUser({ size = 18 }) {
 
 function IconBriefcase({ size = 18 }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+      focusable="false"
+    >
       <path
         d="M10 7V6a2 2 0 0 1 2-2h0a2 2 0 0 1 2 2v1"
         stroke="currentColor"
@@ -35,44 +54,92 @@ function IconBriefcase({ size = 18 }) {
         strokeWidth="2"
         strokeLinejoin="round"
       />
-      <path d="M4 12h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path
+        d="M4 12h16"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
 
 function IconBlock({ size = 18 }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+      focusable="false"
+    >
       <path
         d="M12 22a10 10 0 1 0-10-10 10 10 0 0 0 10 10Z"
         stroke="currentColor"
         strokeWidth="2"
         strokeLinejoin="round"
       />
-      <path d="M7.5 7.5 16.5 16.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path
+        d="M7.5 7.5 16.5 16.5"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
 
 function IconLogout({ size = 18 }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+      focusable="false"
+    >
       <path
         d="M10 17H7a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3"
         stroke="currentColor"
         strokeWidth="2"
         strokeLinecap="round"
       />
-      <path d="M14 12h7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-      <path d="m18 8 3 4-3 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        d="M14 12h7"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <path
+        d="m18 8 3 4-3 4"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
 
 function ChevronRight({ size = 18 }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
-      <path d="m9 6 6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path
+        d="m9 6 6 6-6 6"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
@@ -143,7 +210,11 @@ export default function SettingsPage() {
       ];
       keysToClear.forEach((k) => window.localStorage.removeItem(k));
 
-      toast({ title: "Logged out", message: "You have been logged out on this device (demo).", variant: "success" });
+      toast({
+        title: "Logged out",
+        message: "You have been logged out on this device (demo).",
+        variant: "success",
+      });
       navigate("/");
     } finally {
       setLoggingOut(false);
@@ -161,7 +232,11 @@ export default function SettingsPage() {
 
       <div className="grid" style={{ maxWidth: 900 }}>
         <Card>
-          <div className="list" aria-label="Settings options" style={{ gap: 10 }}>
+          <div
+            className="list"
+            aria-label="Settings options"
+            style={{ gap: 10 }}
+          >
             {SETTINGS_ITEMS.map((item) => {
               const Icon = item.icon;
               const showCount = item.key === "blocked" && blockedCount > 0;
@@ -179,11 +254,25 @@ export default function SettingsPage() {
                       <Icon size={18} />
                     </span>
 
-                    <div className="settings-unified-titlewrap" style={{ flex: 1 }}>
-                      <h4 className="settings-unified-title" style={{ margin: 0, display: "flex", gap: 10, alignItems: "center" }}>
+                    <div
+                      className="settings-unified-titlewrap"
+                      style={{ flex: 1 }}
+                    >
+                      <h4
+                        className="settings-unified-title"
+                        style={{
+                          margin: 0,
+                          display: "flex",
+                          gap: 10,
+                          alignItems: "center",
+                        }}
+                      >
                         <span>{item.title}</span>
                         {showCount ? (
-                          <span className="badge info" aria-label={`${blockedCount} blocked companies`}>
+                          <span
+                            className="badge info"
+                            aria-label={`${blockedCount} blocked companies`}
+                          >
                             {blockedCount}
                           </span>
                         ) : null}
@@ -202,7 +291,9 @@ export default function SettingsPage() {
 
           <div className="hr" />
 
-          <div style={{ display: "flex", justifyContent: "center", paddingTop: 2 }}>
+          <div
+            style={{ display: "flex", justifyContent: "center", paddingTop: 2 }}
+          >
             <Button
               variant="ghost"
               type="button"
@@ -211,7 +302,9 @@ export default function SettingsPage() {
               aria-label="Logout"
               className="settings-logout danger"
             >
-              <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+              <span
+                style={{ display: "inline-flex", alignItems: "center", gap: 8 }}
+              >
                 <span aria-hidden="true">
                   <IconLogout size={18} />
                 </span>

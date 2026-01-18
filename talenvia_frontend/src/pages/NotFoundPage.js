@@ -9,7 +9,8 @@ export default function NotFoundPage() {
     <div className="container">
       <Card title="Page not found">
         <p style={{ marginTop: 0, color: "var(--muted)" }}>
-          The page you’re looking for doesn’t exist. Use navigation or go back to the dashboard.
+          The page you’re looking for doesn’t exist. Use navigation or go back
+          to the dashboard.
         </p>
         <Link to="/">
           <Button variant="primary" type="button">

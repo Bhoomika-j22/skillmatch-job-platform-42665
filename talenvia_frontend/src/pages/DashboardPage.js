@@ -88,7 +88,12 @@ function Icon({ name = "search", size = 16, className = "" }) {
             strokeWidth="2"
             strokeLinecap="round"
           />
-          <path d="M12 17h.01" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+          <path
+            d="M12 17h.01"
+            stroke="currentColor"
+            strokeWidth="3"
+            strokeLinecap="round"
+          />
         </svg>
       );
     default:
@@ -104,9 +109,23 @@ function ProgressRing({ value = 80, size = 76 }) {
   const dash = (clamped / 100) * c;
 
   return (
-    <div className="dash-ring" aria-label={`Career score ${clamped} out of 100`}>
-      <svg width={size} height={size} className="dash-ring-svg" aria-hidden="true">
-        <circle className="dash-ring-track" cx={size / 2} cy={size / 2} r={r} strokeWidth={stroke} />
+    <div
+      className="dash-ring"
+      aria-label={`Career score ${clamped} out of 100`}
+    >
+      <svg
+        width={size}
+        height={size}
+        className="dash-ring-svg"
+        aria-hidden="true"
+      >
+        <circle
+          className="dash-ring-track"
+          cx={size / 2}
+          cy={size / 2}
+          r={r}
+          strokeWidth={stroke}
+        />
         <circle
           className="dash-ring-meter"
           cx={size / 2}
@@ -127,7 +146,7 @@ function ProgressRing({ value = 80, size = 76 }) {
 // PUBLIC_INTERFACE
 export default function DashboardPage({ profile, applications }) {
   /** Dashboard landing page matching the extracted 3-column design notes. */
-  const [query, setQuery] = useState("");
+  const [query] = useState("");
   const [chip, setChip] = useState("Recommended");
   const [sort, setSort] = useState("Relevance");
 
@@ -144,11 +163,20 @@ export default function DashboardPage({ profile, applications }) {
     const base = MOCK_JOBS.slice().sort((a, b) => b.match - a.match);
 
     let filtered = base;
-    if (chip === "Remote") filtered = filtered.filter((j) => String(j.location).toLowerCase().includes("remote"));
-    if (chip === "Full-time") filtered = filtered.filter((j) => String(j.type).toLowerCase().includes("full"));
-    if (chip === "Top Match") filtered = filtered.filter((j) => Number(j.match) >= 80);
+    if (chip === "Remote")
+      filtered = filtered.filter((j) =>
+        String(j.location).toLowerCase().includes("remote"),
+      );
+    if (chip === "Full-time")
+      filtered = filtered.filter((j) =>
+        String(j.type).toLowerCase().includes("full"),
+      );
+    if (chip === "Top Match")
+      filtered = filtered.filter((j) => Number(j.match) >= 80);
 
-    const q = String(query || "").trim().toLowerCase();
+    const q = String(query || "")
+      .trim()
+      .toLowerCase();
     if (q) {
       filtered = filtered.filter((j) => {
         const hay = [
@@ -166,9 +194,13 @@ export default function DashboardPage({ profile, applications }) {
     }
 
     if (sort === "Newest") {
-      filtered = filtered.slice().sort((a, b) => (a.postedDaysAgo || 0) - (b.postedDaysAgo || 0));
+      filtered = filtered
+        .slice()
+        .sort((a, b) => (a.postedDaysAgo || 0) - (b.postedDaysAgo || 0));
     } else if (sort === "Match") {
-      filtered = filtered.slice().sort((a, b) => (b.match || 0) - (a.match || 0));
+      filtered = filtered
+        .slice()
+        .sort((a, b) => (b.match || 0) - (a.match || 0));
     } // "Relevance" keeps default
 
     return filtered;
@@ -177,7 +209,10 @@ export default function DashboardPage({ profile, applications }) {
   const careerScore = useMemo(() => {
     // Demo scoring: skills contribute, applications contribute slightly; capped.
     const skills = (profile?.skills || []).length;
-    const score = Math.min(100, Math.round(55 + skills * 5 + (applications?.length || 0) * 3));
+    const score = Math.min(
+      100,
+      Math.round(55 + skills * 5 + (applications?.length || 0) * 3),
+    );
     return Math.max(0, score);
   }, [profile, applications]);
 
@@ -190,22 +225,30 @@ export default function DashboardPage({ profile, applications }) {
             <div className="dash-panel-head">
               <div>
                 <h1 className="dash-title">Recommended Jobs</h1>
-                <p className="dash-subtitle">Based on your profile and recent activity</p>
+                <p className="dash-subtitle">
+                  Based on your profile and recent activity
+                </p>
               </div>
 
               <div className="dash-panel-controls">
-                <div className="dash-chips" role="tablist" aria-label="Job filters">
-                  {["Recommended", "Remote", "Full-time", "Top Match"].map((c) => (
-                    <button
-                      key={c}
-                      type="button"
-                      className={`dash-chip ${chip === c ? "active" : ""}`}
-                      onClick={() => setChip(c)}
-                      aria-pressed={chip === c}
-                    >
-                      {c}
-                    </button>
-                  ))}
+                <div
+                  className="dash-chips"
+                  role="tablist"
+                  aria-label="Job filters"
+                >
+                  {["Recommended", "Remote", "Full-time", "Top Match"].map(
+                    (c) => (
+                      <button
+                        key={c}
+                        type="button"
+                        className={`dash-chip ${chip === c ? "active" : ""}`}
+                        onClick={() => setChip(c)}
+                        aria-pressed={chip === c}
+                      >
+                        {c}
+                      </button>
+                    ),
+                  )}
                 </div>
 
                 <div className="dash-control-row">
@@ -223,25 +266,36 @@ export default function DashboardPage({ profile, applications }) {
                     </select>
                   </label>
 
-                  <button className="dash-iconbtn" type="button" aria-label="More filters">
+                  <button
+                    className="dash-iconbtn"
+                    type="button"
+                    aria-label="More filters"
+                  >
                     <Icon name="filter" />
                   </button>
                 </div>
               </div>
             </div>
 
-            <div className="dash-joblist" role="list" aria-label="Recommended job results">
+            <div
+              className="dash-joblist"
+              role="list"
+              aria-label="Recommended job results"
+            >
               {recommendedJobs.map((job) => (
                 <article key={job.id} className="dash-jobcard" role="listitem">
                   <div className="dash-job-left">
                     <div className="dash-company-icon" aria-hidden="true">
-                      {String(job.company || "C").slice(0, 1).toUpperCase()}
+                      {String(job.company || "C")
+                        .slice(0, 1)
+                        .toUpperCase()}
                     </div>
 
                     <div className="dash-job-meta">
                       <div className="dash-job-title">{job.title}</div>
                       <div className="dash-job-sub">
-                        {job.company} • {job.location} • {job.type} • {job.postedDaysAgo}d ago
+                        {job.company} • {job.location} • {job.type} •{" "}
+                        {job.postedDaysAgo}d ago
                       </div>
 
                       <div className="dash-tags" aria-label="Job tags">
@@ -250,19 +304,29 @@ export default function DashboardPage({ profile, applications }) {
                             {t}
                           </span>
                         ))}
-                        <span className="dash-tag dash-tag-blue">{job.match}% match</span>
+                        <span className="dash-tag dash-tag-blue">
+                          {job.match}% match
+                        </span>
                       </div>
                     </div>
                   </div>
 
                   <div className="dash-job-right">
-                    <Link to="/jobs" className="dash-applylink" aria-label={`Apply now for ${job.title} at ${job.company}`}>
+                    <Link
+                      to="/jobs"
+                      className="dash-applylink"
+                      aria-label={`Apply now for ${job.title} at ${job.company}`}
+                    >
                       <Button type="button" className="dash-applybtn">
                         Apply Now
                       </Button>
                     </Link>
 
-                    <Link to="/jobs" className="dash-viewlink" aria-label={`View details for ${job.title}`}>
+                    <Link
+                      to="/jobs"
+                      className="dash-viewlink"
+                      aria-label={`View details for ${job.title}`}
+                    >
                       View details
                     </Link>
                   </div>
@@ -272,7 +336,9 @@ export default function DashboardPage({ profile, applications }) {
               {recommendedJobs.length === 0 ? (
                 <div className="dash-empty">
                   <div className="dash-empty-title">No matches</div>
-                  <div className="dash-empty-text">Try a different filter or clear your search query.</div>
+                  <div className="dash-empty-text">
+                    Try a different filter or clear your search query.
+                  </div>
                   <div style={{ height: 10 }} />
                   <Link to="/profile">
                     <Button type="button">Update Profile</Button>
@@ -287,7 +353,11 @@ export default function DashboardPage({ profile, applications }) {
             <section className="dash-card">
               <div className="dash-card-head">
                 <h2 className="dash-card-title">Career Insights</h2>
-                <button className="dash-iconbtn" type="button" aria-label="Career insights menu">
+                <button
+                  className="dash-iconbtn"
+                  type="button"
+                  aria-label="Career insights menu"
+                >
                   <Icon name="dots" />
                 </button>
               </div>
@@ -305,7 +375,9 @@ export default function DashboardPage({ profile, applications }) {
                   </div>
                   <div className="dash-stat">
                     <div className="dash-stat-label">Top match jobs</div>
-                    <div className="dash-stat-value">{MOCK_JOBS.filter((j) => (j.match || 0) >= 80).length}</div>
+                    <div className="dash-stat-value">
+                      {MOCK_JOBS.filter((j) => (j.match || 0) >= 80).length}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -315,7 +387,9 @@ export default function DashboardPage({ profile, applications }) {
               <div className="dash-minirows" aria-label="Insight breakdown">
                 <div className="dash-minirow">
                   <span>Profile completeness</span>
-                  <span className="dash-minirow-val">{Math.min(100, 40 + kpis.skillsCount * 8)}%</span>
+                  <span className="dash-minirow-val">
+                    {Math.min(100, 40 + kpis.skillsCount * 8)}%
+                  </span>
                 </div>
                 <div className="dash-minirow">
                   <span>Recommended actions</span>
@@ -325,7 +399,9 @@ export default function DashboardPage({ profile, applications }) {
                   <span>Avg match score</span>
                   <span className="dash-minirow-val">
                     {Math.round(
-                      (MOCK_JOBS.reduce((sum, j) => sum + (j.match || 0), 0) / Math.max(1, MOCK_JOBS.length)) * 1
+                      (MOCK_JOBS.reduce((sum, j) => sum + (j.match || 0), 0) /
+                        Math.max(1, MOCK_JOBS.length)) *
+                        1,
                     )}
                     %
                   </span>
@@ -348,7 +424,10 @@ export default function DashboardPage({ profile, applications }) {
                   <div className="dash-trackval">{kpis.apps}</div>
                 </div>
                 <div className="dash-trackbar">
-                  <span className="dash-trackbar-fill" style={{ width: `${Math.min(100, kpis.apps * 18)}%` }} />
+                  <span
+                    className="dash-trackbar-fill"
+                    style={{ width: `${Math.min(100, kpis.apps * 18)}%` }}
+                  />
                 </div>
 
                 <div className="dash-trackrow">
@@ -356,7 +435,10 @@ export default function DashboardPage({ profile, applications }) {
                   <div className="dash-trackval">{kpis.inReview}</div>
                 </div>
                 <div className="dash-trackbar">
-                  <span className="dash-trackbar-fill" style={{ width: `${Math.min(100, kpis.inReview * 22)}%` }} />
+                  <span
+                    className="dash-trackbar-fill"
+                    style={{ width: `${Math.min(100, kpis.inReview * 22)}%` }}
+                  />
                 </div>
 
                 <div className="dash-trackrow">
@@ -364,7 +446,10 @@ export default function DashboardPage({ profile, applications }) {
                   <div className="dash-trackval">{kpis.interviews}</div>
                 </div>
                 <div className="dash-trackbar">
-                  <span className="dash-trackbar-fill" style={{ width: `${Math.min(100, kpis.interviews * 30)}%` }} />
+                  <span
+                    className="dash-trackbar-fill"
+                    style={{ width: `${Math.min(100, kpis.interviews * 30)}%` }}
+                  />
                 </div>
               </div>
 
@@ -387,15 +472,23 @@ export default function DashboardPage({ profile, applications }) {
                 <h2 className="dash-card-title">Recommended Actions</h2>
               </div>
 
-              <div className="dash-actionlist" role="list" aria-label="Recommended actions">
+              <div
+                className="dash-actionlist"
+                role="list"
+                aria-label="Recommended actions"
+              >
                 <div className="dash-action" role="listitem">
                   <div className="dash-action-left">
                     <div className="dash-action-icon" aria-hidden="true">
                       ✓
                     </div>
                     <div>
-                      <div className="dash-action-title">Add 2–3 more skills</div>
-                      <div className="dash-action-sub">Improve job matching accuracy</div>
+                      <div className="dash-action-title">
+                        Add 2–3 more skills
+                      </div>
+                      <div className="dash-action-sub">
+                        Improve job matching accuracy
+                      </div>
                     </div>
                   </div>
                   <Link to="/profile">
@@ -412,7 +505,9 @@ export default function DashboardPage({ profile, applications }) {
                     </div>
                     <div>
                       <div className="dash-action-title">Take a mock test</div>
-                      <div className="dash-action-sub">Get targeted recommendations</div>
+                      <div className="dash-action-sub">
+                        Get targeted recommendations
+                      </div>
                     </div>
                   </div>
                   <Link to="/mock-tests">
@@ -428,8 +523,12 @@ export default function DashboardPage({ profile, applications }) {
                       ★
                     </div>
                     <div>
-                      <div className="dash-action-title">Complete a challenge</div>
-                      <div className="dash-action-sub">Earn XP and show evidence</div>
+                      <div className="dash-action-title">
+                        Complete a challenge
+                      </div>
+                      <div className="dash-action-sub">
+                        Earn XP and show evidence
+                      </div>
                     </div>
                   </div>
                   <Link to="/challenges">
@@ -446,11 +545,17 @@ export default function DashboardPage({ profile, applications }) {
                 <h2 className="dash-card-title">Messages</h2>
               </div>
 
-              <div className="dash-msglist" role="list" aria-label="Messages and next steps">
+              <div
+                className="dash-msglist"
+                role="list"
+                aria-label="Messages and next steps"
+              >
                 <div className="dash-msg" role="listitem">
                   <div>
                     <div className="dash-msg-title">Application viewed</div>
-                    <div className="dash-msg-sub">A recruiter viewed your recent application.</div>
+                    <div className="dash-msg-sub">
+                      A recruiter viewed your recent application.
+                    </div>
                   </div>
                   <span className="dash-msg-time">2h</span>
                 </div>
@@ -458,7 +563,9 @@ export default function DashboardPage({ profile, applications }) {
                 <div className="dash-msg" role="listitem">
                   <div>
                     <div className="dash-msg-title">New jobs matched</div>
-                    <div className="dash-msg-sub">3 new roles match your skills.</div>
+                    <div className="dash-msg-sub">
+                      3 new roles match your skills.
+                    </div>
                   </div>
                   <span className="dash-msg-time">1d</span>
                 </div>
@@ -466,7 +573,9 @@ export default function DashboardPage({ profile, applications }) {
                 <div className="dash-msg" role="listitem">
                   <div>
                     <div className="dash-msg-title">Challenge unlocked</div>
-                    <div className="dash-msg-sub">A new challenge is available.</div>
+                    <div className="dash-msg-sub">
+                      A new challenge is available.
+                    </div>
                   </div>
                   <span className="dash-msg-time">2d</span>
                 </div>
